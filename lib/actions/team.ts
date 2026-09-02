@@ -2,14 +2,15 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/auth";
 import { Role } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import { z } from "zod";
 
 async function requireAdminStoreId(): Promise<{ storeId: string; role: Role }> {
-  const supabase = await createClient();
-  const { data: { user }, error } = await supabase.auth.getUser();
-  if (error || !user) throw new Error("Non autorisé");
+  const session = await auth();
+  if (!session?.user) throw new Error("Non autorisé");
+  const user = session.user;
 
   const member = await prisma.storeMember.findFirst({
     where: { userId: user.id },
@@ -22,9 +23,9 @@ async function requireAdminStoreId(): Promise<{ storeId: string; role: Role }> {
 }
 
 async function getStoreId(): Promise<string> {
-  const supabase = await createClient();
-  const { data: { user }, error } = await supabase.auth.getUser();
-  if (error || !user) throw new Error("Non autorisé");
+  const session = await auth();
+  if (!session?.user) throw new Error("Non autorisé");
+  const user = session.user;
   const member = await prisma.storeMember.findFirst({
     where: { userId: user.id },
     select: { storeId: true },
@@ -43,16 +44,20 @@ export async function getTeamMembers() {
 export async function inviteMember(data: { email: string; role: Role }) {
   const { storeId } = await requireAdminStoreId();
 
-  // Créer l'utilisateur via l'API admin Supabase
-  const supabase = await createClient();
-  const { data: authData, error } = await (supabase as any).auth.admin?.inviteUserByEmail
-    ? (supabase as any).auth.admin.inviteUserByEmail(data.email)
-    : { data: null, error: { message: "Admin API non disponible" } };
+  // Créer l'utilisateur via Prisma avec un mot de passe par défaut
+  let user = await prisma.user.findUnique({ where: { email: data.email } });
+  
+  if (!user) {
+    const hashedPassword = await bcrypt.hash("Oyamarket@2026", 10);
+    user = await prisma.user.create({
+      data: {
+        email: data.email,
+        password: hashedPassword,
+      },
+    });
+  }
 
-  if (error) return { error: error.message };
-
-  const userId = authData?.user?.id;
-  if (!userId) return { error: "Impossible de créer l'utilisateur" };
+  const userId = user.id;
 
   const member = await prisma.storeMember.create({
     data: { userId, storeId, role: data.role },

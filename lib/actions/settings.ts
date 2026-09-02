@@ -2,13 +2,13 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/auth";
 import { z } from "zod";
 
 async function requireAdminStoreId(): Promise<string> {
-  const supabase = await createClient();
-  const { data: { user }, error } = await supabase.auth.getUser();
-  if (error || !user) throw new Error("Non autorisé");
+  const session = await auth();
+  if (!session?.user) throw new Error("Non autorisé");
+  const user = session.user;
   const member = await prisma.storeMember.findFirst({
     where: { userId: user.id },
     select: { storeId: true, role: true },
@@ -19,9 +19,9 @@ async function requireAdminStoreId(): Promise<string> {
 }
 
 async function getStoreId(): Promise<string> {
-  const supabase = await createClient();
-  const { data: { user }, error } = await supabase.auth.getUser();
-  if (error || !user) throw new Error("Non autorisé");
+  const session = await auth();
+  if (!session?.user) throw new Error("Non autorisé");
+  const user = session.user;
   const member = await prisma.storeMember.findFirst({
     where: { userId: user.id },
     select: { storeId: true },

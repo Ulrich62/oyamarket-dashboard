@@ -1,15 +1,25 @@
-const { createClient } = require("@supabase/supabase-js");
 const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcryptjs");
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
 const prisma = new PrismaClient();
 
 async function seed() {
-  const userId = "eaa65392-be29-45c4-ad0d-fc9c9cda070e";
-  console.log("Using known user ID:", userId);
+  console.log("Creating user info@denemlabs.com...");
+  const hashedPassword = await bcrypt.hash("Oyamarket@2026", 10);
+  
+  const user = await prisma.user.upsert({
+    where: { email: "info@denemlabs.com" },
+    update: {
+      password: hashedPassword,
+    },
+    create: {
+      email: "info@denemlabs.com",
+      password: hashedPassword,
+      name: "Admin",
+    }
+  });
+
+  console.log("User created:", user.id);
 
   console.log("Creating store in Neon...");
   const store = await prisma.store.create({
@@ -18,7 +28,7 @@ async function seed() {
       currency: "XOF",
       members: {
         create: {
-          userId,
+          userId: user.id,
           role: "ADMIN",
         },
       },

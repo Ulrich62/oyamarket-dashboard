@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -10,25 +10,30 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
 
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success("Connexion réussie");
-      router.push("/");
+      if (res?.error) {
+        toast.error("Identifiants invalides");
+      } else {
+        toast.success("Connexion réussie");
+        router.push("/");
+        router.refresh();
+      }
+    } catch (error) {
+      toast.error("Une erreur est survenue");
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   return (

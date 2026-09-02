@@ -12,7 +12,7 @@ import {
   LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { createClient } from "@/lib/supabase/client";
+import { signOut } from "next-auth/react";
 
 const MAIN_LINKS = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -28,11 +28,8 @@ const ORG_LINKS = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const supabase = createClient();
-
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/login";
+    await signOut({ callbackUrl: "/login" });
   };
 
   return (

@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/auth";
 
 export interface MetaCapiPayload {
   eventName: string;
@@ -26,9 +26,9 @@ async function getStorePixelConfig(storeId: string) {
  * Déclenché UNIQUEMENT quand une commande passe au statut DELIVERED
  */
 export async function sendMetaCapiPurchase(orderId: string) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: "Non autorisé" };
+  const session = await auth();
+  if (!session?.user) return { error: "Non autorisé" };
+  const user = session.user;
 
   const member = await prisma.storeMember.findFirst({
     where: { userId: user.id },
