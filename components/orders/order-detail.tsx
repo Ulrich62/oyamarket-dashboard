@@ -9,7 +9,7 @@ import { StatusBadge } from "@/components/ui/badge";
 import { updateOrderStatus, updateOrder, deleteOrder } from "@/lib/actions/orders";
 import { formatXOF, formatDate, ORDER_STATUS_CONFIG } from "@/lib/constants";
 import { OrderStatus } from "@prisma/client";
-import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown } from "lucide-react";
+import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Order, OrderItem, Product } from "@prisma/client";
 
@@ -86,7 +86,7 @@ export function OrderDetail({ order }: OrderDetailProps) {
     });
   };
 
-  const InlineField = ({
+  const renderInlineField = ({
     field,
     label,
     value,
@@ -154,23 +154,24 @@ export function OrderDetail({ order }: OrderDetailProps) {
         <div className="rounded-2xl border border-line bg-bg-elev/30 p-6">
           <h2 className="text-sm font-medium text-ink mb-2">Informations client</h2>
           <div className="flex flex-col">
-            <InlineField
-              field="customerName"
-              label="Nom complet"
-              value={order.customerName}
-            />
-            <InlineField
-              field="customerPhone"
-              label="Téléphone"
-              value={order.customerPhone}
-              icon={<Phone className="w-3.5 h-3.5 text-ink-4" />}
-            />
-            <InlineField
-              field="quartier"
-              label="Quartier / Zone"
-              value={order.quartier ?? ""}
-              icon={<MapPin className="w-3.5 h-3.5 text-ink-4" />}
-            />
+            {renderInlineField({
+              field: "customerName",
+              label: "Nom complet",
+              value: order.customerName,
+              icon: <User className="w-3.5 h-3.5 text-ink-4" />,
+            })}
+            {renderInlineField({
+              field: "customerPhone",
+              label: "Téléphone",
+              value: order.customerPhone,
+              icon: <Phone className="w-3.5 h-3.5 text-ink-4" />,
+            })}
+            {renderInlineField({
+              field: "quartier",
+              label: "Quartier / Zone",
+              value: order.quartier ?? "",
+              icon: <MapPin className="w-3.5 h-3.5 text-ink-4" />,
+            })}
           </div>
         </div>
 

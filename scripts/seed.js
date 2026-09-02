@@ -8,31 +8,8 @@ const supabase = createClient(
 const prisma = new PrismaClient();
 
 async function seed() {
-  console.log("Authenticating with Supabase...");
-  let { data, error } = await supabase.auth.signUp({
-    email: "info@denemlabs.com",
-    password: "Oyamarket@2026",
-  });
-
-  if (error) {
-    if (error.message.includes("already registered")) {
-        console.log("User already exists, trying login...");
-        const res = await supabase.auth.signInWithPassword({
-            email: "info@denemlabs.com",
-            password: "Oyamarket@2026",
-        });
-        data = res.data;
-        error = res.error;
-    }
-  }
-
-  if (error) {
-    console.error("Auth failed:", error.message);
-    process.exit(1);
-  }
-
-  const userId = data.user.id;
-  console.log("User authenticated, ID:", userId);
+  const userId = "eaa65392-be29-45c4-ad0d-fc9c9cda070e";
+  console.log("Using known user ID:", userId);
 
   console.log("Creating store in Neon...");
   const store = await prisma.store.create({
