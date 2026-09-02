@@ -1,29 +1,21 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { put } from "@vercel/blob";
 import { v4 as uuidv4 } from "uuid";
 
-const BUCKET = "oyamarket_medias";
-
 export async function uploadProductImage(file: File): Promise<{ url: string } | { error: string }> {
-  const supabase = await createClient();
+  try {
+    const ext = file.name.split(".").pop();
+    const filename = `products/${uuidv4()}.${ext}`;
 
-  const ext = file.name.split(".").pop();
-  const filename = `products/${uuidv4()}.${ext}`;
-
-  const { error } = await supabase.storage
-    .from(BUCKET)
-    .upload(filename, file, {
-      cacheControl: "3600",
-      upsert: false,
-      contentType: file.type,
+    const blob = await put(filename, file, {
+      access: "public",
     });
 
-  if (error) return { error: error.message };
-
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from(BUCKET).getPublicUrl(filename);
-
-  return { url: publicUrl };
+    return { url: blob.url };
+  } catch (error: any) {
+    console.error("Vercel Blob error:", error);
+    return { error: error.message || "Erreur d'upload" };
+  }
 }
+
