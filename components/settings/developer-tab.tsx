@@ -53,6 +53,28 @@ function getEndpoints(storeId: string): Endpoint[] {
 }`,
     },
     {
+      method: "GET",
+      path: "/api/v1/products/:id",
+      description: "Retourne le détail d'un produit actif.",
+      icon: <PackageSearch className="w-4 h-4" />,
+      params: [
+        { name: ":id", type: "string", required: true, description: "ID du produit (dans l'URL)" },
+        { name: "storeId", type: "string", required: true, description: "Identifiant de la boutique" },
+      ],
+      example: `const productId = "prd_abc123";
+fetch(\`${BASE_URL}/api/v1/products/\${productId}?storeId=${storeId}\`)
+  .then(res => res.json())
+  .then(data => console.log(data.product));`,
+      response: `{
+  "product": {
+    "id": "prd_abc123",
+    "name": "Robe en wax",
+    "price": 8500,
+    "imageUrl": "https://..."
+  }
+}`,
+    },
+    {
       method: "POST",
       path: "/api/v1/orders",
       description: "Crée une commande depuis le formulaire de la boutique.",
