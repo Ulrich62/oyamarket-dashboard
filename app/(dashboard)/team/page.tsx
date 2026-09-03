@@ -92,13 +92,10 @@ export default async function TeamPage() {
                     <td className="px-4 py-3">
                       <div className="flex flex-col">
                         <span className="text-[13px] font-medium text-ink">
-                          {/* @ts-expect-error: untyped relation */}
                           {member.user?.name || member.user?.email}
                         </span>
-                        {/* @ts-expect-error: untyped relation */}
                         {member.user?.name && (
                           <span className="text-[11px] text-ink-4">
-                            {/* @ts-expect-error: untyped relation */}
                             {member.user.email}
                           </span>
                         )}
