@@ -1,5 +1,7 @@
 "use server";
 
+import { requireStoreId, requireAdminStoreId } from "@/lib/actions/store-context";
+
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
@@ -7,19 +9,6 @@ import { OrderStatus } from "@prisma/client";
 import { z } from "zod";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
-
-async function requireStoreId(): Promise<string> {
-  const session = await auth();
-  if (!session?.user) throw new Error("Non autorisé");
-  const user = session.user;
-
-  const member = await prisma.storeMember.findFirst({
-    where: { userId: user.id },
-    select: { storeId: true },
-  });
-  if (!member) throw new Error("Aucune boutique trouvée");
-  return member.storeId;
-}
 
 // ─── Schemas ────────────────────────────────────────────────────────────────
 

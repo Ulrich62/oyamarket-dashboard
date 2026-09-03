@@ -5,6 +5,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { createOrder } from "@/lib/actions/orders";
 import { formatXOF } from "@/lib/constants";
 import { Plus, Trash2, Package } from "lucide-react";
@@ -151,17 +158,21 @@ export function NewOrderForm({ products }: NewOrderFormProps) {
                 <label className="block text-[10px] uppercase tracking-[0.14em] text-ink-3 font-mono mb-1.5">
                   Ajouter un produit
                 </label>
-                <select
+                <Select
                   value={selectedProductId}
-                  onChange={(e) => setSelectedProductId(e.target.value)}
-                  className="w-full rounded-lg bg-bg-elev border border-line py-2.5 px-3.5 text-[13px] text-ink outline-none transition focus:border-ink-3"
+                  onValueChange={setSelectedProductId}
                 >
-                  {products.map((p) => (
-                    <option key={p.id} value={p.id} className="bg-[#111]">
-                      {p.name} — {formatXOF(p.price)}
-                    </option>
-                  ))}
-                </select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionnez un produit" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {products.map((p) => (
+                      <SelectItem key={p.id} value={p.id}>
+                        {p.name} — {formatXOF(p.price)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <Button
                 type="button"

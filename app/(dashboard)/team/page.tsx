@@ -64,7 +64,7 @@ export default async function TeamPage() {
           <div>
             <p className="text-ink font-medium">Aucun membre</p>
             <p className="text-ink-3 text-sm mt-1">
-              Invitez des membres via les paramètres Supabase Auth.
+              Commencez par inviter de nouveaux membres dans votre équipe.
             </p>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default async function TeamPage() {
             <thead>
               <tr className="border-b border-line">
                 <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium">
-                  Utilisateur (ID)
+                  Utilisateur
                 </th>
                 <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium">
                   Rôle
@@ -90,9 +90,19 @@ export default async function TeamPage() {
                     className="border-b border-line-soft last:border-0 hover:bg-bg-elev/50 transition-colors"
                   >
                     <td className="px-4 py-3">
-                      <span className="font-mono text-[12px] text-ink-3">
-                        {member.userId.slice(0, 12)}…
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-[13px] font-medium text-ink">
+                          {/* @ts-expect-error: untyped relation */}
+                          {member.user?.name || member.user?.email}
+                        </span>
+                        {/* @ts-expect-error: untyped relation */}
+                        {member.user?.name && (
+                          <span className="text-[11px] text-ink-4">
+                            {/* @ts-expect-error: untyped relation */}
+                            {member.user.email}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3">
                       <span className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2 py-1 rounded-md border ${cfg.color}`}>
@@ -109,12 +119,11 @@ export default async function TeamPage() {
       )}
 
       {/* Info RBAC */}
-      <div className="rounded-xl border border-line-soft bg-bg-elev/20 p-4">
+      <div className="rounded-xl border border-line-soft bg-bg-elev/20 p-4 mt-4">
         <p className="text-[12px] text-ink-4">
           <span className="font-medium text-ink-3">Note RBAC :</span>{" "}
-          Les permissions sont appliquées côté serveur via Row Level Security (RLS) Supabase.
+          Les permissions sont appliquées côté serveur.
           Les livreurs ne voient que les commandes qui leur sont assignées.
-          Invitez de nouveaux membres via votre tableau de bord Supabase.
         </p>
       </div>
     </div>

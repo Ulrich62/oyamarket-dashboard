@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input, Select } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { StatusBadge } from "@/components/ui/badge";
 import { updateOrderStatus, updateOrder, deleteOrder } from "@/lib/actions/orders";
 import { formatXOF, formatDate, ORDER_STATUS_CONFIG } from "@/lib/constants";

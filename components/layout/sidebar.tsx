@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
+import { StoreSwitcher } from "./store-switcher";
 
 const MAIN_LINKS = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -26,7 +27,7 @@ const ORG_LINKS = [
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 
-export function Sidebar() {
+export function Sidebar({ stores, currentStoreId }: { stores: any[]; currentStoreId: string }) {
   const pathname = usePathname();
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/login" });
@@ -35,11 +36,8 @@ export function Sidebar() {
   return (
     <aside className="w-[240px] flex-shrink-0 border-r border-line bg-bg flex flex-col justify-between hidden md:flex">
       <div className="p-4 flex flex-col h-full">
-        <div className="mb-8 px-2 mt-2 flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-accent flex items-center justify-center">
-            <span className="text-bg font-bold text-sm">O</span>
-          </div>
-          <span className="font-semibold text-ink text-sm">OyaMarket</span>
+        <div className="mb-8 mt-2 flex items-center justify-between">
+          <StoreSwitcher stores={stores} currentStoreId={currentStoreId} />
         </div>
 
         <nav className="flex flex-col gap-6 flex-1">

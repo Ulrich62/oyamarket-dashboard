@@ -4,6 +4,13 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { updateStoreSettings } from "@/lib/actions/settings";
 import { Eye, EyeOff, Save, ExternalLink } from "lucide-react";
 import type { Store } from "@prisma/client";
@@ -63,17 +70,21 @@ export function SettingsForm({ store }: SettingsFormProps) {
           <label className="block text-[10px] uppercase tracking-[0.14em] text-ink-3 font-mono">
             Devise principale
           </label>
-          <select
+          <Select
             value={formData.currency}
-            onChange={(e) => handleChange("currency", e.target.value)}
-            className="w-full rounded-lg bg-bg-elev border border-line py-2.5 px-3.5 text-[13px] text-ink outline-none transition focus:border-ink-3"
+            onValueChange={(value) => handleChange("currency", value)}
           >
-            {CURRENCY_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value} className="bg-[#111]">
-                {opt.label}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger>
+              <SelectValue placeholder="Sélectionnez une devise" />
+            </SelectTrigger>
+            <SelectContent>
+              {CURRENCY_OPTIONS.map((opt) => (
+                <SelectItem key={opt.value} value={opt.value}>
+                  {opt.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 

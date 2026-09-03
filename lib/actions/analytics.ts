@@ -1,21 +1,11 @@
 "use server";
 
+import { requireStoreId, requireAdminStoreId } from "@/lib/actions/store-context";
+
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { OrderStatus } from "@prisma/client";
 import { startOfDay, startOfWeek, startOfMonth, subDays } from "date-fns";
-
-async function getStoreId(): Promise<string> {
-  const session = await auth();
-  if (!session?.user) throw new Error("Non autorisé");
-  const user = session.user;
-  const member = await prisma.storeMember.findFirst({
-    where: { userId: user.id },
-    select: { storeId: true },
-  });
-  if (!member) throw new Error("Aucune boutique trouvée");
-  return member.storeId;
-}
 
 export type PeriodFilter = "today" | "7d" | "30d";
 
@@ -27,7 +17,7 @@ function getPeriodStart(period: PeriodFilter): Date {
 }
 
 export async function getDashboardKPIs(period: PeriodFilter = "30d") {
-  const storeId = await getStoreId();
+  const storeId = await requireStoreId();
   const since = getPeriodStart(period);
 
   const [allOrders, periodOrders] = await Promise.all([
@@ -82,7 +72,7 @@ export async function getDashboardKPIs(period: PeriodFilter = "30d") {
 }
 
 export async function getOrdersOverTime(period: PeriodFilter = "30d") {
-  const storeId = await getStoreId();
+  const storeId = await requireStoreId();
   const since = getPeriodStart(period);
 
   const orders = await prisma.order.findMany({
@@ -110,7 +100,7 @@ export async function getOrdersOverTime(period: PeriodFilter = "30d") {
 }
 
 export async function getStatusBreakdown(period: PeriodFilter = "30d") {
-  const storeId = await getStoreId();
+  const storeId = await requireStoreId();
   const since = getPeriodStart(period);
 
   const orders = await prisma.order.findMany({

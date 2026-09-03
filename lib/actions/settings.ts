@@ -1,34 +1,11 @@
 "use server";
 
+import { requireStoreId, requireAdminStoreId } from "@/lib/actions/store-context";
+
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { z } from "zod";
-
-async function requireAdminStoreId(): Promise<string> {
-  const session = await auth();
-  if (!session?.user) throw new Error("Non autorisé");
-  const user = session.user;
-  const member = await prisma.storeMember.findFirst({
-    where: { userId: user.id },
-    select: { storeId: true, role: true },
-  });
-  if (!member) throw new Error("Aucune boutique trouvée");
-  if (member.role !== "ADMIN") throw new Error("Accès réservé aux admins");
-  return member.storeId;
-}
-
-async function getStoreId(): Promise<string> {
-  const session = await auth();
-  if (!session?.user) throw new Error("Non autorisé");
-  const user = session.user;
-  const member = await prisma.storeMember.findFirst({
-    where: { userId: user.id },
-    select: { storeId: true },
-  });
-  if (!member) throw new Error("Aucune boutique trouvée");
-  return member.storeId;
-}
 
 const SettingsSchema = z.object({
   name: z.string().min(1),
@@ -38,7 +15,7 @@ const SettingsSchema = z.object({
 });
 
 export async function getStoreSettings() {
-  const storeId = await getStoreId();
+  const storeId = await requireStoreId();
   return prisma.store.findUnique({ where: { id: storeId } });
 }
 
@@ -48,7 +25,7 @@ export async function updateStoreSettings(data: {
   pixelId?: string;
   capiToken?: string;
 }) {
-  const storeId = await requireAdminStoreId();
+  const { storeId } = await requireAdminStoreId();
 
   const parsed = SettingsSchema.safeParse(data);
   if (!parsed.success) return { error: parsed.error.flatten().fieldErrors };

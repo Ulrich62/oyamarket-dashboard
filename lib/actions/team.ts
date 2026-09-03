@@ -1,43 +1,20 @@
 "use server";
 
+import { requireStoreId, requireAdminStoreId } from "@/lib/actions/store-context";
+
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { auth } from "@/auth";
 import { Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 
-async function requireAdminStoreId(): Promise<{ storeId: string; role: Role }> {
-  const session = await auth();
-  if (!session?.user) throw new Error("Non autorisé");
-  const user = session.user;
-
-  const member = await prisma.storeMember.findFirst({
-    where: { userId: user.id },
-    select: { storeId: true, role: true },
-  });
-  if (!member) throw new Error("Aucune boutique trouvée");
-  if (member.role !== "ADMIN") throw new Error("Accès réservé aux admins");
-
-  return { storeId: member.storeId, role: member.role };
-}
-
-async function getStoreId(): Promise<string> {
-  const session = await auth();
-  if (!session?.user) throw new Error("Non autorisé");
-  const user = session.user;
-  const member = await prisma.storeMember.findFirst({
-    where: { userId: user.id },
-    select: { storeId: true },
-  });
-  if (!member) throw new Error("Aucune boutique trouvée");
-  return member.storeId;
-}
-
 export async function getTeamMembers() {
-  const storeId = await getStoreId();
+  const storeId = await requireStoreId();
   return prisma.storeMember.findMany({
     where: { storeId },
+    include: { user: true },
   });
 }
 
