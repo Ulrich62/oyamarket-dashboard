@@ -1,6 +1,5 @@
 import { getStoreSettings } from "@/lib/actions/settings";
-import { SettingsForm } from "@/components/settings/settings-form";
-import { ApiIntegrationCard } from "@/components/settings/api-integration-card";
+import { SettingsTabs } from "@/components/settings/settings-tabs";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +21,7 @@ export default async function SettingsPage() {
         <div className="rounded-2xl border border-dashed border-line bg-bg-elev/30 p-12 text-center">
           <p className="text-ink font-medium">Aucune boutique configurée</p>
           <p className="text-ink-3 text-sm mt-1">
-            Votre compte n'est associé à aucune boutique.
+            Votre compte n&apos;est associé à aucune boutique.
           </p>
         </div>
       </div>
@@ -38,9 +37,7 @@ export default async function SettingsPage() {
         </p>
       </div>
 
-      <SettingsForm store={store} />
-      
-      <ApiIntegrationCard storeId={store.id} />
+      <SettingsTabs store={store} />
     </div>
   );
 }
