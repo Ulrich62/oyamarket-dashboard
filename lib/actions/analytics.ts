@@ -1,11 +1,10 @@
 "use server";
 
-import { requireStoreId, requireAdminStoreId } from "@/lib/actions/store-context";
+import { requireStoreId } from "@/lib/actions/store-context";
 
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
 import { OrderStatus } from "@prisma/client";
-import { startOfDay, startOfWeek, startOfMonth, subDays } from "date-fns";
+import { startOfDay, subDays } from "date-fns";
 
 export type PeriodFilter = "today" | "7d" | "30d";
 

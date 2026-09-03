@@ -4,7 +4,6 @@ import { requireStoreId, requireAdminStoreId } from "@/lib/actions/store-context
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { auth } from "@/auth";
 import { z } from "zod";
 
 const SettingsSchema = z.object({

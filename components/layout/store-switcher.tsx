@@ -1,16 +1,14 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronsUpDown, Check, Plus, Store as StoreIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Plus, Store as StoreIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { switchStore } from "@/lib/actions/store-context";
 

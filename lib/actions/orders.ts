@@ -1,10 +1,9 @@
 "use server";
 
-import { requireStoreId, requireAdminStoreId } from "@/lib/actions/store-context";
+import { requireStoreId } from "@/lib/actions/store-context";
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { auth } from "@/auth";
 import { OrderStatus } from "@prisma/client";
 import { z } from "zod";
 

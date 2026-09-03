@@ -1,7 +1,6 @@
 import { getStoreSettings } from "@/lib/actions/settings";
 import { SettingsForm } from "@/components/settings/settings-form";
 import { ApiIntegrationCard } from "@/components/settings/api-integration-card";
-import { Settings as SettingsIcon } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
