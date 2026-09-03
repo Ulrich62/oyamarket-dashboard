@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { Toaster } from "sonner";
+import { NavigationProgress } from "@/components/layout/navigation-progress";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,8 +15,15 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OyaMarket COD Dashboard",
+  title: "OyaMarket — Dashboard COD",
   description: "Back-office pour e-commerce en paiement à la livraison au Bénin.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -29,8 +37,9 @@ export default function RootLayout({
       className={`${inter.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-screen bg-bg text-ink font-sans flex flex-col">
+        <NavigationProgress />
         {children}
-        <Toaster position="bottom-right" />
+        <Toaster position="bottom-right" richColors closeButton />
       </body>
     </html>
   );

@@ -33,6 +33,11 @@
   color-scheme: dark;
 }
 
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-ink);
@@ -45,3 +50,61 @@ body {
 * {
   border-color: var(--color-line);
 }
+
+/* Global transition defaults for interactive elements */
+a,
+button,
+[role="button"] {
+  transition-property: color, background-color, border-color, opacity, box-shadow, transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+/* Smooth main content transitions on navigation */
+main {
+  animation: fadeSlideIn 200ms ease-out both;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(250, 248, 243, 0.1);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(250, 248, 243, 0.2);
+}
+
+/* Focus ring — consistent across all focusable elements */
+:focus-visible {
+  outline: 2px solid rgba(201, 242, 102, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skeleton pulse animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse {
+  animation: pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
