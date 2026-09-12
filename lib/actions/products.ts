@@ -28,7 +28,7 @@ const ProductSchema = z.object({
   costPrice: z.coerce.number().int().nonnegative().optional().nullable(),
   stock: z.coerce.number().int().nonnegative().default(100),
   isActive: z.coerce.boolean().default(true),
-  imageUrl: z.string().url().optional().nullable().or(z.literal("")),
+  imageUrl: z.string().optional().nullable().or(z.literal("")),
   isFeatured: z.coerce.boolean().default(false),
   featuredOrder: z.coerce.number().int().default(0),
   landingData: z.any().optional().nullable(),
@@ -58,170 +58,96 @@ export async function getProduct(id: string) {
 }
 
 export async function createProduct(formData: FormData) {
-  const storeId = await requireStoreId();
+  try {
+    const storeId = await requireStoreId();
 
-  let landingDataParsed = null;
-  const rawLanding = formData.get("landingData");
-  if (typeof rawLanding === "string" && rawLanding.trim()) {
-    try {
-      landingDataParsed = JSON.parse(rawLanding);
-    } catch {
-      // Ignorer erreur de parse JSON
+    let landingDataParsed = null;
+    const rawLanding = formData.get("landingData");
+    if (typeof rawLanding === "string" && rawLanding.trim()) {
+      try {
+        landingDataParsed = JSON.parse(rawLanding);
+      } catch {
+        // Ignorer erreur de parse JSON
+      }
     }
-  }
 
-  let packsParsed: any[] = [];
-  const rawPacks = formData.get("packs");
-  if (typeof rawPacks === "string" && rawPacks.trim()) {
-    try {
-      packsParsed = JSON.parse(rawPacks);
-    } catch {
-      // Ignorer erreur de parse JSON
+    let packsParsed: any[] = [];
+    const rawPacks = formData.get("packs");
+    if (typeof rawPacks === "string" && rawPacks.trim()) {
+      try {
+        packsParsed = JSON.parse(rawPacks);
+      } catch {
+        // Ignorer erreur de parse JSON
+      }
     }
-  }
 
-  const rawName = String(formData.get("name") || "");
-  const rawSlug = formData.get("slug") ? String(formData.get("slug")) : generateSlug(rawName);
+    const rawName = String(formData.get("name") || "").trim();
+    const rawSlugInput = formData.get("slug") ? String(formData.get("slug")).trim() : "";
+    const rawSlug = rawSlugInput ? generateSlug(rawSlugInput) : generateSlug(rawName);
 
-  const raw = {
-    name: rawName,
-    slug: rawSlug,
-    category: formData.get("category") || null,
-    price: formData.get("price"),
-    compareAtPrice: formData.get("compareAtPrice") || null,
-    costPrice: formData.get("costPrice") || null,
-    stock: formData.get("stock") || 100,
-    isActive: formData.get("isActive") !== "false",
-    imageUrl: formData.get("imageUrl") || null,
-    isFeatured: formData.get("isFeatured") === "true",
-    featuredOrder: formData.get("featuredOrder") ? Number(formData.get("featuredOrder")) : 0,
-    landingData: landingDataParsed,
-  };
+    const rawPrice = formData.get("price");
+    const rawCompare = formData.get("compareAtPrice");
+    const rawCost = formData.get("costPrice");
+    const rawStock = formData.get("stock");
 
-  const parsed = ProductSchema.safeParse(raw);
-  if (!parsed.success) {
-    return { error: parsed.error.flatten().fieldErrors };
-  }
+    const raw = {
+      name: rawName,
+      slug: rawSlug,
+      category: formData.get("category") ? String(formData.get("category")).trim() : null,
+      price: rawPrice !== null && rawPrice !== "" && !isNaN(Number(rawPrice)) ? Number(rawPrice) : null,
+      compareAtPrice: rawCompare !== null && rawCompare !== "" && !isNaN(Number(rawCompare)) ? Number(rawCompare) : null,
+      costPrice: rawCost !== null && rawCost !== "" && !isNaN(Number(rawCost)) ? Number(rawCost) : null,
+      stock: rawStock !== null && rawStock !== "" && !isNaN(Number(rawStock)) ? Number(rawStock) : 100,
+      isActive: formData.get("isActive") !== "false",
+      imageUrl: formData.get("imageUrl") ? String(formData.get("imageUrl")).trim() : null,
+      isFeatured: formData.get("isFeatured") === "true",
+      featuredOrder: formData.get("featuredOrder") ? Number(formData.get("featuredOrder")) : 0,
+      landingData: landingDataParsed,
+    };
 
-  const data = parsed.data;
-  const finalSlug = data.slug && data.slug.trim() ? data.slug.trim() : generateSlug(data.name);
+    const parsed = ProductSchema.safeParse(raw);
+    if (!parsed.success) {
+      return { error: parsed.error.flatten().fieldErrors };
+    }
 
-  const product = await prisma.$transaction(async (tx) => {
-    const p = await tx.product.create({
-      data: {
+    const data = parsed.data;
+    const finalSlug = data.slug || generateSlug(data.name);
+
+    const existing = await prisma.product.findFirst({
+      where: {
         storeId,
-        name: data.name,
         slug: finalSlug,
-        category: data.category ?? null,
-        price: data.price,
-        compareAtPrice: data.compareAtPrice ?? null,
-        costPrice: data.costPrice ?? null,
-        stock: data.stock,
-        isActive: data.isActive,
-        imageUrl: data.imageUrl || null,
-        isFeatured: data.isFeatured,
-        featuredOrder: data.featuredOrder,
-        landingData: data.landingData || null,
+        deletedAt: null,
       },
     });
 
-    if (Array.isArray(packsParsed) && packsParsed.length > 0) {
-      await tx.productPack.createMany({
-        data: packsParsed.map((pack, idx) => ({
-          productId: p.id,
-          name: pack.name || `${pack.quantity || 1}x ${p.name}`,
-          subtitle: pack.subtitle || null,
-          badge: pack.badge || null,
-          quantity: Number(pack.quantity) || 1,
-          price: Number(pack.price) || p.price,
-          compareAtPrice: pack.compareAtPrice ? Number(pack.compareAtPrice) : null,
-          isPopular: Boolean(pack.isPopular),
-          position: idx,
-        })),
+    if (existing) {
+      return { error: { slug: ["Cet identifiant URL (slug) est déjà utilisé par un autre produit."] } };
+    }
+
+    const product = await prisma.$transaction(async (tx) => {
+      const p = await tx.product.create({
+        data: {
+          storeId,
+          name: data.name,
+          slug: finalSlug,
+          category: data.category ?? null,
+          price: data.price,
+          compareAtPrice: data.compareAtPrice ?? null,
+          costPrice: data.costPrice ?? null,
+          stock: data.stock,
+          isActive: data.isActive,
+          imageUrl: data.imageUrl || null,
+          isFeatured: data.isFeatured,
+          featuredOrder: data.featuredOrder,
+          landingData: data.landingData || null,
+        },
       });
-    }
 
-    return p;
-  });
-
-  revalidatePath("/products");
-  return { success: true, product };
-}
-
-export async function updateProduct(id: string, formData: FormData) {
-  const storeId = await requireStoreId();
-
-  let landingDataParsed = null;
-  const rawLanding = formData.get("landingData");
-  if (typeof rawLanding === "string" && rawLanding.trim()) {
-    try {
-      landingDataParsed = JSON.parse(rawLanding);
-    } catch {
-      // Ignorer erreur de parse JSON
-    }
-  }
-
-  let packsParsed: any[] = [];
-  const rawPacks = formData.get("packs");
-  if (typeof rawPacks === "string" && rawPacks.trim()) {
-    try {
-      packsParsed = JSON.parse(rawPacks);
-    } catch {
-      // Ignorer erreur de parse JSON
-    }
-  }
-
-  const rawName = String(formData.get("name") || "");
-  const rawSlug = formData.get("slug") ? String(formData.get("slug")) : generateSlug(rawName);
-
-  const raw = {
-    name: rawName,
-    slug: rawSlug,
-    category: formData.get("category") || null,
-    price: formData.get("price"),
-    compareAtPrice: formData.get("compareAtPrice") || null,
-    costPrice: formData.get("costPrice") || null,
-    stock: formData.get("stock") || 100,
-    isActive: formData.get("isActive") !== "false",
-    imageUrl: formData.get("imageUrl") || null,
-    isFeatured: formData.get("isFeatured") === "true",
-    featuredOrder: formData.get("featuredOrder") ? Number(formData.get("featuredOrder")) : 0,
-    landingData: landingDataParsed,
-  };
-
-  const parsed = ProductSchema.safeParse(raw);
-  if (!parsed.success) {
-    return { error: parsed.error.flatten().fieldErrors };
-  }
-
-  const data = parsed.data;
-  const finalSlug = data.slug && data.slug.trim() ? data.slug.trim() : generateSlug(data.name);
-
-  const product = await prisma.$transaction(async (tx) => {
-    const p = await tx.product.update({
-      where: { id, storeId },
-      data: {
-        name: data.name,
-        slug: finalSlug,
-        category: data.category ?? null,
-        price: data.price,
-        compareAtPrice: data.compareAtPrice ?? null,
-        costPrice: data.costPrice ?? null,
-        stock: data.stock,
-        isActive: data.isActive,
-        imageUrl: data.imageUrl || null,
-        isFeatured: data.isFeatured,
-        featuredOrder: data.featuredOrder,
-        landingData: data.landingData !== undefined ? data.landingData : undefined,
-      },
-    });
-
-    if (Array.isArray(packsParsed)) {
-      await tx.productPack.deleteMany({ where: { productId: id } });
-      if (packsParsed.length > 0) {
+      if (Array.isArray(packsParsed) && packsParsed.length > 0) {
         await tx.productPack.createMany({
           data: packsParsed.map((pack, idx) => ({
-            productId: id,
+            productId: p.id,
             name: pack.name || `${pack.quantity || 1}x ${p.name}`,
             subtitle: pack.subtitle || null,
             badge: pack.badge || null,
@@ -233,14 +159,136 @@ export async function updateProduct(id: string, formData: FormData) {
           })),
         });
       }
+
+      return p;
+    });
+
+    revalidatePath("/products");
+    return { success: true, product };
+  } catch (error: any) {
+    console.error("Error in createProduct:", error);
+    return { error: error.message || "Erreur interne lors de la création du produit" };
+  }
+}
+
+export async function updateProduct(id: string, formData: FormData) {
+  try {
+    const storeId = await requireStoreId();
+
+    let landingDataParsed = null;
+    const rawLanding = formData.get("landingData");
+    if (typeof rawLanding === "string" && rawLanding.trim()) {
+      try {
+        landingDataParsed = JSON.parse(rawLanding);
+      } catch {
+        // Ignorer erreur de parse JSON
+      }
     }
 
-    return p;
-  });
+    let packsParsed: any[] = [];
+    const rawPacks = formData.get("packs");
+    if (typeof rawPacks === "string" && rawPacks.trim()) {
+      try {
+        packsParsed = JSON.parse(rawPacks);
+      } catch {
+        // Ignorer erreur de parse JSON
+      }
+    }
 
-  revalidatePath("/products");
-  revalidatePath(`/products/${id}`);
-  return { success: true, product };
+    const rawName = String(formData.get("name") || "").trim();
+    const rawSlugInput = formData.get("slug") ? String(formData.get("slug")).trim() : "";
+    const rawSlug = rawSlugInput ? generateSlug(rawSlugInput) : generateSlug(rawName);
+
+    const rawPrice = formData.get("price");
+    const rawCompare = formData.get("compareAtPrice");
+    const rawCost = formData.get("costPrice");
+    const rawStock = formData.get("stock");
+
+    const raw = {
+      name: rawName,
+      slug: rawSlug,
+      category: formData.get("category") ? String(formData.get("category")).trim() : null,
+      price: rawPrice !== null && rawPrice !== "" && !isNaN(Number(rawPrice)) ? Number(rawPrice) : null,
+      compareAtPrice: rawCompare !== null && rawCompare !== "" && !isNaN(Number(rawCompare)) ? Number(rawCompare) : null,
+      costPrice: rawCost !== null && rawCost !== "" && !isNaN(Number(rawCost)) ? Number(rawCost) : null,
+      stock: rawStock !== null && rawStock !== "" && !isNaN(Number(rawStock)) ? Number(rawStock) : 100,
+      isActive: formData.get("isActive") !== "false",
+      imageUrl: formData.get("imageUrl") ? String(formData.get("imageUrl")).trim() : null,
+      isFeatured: formData.get("isFeatured") === "true",
+      featuredOrder: formData.get("featuredOrder") ? Number(formData.get("featuredOrder")) : 0,
+      landingData: landingDataParsed,
+    };
+
+    const parsed = ProductSchema.safeParse(raw);
+    if (!parsed.success) {
+      return { error: parsed.error.flatten().fieldErrors };
+    }
+
+    const data = parsed.data;
+    const finalSlug = data.slug || generateSlug(data.name);
+
+    // Vérifier l'unicité du slug pour un autre produit
+    const existing = await prisma.product.findFirst({
+      where: {
+        storeId,
+        slug: finalSlug,
+        id: { not: id },
+        deletedAt: null,
+      },
+    });
+
+    if (existing) {
+      return { error: { slug: ["Cet identifiant URL (slug) est déjà utilisé par un autre produit de votre boutique."] } };
+    }
+
+    const product = await prisma.$transaction(async (tx) => {
+      const p = await tx.product.update({
+        where: { id, storeId },
+        data: {
+          name: data.name,
+          slug: finalSlug,
+          category: data.category ?? null,
+          price: data.price,
+          compareAtPrice: data.compareAtPrice ?? null,
+          costPrice: data.costPrice ?? null,
+          stock: data.stock,
+          isActive: data.isActive,
+          imageUrl: data.imageUrl || null,
+          isFeatured: data.isFeatured,
+          featuredOrder: data.featuredOrder,
+          landingData: data.landingData !== undefined ? data.landingData : undefined,
+        },
+      });
+
+      if (Array.isArray(packsParsed)) {
+        await tx.productPack.deleteMany({ where: { productId: id } });
+        if (packsParsed.length > 0) {
+          await tx.productPack.createMany({
+            data: packsParsed.map((pack, idx) => ({
+              productId: id,
+              name: pack.name || `${pack.quantity || 1}x ${p.name}`,
+              subtitle: pack.subtitle || null,
+              badge: pack.badge || null,
+              quantity: Number(pack.quantity) || 1,
+              price: Number(pack.price) || p.price,
+              compareAtPrice: pack.compareAtPrice ? Number(pack.compareAtPrice) : null,
+              isPopular: Boolean(pack.isPopular),
+              position: idx,
+            })),
+          });
+        }
+      }
+
+      return p;
+    });
+
+    revalidatePath("/products");
+    revalidatePath(`/products/${id}`);
+    return { success: true, product };
+  } catch (error: any) {
+    console.error("Error in updateProduct:", error);
+    return { error: error.message || "Erreur interne lors de la mise à jour du produit" };
+  }
 }
 
 export async function toggleProductFeatured(id: string) {
