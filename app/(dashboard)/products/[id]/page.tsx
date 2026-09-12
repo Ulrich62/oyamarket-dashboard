@@ -1,5 +1,6 @@
 import { getProduct } from "@/lib/actions/products";
 import { ProductForm } from "@/components/products/product-form";
+import { DeleteProductButton } from "@/components/products/delete-product-button";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -30,11 +31,18 @@ export default async function EditProductPage({
         <span className="text-sm text-ink">{product.name}</span>
       </div>
 
-      <div>
-        <h1 className="text-2xl font-semibold text-ink tracking-tight">Modifier le produit</h1>
-        <p className="text-sm text-ink-3 mt-0.5">
-          Modifiez les informations du produit.
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink tracking-tight">Modifier le produit</h1>
+          <p className="text-sm text-ink-3 mt-0.5">
+            Modifiez les informations du produit.
+          </p>
+        </div>
+        <DeleteProductButton
+          productId={product.id}
+          productName={product.name}
+          variant="button"
+        />
       </div>
 
       <ProductForm product={product} />

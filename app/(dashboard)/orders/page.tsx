@@ -106,86 +106,90 @@ export default async function OrdersPage({
       {/* Table */}
       {orders.length > 0 && (
         <div className="rounded-2xl border border-line bg-bg-elev/30 overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-line">
-                <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium">
-                  Client
-                </th>
-                <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium">
-                  Statut
-                </th>
-                <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium">
-                  Montant
-                </th>
-                <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium">
-                  Produits
-                </th>
-                <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium">
-                  Date
-                </th>
-                <th className="px-4 py-3" />
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr
-                  key={order.id}
-                  className="border-b border-line-soft last:border-0 hover:bg-bg-elev/50 transition-colors"
-                >
-                  {/* Client */}
-                  <td className="px-4 py-3">
-                    <div>
-                      <p className="font-medium text-ink">{order.customerName}</p>
-                      <p className="text-[12px] text-ink-3 flex items-center gap-1 mt-0.5">
-                        <Phone className="w-3 h-3" />
-                        {order.customerPhone}
-                        {order.quartier && (
-                          <span className="text-ink-4 ml-1">· {order.quartier}</span>
-                        )}
-                      </p>
-                    </div>
-                  </td>
-
-                  {/* Statut */}
-                  <td className="px-4 py-3">
-                    <StatusBadge status={order.status} />
-                  </td>
-
-                  {/* Montant */}
-                  <td className="px-4 py-3 font-mono text-ink font-medium">
-                    {formatXOF(order.totalAmount)}
-                  </td>
-
-                  {/* Produits */}
-                  <td className="px-4 py-3 text-ink-3 text-[12px]">
-                    {order.items.length} article{order.items.length !== 1 ? "s" : ""}
-                    {order.items[0]?.product?.name && (
-                      <p className="text-ink-4 truncate max-w-[140px]">
-                        {order.items[0].product.name}
-                        {order.items.length > 1 && ` +${order.items.length - 1}`}
-                      </p>
-                    )}
-                  </td>
-
-                  {/* Date */}
-                  <td className="px-4 py-3 text-ink-3 text-[12px] whitespace-nowrap">
-                    {formatDate(order.createdAt)}
-                  </td>
-
-                  {/* Action */}
-                  <td className="px-4 py-3 text-right">
-                    <Link
-                      href={`/orders/${order.id}`}
-                      className="text-[12px] text-ink-3 hover:text-ink transition-colors font-medium"
-                    >
-                      Voir →
-                    </Link>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-line">
+                  <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
+                    Client
+                  </th>
+                  <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
+                    Statut
+                  </th>
+                  <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
+                    Montant
+                  </th>
+                  <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
+                    Produits
+                  </th>
+                  <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
+                    Date
+                  </th>
+                  <th className="text-right px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
+                    Action
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr
+                    key={order.id}
+                    className="border-b border-line-soft last:border-0 hover:bg-bg-elev/50 transition-colors"
+                  >
+                    {/* Client */}
+                    <td className="px-4 py-3 min-w-[200px]">
+                      <div>
+                        <p className="font-medium text-ink">{order.customerName}</p>
+                        <p className="text-[12px] text-ink-3 flex items-center gap-1 mt-0.5 whitespace-nowrap">
+                          <Phone className="w-3 h-3 shrink-0" />
+                          {order.customerPhone}
+                          {order.quartier && (
+                            <span className="text-ink-4 ml-1">· {order.quartier}</span>
+                          )}
+                        </p>
+                      </div>
+                    </td>
+
+                    {/* Statut */}
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <StatusBadge status={order.status} />
+                    </td>
+
+                    {/* Montant */}
+                    <td className="px-4 py-3 font-mono text-ink font-medium whitespace-nowrap">
+                      {formatXOF(order.totalAmount)}
+                    </td>
+
+                    {/* Produits */}
+                    <td className="px-4 py-3 text-ink-3 text-[12px] whitespace-nowrap">
+                      {order.items.reduce((sum, item) => sum + (item.unitsCount || item.quantity), 0)} unité{order.items.reduce((sum, item) => sum + (item.unitsCount || item.quantity), 0) > 1 ? "s" : ""}
+                      {order.items[0] && (
+                        <p className="text-ink-4 truncate max-w-[180px]">
+                          {order.items[0].packName || order.items[0].product?.name}
+                          {order.items.length > 1 && ` +${order.items.length - 1}`}
+                        </p>
+                      )}
+                    </td>
+
+                    {/* Date */}
+                    <td className="px-4 py-3 text-ink-3 text-[12px] whitespace-nowrap">
+                      {formatDate(order.createdAt)}
+                    </td>
+
+                    {/* Action */}
+                    <td className="px-4 py-3 text-right whitespace-nowrap">
+                      <Link
+                        href={`/orders/${order.id}`}
+                        className="inline-flex items-center gap-1 text-[12px] text-ink-3 hover:text-ink transition-colors font-medium px-2 py-1 rounded-md hover:bg-bg-elev"
+                      >
+                        Voir →
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

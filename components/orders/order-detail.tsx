@@ -4,16 +4,17 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { ConfirmModal } from "@/components/ui/confirm-modal";
 import { StatusBadge } from "@/components/ui/badge";
 import { updateOrderStatus, updateOrder, deleteOrder } from "@/lib/actions/orders";
 import { formatXOF, formatDate, ORDER_STATUS_CONFIG } from "@/lib/constants";
 import { OrderStatus } from "@prisma/client";
 import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Order, OrderItem, Product } from "@prisma/client";
+import type { Order, OrderItem, Product, ProductPack } from "@prisma/client";
 
 type OrderWithItems = Order & {
-  items: (OrderItem & { product: Product })[];
+  items: (OrderItem & { product: Product; pack?: ProductPack | null })[];
 };
 
 interface OrderDetailProps {
@@ -38,6 +39,7 @@ export function OrderDetail({ order }: OrderDetailProps) {
     quartier: order.quartier ?? "",
   });
   const [statusDropdown, setStatusDropdown] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const startEdit = (field: string) => {
     setEditing(field);
@@ -76,12 +78,15 @@ export function OrderDetail({ order }: OrderDetailProps) {
     });
   };
 
-  const handleDelete = () => {
-    if (!confirm("Supprimer cette commande ? Cette action est irréversible.")) return;
+  const confirmDeleteOrder = () => {
     startDeleteTransition(async () => {
-      await deleteOrder(order.id);
-      toast.success("Commande supprimée");
-      router.push("/orders");
+      try {
+        await deleteOrder(order.id);
+        toast.success("Commande supprimée avec succès");
+        router.push("/orders");
+      } catch (err: any) {
+        toast.error(err.message || "Erreur lors de la suppression de la commande");
+      }
     });
   };
 
@@ -198,14 +203,27 @@ export function OrderDetail({ order }: OrderDetailProps) {
                   </div>
                   <div>
                     <p className="text-[13px] font-medium text-ink">{item.product.name}</p>
-                    <p className="text-[11px] text-ink-4">
-                      {item.quantity} × {formatXOF(item.price)}
-                    </p>
+                    {item.packName ? (
+                      <p className="text-[11px] text-emerald-400 font-medium">
+                        Pack : {item.packName} ({item.unitsCount} {item.unitsCount > 1 ? "unités" : "unité"})
+                      </p>
+                    ) : (
+                      <p className="text-[11px] text-ink-4">
+                        {item.quantity} × {formatXOF(item.unitPrice || item.price)}
+                      </p>
+                    )}
                   </div>
                 </div>
-                <p className="font-mono text-ink font-medium text-[13px]">
-                  {formatXOF(item.quantity * item.price)}
-                </p>
+                <div className="text-right">
+                  <p className="font-mono text-ink font-medium text-[13px]">
+                    {formatXOF(item.totalPrice || item.price)}
+                  </p>
+                  {item.packName && (
+                    <span className="text-[10px] text-ink-4">
+                      {item.quantity} {item.quantity > 1 ? "packs" : "pack"}
+                    </span>
+                  )}
+                </div>
               </div>
             ))}
 
@@ -279,14 +297,26 @@ export function OrderDetail({ order }: OrderDetailProps) {
         {/* Danger zone */}
         <Button
           variant="danger"
-          loading={isDeleting}
-          onClick={handleDelete}
+          onClick={() => setShowDeleteModal(true)}
           icon={<Trash2 className="w-3.5 h-3.5" />}
-          className="w-full justify-center"
+          className="w-full justify-center cursor-pointer"
         >
           Supprimer la commande
         </Button>
       </div>
+
+      {/* Confirmation Modal for Order Deletion */}
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={confirmDeleteOrder}
+        title="Supprimer définitivement cette commande ?"
+        description={`Êtes-vous sûr de vouloir supprimer définitivement la commande #${order.id.slice(-8).toUpperCase()} (${order.customerName}) ? Cette action est irréversible.`}
+        confirmText="Supprimer définitivement"
+        cancelText="Conserver la commande"
+        variant="danger"
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

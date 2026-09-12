@@ -51,7 +51,21 @@ body {
   border-color: var(--color-line);
 }
 
-/* Global transition defaults for interactive elements */
+/* Global interactive elements cursor & transition defaults */
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[role="button"][aria-disabled="true"],
+input:disabled {
+  cursor: not-allowed;
+}
+
 a,
 button,
 [role="button"] {

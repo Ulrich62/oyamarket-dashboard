@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/toaster";
 import { NavigationProgress } from "@/components/layout/navigation-progress";
 import "./globals.css";
 
@@ -17,13 +17,29 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "OyaMarket — Dashboard COD",
   description: "Back-office pour e-commerce en paiement à la livraison au Bénin.",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "OyaMarket",
+  },
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon.png", type: "image/png" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: "/icon.png",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
+};
+
+export const viewport = {
+  themeColor: "#0C9653",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -39,7 +55,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-bg text-ink font-sans flex flex-col">
         <NavigationProgress />
         {children}
-        <Toaster position="bottom-right" richColors closeButton />
+        <Toaster />
       </body>
     </html>
   );

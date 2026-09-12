@@ -7,6 +7,7 @@ import {
   Package, 
   ShoppingCart, 
   ChartColumn, 
+  Images,
   Users, 
   Settings,
   LogOut
@@ -20,6 +21,7 @@ const MAIN_LINKS = [
   { name: "Products", href: "/products", icon: Package },
   { name: "Orders", href: "/orders", icon: ShoppingCart },
   { name: "Analytics", href: "/analytics", icon: ChartColumn },
+  { name: "Médias", href: "/media", icon: Images },
 ];
 
 const ORG_LINKS = [

@@ -12,38 +12,86 @@ datasource db {
 }
 
 model Store {
-  id          String   @id @default(cuid())
-  name        String
-  currency    String   @default("XOF")
-  pixelId     String?
-  capiToken   String?
+  id           String        @id @default(cuid())
+  name         String
+  currency     String        @default("XOF")
+  pixelId      String?
+  capiToken    String?
+  supportEmail String        @default("contact@oyamarket.shop")
+  homeData     Json?
   
-  products    Product[]
-  orders      Order[]
-  members     StoreMember[]
+  products     Product[]
+  orders       Order[]
+  members      StoreMember[]
+  medias       Media[]
+  notifications     Notification[]
+  pushSubscriptions PushSubscription[]
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  storeId     String
-  store       Store    @relation(fields: [storeId], references: [id])
+  id              String      @id @default(cuid())
+  storeId         String
+  store           Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
   
-  name        String
-  price       Int
-  costPrice   Int?
-  isActive    Boolean  @default(true)
-  imageUrl    String?
-  orders      OrderItem[]
+  name            String
+  slug            String
+  category        String?
+  price           Int
+  compareAtPrice  Int?
+  costPrice       Int?
+  stock           Int         @default(100)
+  isActive        Boolean     @default(true)
+  imageUrl        String?
+
+  isFeatured      Boolean     @default(false)
+  featuredOrder   Int         @default(0)
+
+  landingData     Json?
+  deletedAt       DateTime?
+
+  packs           ProductPack[]
+  orders          OrderItem[]
+
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@unique([storeId, slug])
+  @@index([storeId])
+  @@index([deletedAt])
+}
+
+model ProductPack {
+  id             String      @id @default(cuid())
+  productId      String
+  product        Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  name           String      // ex: "1x Aspirateur", "2x Aspirateurs"
+  subtitle       String?     // ex: "Kit complet", "Offrez-en un à un proche (-5 000 FCFA)"
+  badge          String?     // ex: "Plus Populaire 🔥", "Meilleure Offre"
+  quantity       Int         @default(1) // Nombre physique d'articles dans ce pack (1, 2, 3...)
+  price          Int         // PRIX TOTAL DU PACK payé par le client (ex: 15000, 25000)
+  compareAtPrice Int?        // PRIX BARRÉ TOTAL DU PACK (ex: 25000, 45000)
+  isPopular      Boolean     @default(false)
+  position       Int         @default(0) // Ordre d'affichage dans la Buy Box
+
+  orderItems     OrderItem[]
+
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([productId])
 }
 
 model Order {
   id            String      @id @default(cuid())
   storeId       String
-  store         Store       @relation(fields: [storeId], references: [id])
+  store         Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
   customerName  String
   customerPhone String
+  customerCity  String?     @default("Cotonou")
   quartier      String?
+  notes         String?
   status        OrderStatus @default(NEW)
   totalAmount   Int
   assignedToId  String?
@@ -55,13 +103,26 @@ model Order {
 }
 
 model OrderItem {
-  id        String  @id @default(cuid())
-  orderId   String
-  order     Order   @relation(fields: [orderId], references: [id])
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
-  quantity  Int
-  price     Int     // Price at the time of order
+  id          String       @id @default(cuid())
+  orderId     String
+  order       Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product      @relation(fields: [productId], references: [id])
+  
+  packId      String?
+  pack        ProductPack? @relation(fields: [packId], references: [id], onDelete: SetNull)
+
+  packName    String?      // Snapshot textuel du pack (ex: "2x Aspirateurs Points Noirs")
+  quantity    Int          @default(1) // Nombre de packs commandés (ex: 1)
+  unitsCount  Int          @default(1) // Unités physiques totales à livrer/déduire (ex: 2)
+  unitPrice   Int          @default(0) // Prix du pack payé (ex: 25000)
+  totalPrice  Int          @default(0) // Total de la ligne = quantity * unitPrice (ex: 25000)
+
+  price       Int          // Alias pour rétro-compatibilité (= unitPrice)
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([packId])
 }
 
 enum OrderStatus {
@@ -104,4 +165,55 @@ model User {
   updatedAt     DateTime        @updatedAt
   
   storeMembers  StoreMember[]
+}
+
+model Media {
+  id           String   @id @default(cuid())
+  storeId      String
+  store        Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  name         String
+  url          String
+  publicId     String?
+  format       String?
+  resourceType String   @default("image") // "image" | "video" | "raw"
+  bytes        Int?
+  width        Int?
+  height       Int?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([resourceType])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  type      String   // "NEW_ORDER", "LOW_STOCK", "SYSTEM"
+  title     String
+  message   String
+  link      String?
+  isRead    Boolean  @default(false)
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([storeId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([storeId])
 }

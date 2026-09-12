@@ -1,10 +1,18 @@
 "use client";
 
-import { Search, Bell } from "lucide-react";
+import { Search, UploadCloud } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useMediaUploader } from "@/lib/store/use-media-uploader";
+import { NotificationCenter } from "@/components/notifications/notification-center";
+import { PwaInstallButton } from "@/components/pwa/pwa-install-button";
 
-export function Topbar() {
+interface TopbarProps {
+  currentStoreId?: string;
+}
+
+export function Topbar({ currentStoreId }: TopbarProps) {
   const [mounted, setMounted] = useState(false);
+  const { openUploader } = useMediaUploader();
 
   useEffect(() => {
     setMounted(true);
@@ -31,12 +39,24 @@ export function Topbar() {
           )}
         </div>
       </div>
-      <div className="flex items-center gap-4">
-        <button className="relative text-ink-3 hover:text-ink transition-colors">
-          <Bell className="h-5 w-5" />
-          <span className="absolute right-0 top-0 block h-2 w-2 rounded-full bg-accent ring-2 ring-bg" />
+
+      <div className="flex items-center gap-2">
+        {/* PWA Install Button */}
+        <PwaInstallButton />
+
+        {/* Cloudinary Uploader Trigger Icon Button */}
+        <button
+          onClick={() => openUploader()}
+          title="Uploader un média (Cloudinary)"
+          aria-label="Uploader un média sur Cloudinary"
+          className="relative text-ink-3 hover:text-ink transition-colors p-2 rounded-lg hover:bg-bg-elev cursor-pointer"
+        >
+          <UploadCloud className="h-5 w-5" />
         </button>
-        <div className="flex items-center gap-2 border-l border-line pl-4">
+
+        <NotificationCenter storeId={currentStoreId} />
+
+        <div className="flex items-center gap-2 border-l border-line pl-3 ml-1">
           <div className="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold shadow-lg">
             AD
           </div>

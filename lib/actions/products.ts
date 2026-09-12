@@ -8,14 +8,30 @@ import { z } from "zod";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
+function generateSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 // ─── Schemas de validation ────────────────────────────────────────────────────
 
 const ProductSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
+  slug: z.string().optional().nullable(),
+  category: z.string().optional().nullable(),
   price: z.coerce.number().int().positive("Le prix doit être positif"),
+  compareAtPrice: z.coerce.number().int().nonnegative().optional().nullable(),
   costPrice: z.coerce.number().int().nonnegative().optional().nullable(),
+  stock: z.coerce.number().int().nonnegative().default(100),
   isActive: z.coerce.boolean().default(true),
   imageUrl: z.string().url().optional().nullable().or(z.literal("")),
+  isFeatured: z.coerce.boolean().default(false),
+  featuredOrder: z.coerce.number().int().default(0),
+  landingData: z.any().optional().nullable(),
 });
 
 // ─── Server Actions — Products ────────────────────────────────────────────────
@@ -23,25 +39,63 @@ const ProductSchema = z.object({
 export async function getProducts() {
   const storeId = await requireStoreId();
   return prisma.product.findMany({
-    where: { storeId },
-    orderBy: { name: "asc" },
+    where: { storeId, deletedAt: null },
+    include: {
+      packs: { orderBy: { position: "asc" } },
+    },
+    orderBy: { createdAt: "desc" },
   });
 }
 
 export async function getProduct(id: string) {
   const storeId = await requireStoreId();
-  return prisma.product.findFirst({ where: { id, storeId } });
+  return prisma.product.findFirst({
+    where: { id, storeId, deletedAt: null },
+    include: {
+      packs: { orderBy: { position: "asc" } },
+    },
+  });
 }
 
 export async function createProduct(formData: FormData) {
   const storeId = await requireStoreId();
 
+  let landingDataParsed = null;
+  const rawLanding = formData.get("landingData");
+  if (typeof rawLanding === "string" && rawLanding.trim()) {
+    try {
+      landingDataParsed = JSON.parse(rawLanding);
+    } catch {
+      // Ignorer erreur de parse JSON
+    }
+  }
+
+  let packsParsed: any[] = [];
+  const rawPacks = formData.get("packs");
+  if (typeof rawPacks === "string" && rawPacks.trim()) {
+    try {
+      packsParsed = JSON.parse(rawPacks);
+    } catch {
+      // Ignorer erreur de parse JSON
+    }
+  }
+
+  const rawName = String(formData.get("name") || "");
+  const rawSlug = formData.get("slug") ? String(formData.get("slug")) : generateSlug(rawName);
+
   const raw = {
-    name: formData.get("name"),
+    name: rawName,
+    slug: rawSlug,
+    category: formData.get("category") || null,
     price: formData.get("price"),
+    compareAtPrice: formData.get("compareAtPrice") || null,
     costPrice: formData.get("costPrice") || null,
+    stock: formData.get("stock") || 100,
     isActive: formData.get("isActive") !== "false",
     imageUrl: formData.get("imageUrl") || null,
+    isFeatured: formData.get("isFeatured") === "true",
+    featuredOrder: formData.get("featuredOrder") ? Number(formData.get("featuredOrder")) : 0,
+    landingData: landingDataParsed,
   };
 
   const parsed = ProductSchema.safeParse(raw);
@@ -50,15 +104,44 @@ export async function createProduct(formData: FormData) {
   }
 
   const data = parsed.data;
-  const product = await prisma.product.create({
-    data: {
-      storeId,
-      name: data.name,
-      price: data.price,
-      costPrice: data.costPrice ?? null,
-      isActive: data.isActive,
-      imageUrl: data.imageUrl || null,
-    },
+  const finalSlug = data.slug && data.slug.trim() ? data.slug.trim() : generateSlug(data.name);
+
+  const product = await prisma.$transaction(async (tx) => {
+    const p = await tx.product.create({
+      data: {
+        storeId,
+        name: data.name,
+        slug: finalSlug,
+        category: data.category ?? null,
+        price: data.price,
+        compareAtPrice: data.compareAtPrice ?? null,
+        costPrice: data.costPrice ?? null,
+        stock: data.stock,
+        isActive: data.isActive,
+        imageUrl: data.imageUrl || null,
+        isFeatured: data.isFeatured,
+        featuredOrder: data.featuredOrder,
+        landingData: data.landingData || null,
+      },
+    });
+
+    if (Array.isArray(packsParsed) && packsParsed.length > 0) {
+      await tx.productPack.createMany({
+        data: packsParsed.map((pack, idx) => ({
+          productId: p.id,
+          name: pack.name || `${pack.quantity || 1}x ${p.name}`,
+          subtitle: pack.subtitle || null,
+          badge: pack.badge || null,
+          quantity: Number(pack.quantity) || 1,
+          price: Number(pack.price) || p.price,
+          compareAtPrice: pack.compareAtPrice ? Number(pack.compareAtPrice) : null,
+          isPopular: Boolean(pack.isPopular),
+          position: idx,
+        })),
+      });
+    }
+
+    return p;
   });
 
   revalidatePath("/products");
@@ -68,12 +151,42 @@ export async function createProduct(formData: FormData) {
 export async function updateProduct(id: string, formData: FormData) {
   const storeId = await requireStoreId();
 
+  let landingDataParsed = null;
+  const rawLanding = formData.get("landingData");
+  if (typeof rawLanding === "string" && rawLanding.trim()) {
+    try {
+      landingDataParsed = JSON.parse(rawLanding);
+    } catch {
+      // Ignorer erreur de parse JSON
+    }
+  }
+
+  let packsParsed: any[] = [];
+  const rawPacks = formData.get("packs");
+  if (typeof rawPacks === "string" && rawPacks.trim()) {
+    try {
+      packsParsed = JSON.parse(rawPacks);
+    } catch {
+      // Ignorer erreur de parse JSON
+    }
+  }
+
+  const rawName = String(formData.get("name") || "");
+  const rawSlug = formData.get("slug") ? String(formData.get("slug")) : generateSlug(rawName);
+
   const raw = {
-    name: formData.get("name"),
+    name: rawName,
+    slug: rawSlug,
+    category: formData.get("category") || null,
     price: formData.get("price"),
+    compareAtPrice: formData.get("compareAtPrice") || null,
     costPrice: formData.get("costPrice") || null,
+    stock: formData.get("stock") || 100,
     isActive: formData.get("isActive") !== "false",
     imageUrl: formData.get("imageUrl") || null,
+    isFeatured: formData.get("isFeatured") === "true",
+    featuredOrder: formData.get("featuredOrder") ? Number(formData.get("featuredOrder")) : 0,
+    landingData: landingDataParsed,
   };
 
   const parsed = ProductSchema.safeParse(raw);
@@ -82,15 +195,47 @@ export async function updateProduct(id: string, formData: FormData) {
   }
 
   const data = parsed.data;
-  const product = await prisma.product.update({
-    where: { id, storeId },
-    data: {
-      name: data.name,
-      price: data.price,
-      costPrice: data.costPrice ?? null,
-      isActive: data.isActive,
-      imageUrl: data.imageUrl || null,
-    },
+  const finalSlug = data.slug && data.slug.trim() ? data.slug.trim() : generateSlug(data.name);
+
+  const product = await prisma.$transaction(async (tx) => {
+    const p = await tx.product.update({
+      where: { id, storeId },
+      data: {
+        name: data.name,
+        slug: finalSlug,
+        category: data.category ?? null,
+        price: data.price,
+        compareAtPrice: data.compareAtPrice ?? null,
+        costPrice: data.costPrice ?? null,
+        stock: data.stock,
+        isActive: data.isActive,
+        imageUrl: data.imageUrl || null,
+        isFeatured: data.isFeatured,
+        featuredOrder: data.featuredOrder,
+        landingData: data.landingData !== undefined ? data.landingData : undefined,
+      },
+    });
+
+    if (Array.isArray(packsParsed)) {
+      await tx.productPack.deleteMany({ where: { productId: id } });
+      if (packsParsed.length > 0) {
+        await tx.productPack.createMany({
+          data: packsParsed.map((pack, idx) => ({
+            productId: id,
+            name: pack.name || `${pack.quantity || 1}x ${p.name}`,
+            subtitle: pack.subtitle || null,
+            badge: pack.badge || null,
+            quantity: Number(pack.quantity) || 1,
+            price: Number(pack.price) || p.price,
+            compareAtPrice: pack.compareAtPrice ? Number(pack.compareAtPrice) : null,
+            isPopular: Boolean(pack.isPopular),
+            position: idx,
+          })),
+        });
+      }
+    }
+
+    return p;
   });
 
   revalidatePath("/products");
@@ -98,9 +243,62 @@ export async function updateProduct(id: string, formData: FormData) {
   return { success: true, product };
 }
 
+export async function toggleProductFeatured(id: string) {
+  const storeId = await requireStoreId();
+  const product = await prisma.product.findFirst({
+    where: { id, storeId, deletedAt: null },
+    select: { id: true, isFeatured: true },
+  });
+  if (!product) return { error: "Produit introuvable" };
+
+  const updated = await prisma.product.update({
+    where: { id },
+    data: { isFeatured: !product.isFeatured },
+  });
+
+  revalidatePath("/products");
+  revalidatePath(`/products/${id}`);
+  return { success: true, isFeatured: updated.isFeatured };
+}
+
 export async function deleteProduct(id: string) {
   const storeId = await requireStoreId();
-  await prisma.product.delete({ where: { id, storeId } });
-  revalidatePath("/products");
-  return { success: true };
+
+  try {
+    // Vérifier si le produit a déjà des commandes enregistrées
+    const orderItemsCount = await prisma.orderItem.count({
+      where: { productId: id },
+    });
+
+    if (orderItemsCount > 0) {
+      // Si le produit a des commandes historiques : Soft-delete (archivage)
+      // Cela masque immédiatement le produit du catalogue et de la boutique,
+      // tout en préservant intactes les lignes de commandes passées et leurs unités.
+      await prisma.product.update({
+        where: { id, storeId },
+        data: {
+          deletedAt: new Date(),
+          isActive: false,
+          isFeatured: false,
+        },
+      });
+    } else {
+      // Si le produit n'a aucune commande associée : suppression physique sûre
+      await prisma.$transaction(async (tx) => {
+        await tx.productPack.deleteMany({
+          where: { productId: id },
+        });
+        await tx.product.delete({
+          where: { id, storeId },
+        });
+      });
+    }
+
+    revalidatePath("/products");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error: any) {
+    console.error("[deleteProduct] Error:", error);
+    return { error: error?.message || "Échec de la suppression du produit" };
+  }
 }

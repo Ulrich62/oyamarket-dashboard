@@ -54,7 +54,7 @@ export async function getOrder(id: string) {
     where: { id, storeId },
     include: {
       items: {
-        include: { product: true },
+        include: { product: true, pack: true },
       },
     },
   });
