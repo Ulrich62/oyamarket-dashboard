@@ -735,6 +735,23 @@ export function ProductForm({ product }: ProductFormProps) {
                       </div>
                     </div>
 
+                    <div>
+                      <label className="text-[10px] uppercase text-ink-3 font-mono">
+                        Sous-titre / Accroche du pack (texte affiché sous le nom sur le shop)
+                      </label>
+                      <input
+                        type="text"
+                        value={p.subtitle || ""}
+                        placeholder="ex: Offrez-en un à un proche (-5 000 FCFA)"
+                        onChange={(e) => {
+                          const updated = [...packs];
+                          updated[idx].subtitle = e.target.value;
+                          setPacks(updated);
+                        }}
+                        className="w-full mt-1 p-2 bg-bg-elev rounded-lg text-xs border border-line text-ink"
+                      />
+                    </div>
+
                     <div className="grid grid-cols-3 gap-3">
                       <div>
                         <label className="text-[10px] uppercase text-ink-3 font-mono">Articles inclus (Unités)</label>
