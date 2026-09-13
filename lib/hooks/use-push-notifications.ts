@@ -29,6 +29,22 @@ export function usePushNotifications(storeId?: string) {
         const sub = await registration.pushManager.getSubscription();
         if (sub) {
           setIsSubscribed(true);
+          // Always sync existing subscription to DB so server push works
+          if (storeId) {
+            try {
+              await fetch("/api/v1/push/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  storeId,
+                  subscription: sub,
+                  userAgent: navigator.userAgent,
+                }),
+              });
+            } catch (syncErr) {
+              console.warn("[Push Hook] Auto-sync to DB error:", syncErr);
+            }
+          }
         } else if (Notification.permission === "granted" && storeId) {
           // Auto-resubscribe if permission was already granted by user
           try {

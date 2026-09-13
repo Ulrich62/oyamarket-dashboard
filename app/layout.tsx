@@ -52,6 +52,19 @@ export default function RootLayout({
       lang="fr"
       className={`${inter.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('beforeinstallprompt', function(e) {
+                e.preventDefault();
+                window.__deferredInstallPrompt = e;
+                window.dispatchEvent(new CustomEvent('pwa-install-ready'));
+              });
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-bg text-ink font-sans flex flex-col">
         <NavigationProgress />
         {children}

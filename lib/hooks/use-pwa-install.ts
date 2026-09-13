@@ -11,6 +11,7 @@ export function usePwaInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState<boolean>(false);
   const [isInstalled, setIsInstalled] = useState<boolean>(false);
+  const [isMac, setIsMac] = useState<boolean>(false);
   const [isIOS, setIsIOS] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,29 +25,48 @@ export function usePwaInstall() {
 
     setIsInstalled(isStandalone);
 
-    // Detect iOS
+    // Detect devices
     const userAgent = window.navigator.userAgent.toLowerCase();
     const isAppleDevice = /iphone|ipad|ipod/.test(userAgent);
+    const isMacDevice = /macintosh|mac os x/.test(userAgent) && !isAppleDevice;
     setIsIOS(isAppleDevice);
+    setIsMac(isMacDevice);
+
+    // Check if prompt was already captured by early script
+    if ((window as any).__deferredInstallPrompt) {
+      setDeferredPrompt((window as any).__deferredInstallPrompt);
+      setIsInstallable(true);
+    }
 
     // Listen for beforeinstallprompt
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
+      (window as any).__deferredInstallPrompt = e;
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       setIsInstallable(true);
+    };
+
+    const handleEarlyReady = () => {
+      if ((window as any).__deferredInstallPrompt) {
+        setDeferredPrompt((window as any).__deferredInstallPrompt);
+        setIsInstallable(true);
+      }
     };
 
     const handleAppInstalled = () => {
       setIsInstalled(true);
       setIsInstallable(false);
       setDeferredPrompt(null);
+      (window as any).__deferredInstallPrompt = null;
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("pwa-install-ready", handleEarlyReady);
     window.addEventListener("appinstalled", handleAppInstalled);
 
     return () => {
       window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      window.removeEventListener("pwa-install-ready", handleEarlyReady);
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
   }, []);
@@ -76,6 +96,8 @@ export function usePwaInstall() {
     isInstallable,
     isInstalled,
     isIOS,
+    isMac,
     promptInstall,
   };
 }
+
