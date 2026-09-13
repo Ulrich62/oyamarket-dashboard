@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { urlBase64ToUint8Array } from "@/lib/push-client";
+import { playNotificationChime } from "@/lib/audio";
 import { toast } from "sonner";
 
 export type PushPermissionState = "unsupported" | "default" | "granted" | "denied";
@@ -176,23 +177,10 @@ export function usePushNotifications(storeId?: string) {
     try {
       setLoading(true);
 
-      // 1. Immediately display a local desktop notification to test macOS Notification Center
-      if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "granted") {
-        try {
-          const registration = await navigator.serviceWorker.ready;
-          registration.showNotification("🔔 Test OyaMarket (Direct Mac)", {
-            body: "Le système de notification de votre Mac est parfaitement connecté !",
-            icon: "/icon-192.png",
-            badge: "/icon-192.png",
-            data: { url: "/orders" },
-            requireInteraction: true,
-          });
-        } catch (localErr) {
-          console.warn("[Push Hook] Local test notification failed:", localErr);
-        }
-      }
+      // 1. Play the crisp audio chime immediately upon click
+      playNotificationChime();
 
-      // 2. Dispatch the real Web Push via FCM server
+      // 2. Dispatch the real Web Push via FCM server (single notification, deduplicated by tag)
       const res = await fetch("/api/v1/push/test", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

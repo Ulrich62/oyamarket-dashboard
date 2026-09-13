@@ -133,6 +133,22 @@ export function NotificationCenter({ storeId }: NotificationCenterProps) {
     [storeId, router]
   );
 
+  // Listen for push sound trigger from Service Worker
+  useEffect(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+
+    const handleSwMessage = (event: MessageEvent) => {
+      if (event.data?.type === "PLAY_NOTIFICATION_SOUND") {
+        playNotificationChime();
+      }
+    };
+
+    navigator.serviceWorker.addEventListener("message", handleSwMessage);
+    return () => {
+      navigator.serviceWorker.removeEventListener("message", handleSwMessage);
+    };
+  }, []);
+
   // Initial fetch and 15-second polling
   useEffect(() => {
     fetchNotifications(false);
