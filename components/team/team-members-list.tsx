@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useMemo } from "react";
+import { useState, useEffect, useTransition, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Role } from "@prisma/client";
@@ -47,7 +47,7 @@ interface TeamMembersListProps {
   currentUserRole: Role;
 }
 
-const ROLE_INFO: Record<
+export const ROLE_INFO: Record<
   Role,
   {
     label: string;
@@ -86,9 +86,13 @@ export function TeamMembersList({
   currentUserRole,
 }: TeamMembersListProps) {
   const router = useRouter();
-  const [members] = useState<TeamMemberItem[]>(initialMembers);
+  const [members, setMembers] = useState<TeamMemberItem[]>(initialMembers);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState<string>("ALL");
+
+  useEffect(() => {
+    setMembers(initialMembers);
+  }, [initialMembers]);
 
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState<TeamMemberItem | null>(null);
@@ -125,15 +129,21 @@ export function TeamMembersList({
 
   const handleRoleChange = async (memberId: string, newRole: Role) => {
     setUpdatingId(memberId);
+    const prevMembers = members;
+    setMembers((prev) =>
+      prev.map((m) => (m.id === memberId ? { ...m, role: newRole } : m))
+    );
     try {
       const result = await updateMemberRole(memberId, newRole);
       if (result.error) {
+        setMembers(prevMembers);
         toast.error(result.error);
       } else {
         toast.success(result.message || "Rôle mis à jour");
         router.refresh();
       }
     } catch (err: any) {
+      setMembers(prevMembers);
       toast.error(err.message || "Erreur lors du changement de rôle");
     } finally {
       setUpdatingId(null);
@@ -143,10 +153,15 @@ export function TeamMembersList({
   const handleConfirmDelete = () => {
     if (!memberToDelete) return;
 
+    const targetId = memberToDelete.id;
+    const prevMembers = members;
+    setMembers((prev) => prev.filter((m) => m.id !== targetId));
+
     startDeleteTransition(async () => {
       try {
-        const result = await removeMember(memberToDelete.id);
+        const result = await removeMember(targetId);
         if (result.error) {
+          setMembers(prevMembers);
           toast.error(result.error);
         } else {
           toast.success(result.message || "Membre retiré de l'équipe");
@@ -154,6 +169,7 @@ export function TeamMembersList({
           router.refresh();
         }
       } catch (err: any) {
+        setMembers(prevMembers);
         toast.error(err.message || "Erreur lors de la suppression");
       }
     });
