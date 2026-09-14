@@ -25,6 +25,18 @@ export function usePwaInstall() {
 
     setIsInstalled(isStandalone);
 
+    // Check if installed via getInstalledRelatedApps
+    if ("getInstalledRelatedApps" in navigator) {
+      (navigator as any)
+        .getInstalledRelatedApps()
+        .then((relatedApps: any[]) => {
+          if (relatedApps && relatedApps.length > 0) {
+            setIsInstalled(true);
+          }
+        })
+        .catch(() => {});
+    }
+
     // Detect devices
     const userAgent = window.navigator.userAgent.toLowerCase();
     const isAppleDevice = /iphone|ipad|ipod/.test(userAgent);
