@@ -93,29 +93,8 @@ export function NotificationCenter({ storeId }: NotificationCenterProps) {
               },
             });
 
-            // Also trigger native OS desktop notification banner (macOS / Windows)
-            if (
-              typeof window !== "undefined" &&
-              "Notification" in window &&
-              Notification.permission === "granted"
-            ) {
-              try {
-                if ("serviceWorker" in navigator) {
-                  navigator.serviceWorker.ready.then((reg) => {
-                    reg.showNotification(latest.title, {
-                      body: latest.message,
-                      icon: "/icon-192.png",
-                      badge: "/icon-192.png",
-                      data: { url: latest.link || "/orders", orderId: latest.id },
-                      tag: `order-${latest.id}`,
-                      requireInteraction: true,
-                    });
-                  });
-                }
-              } catch (desktopErr) {
-                console.warn("[NotificationCenter] Desktop notification failed:", desktopErr);
-              }
-            }
+            // Note: Desktop OS notification banner is already handled by server Web Push (sw.js)
+            // Polling only plays chime and displays in-app toast to avoid duplicate OS banners
           }
         }
 
