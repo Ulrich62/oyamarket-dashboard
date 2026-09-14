@@ -52,6 +52,7 @@ export function NotificationCenter({ storeId }: NotificationCenterProps) {
     isSubscribed,
     loading: pushLoading,
     subscribe,
+    unsubscribe,
     sendTest,
   } = usePushNotifications(storeId);
 
@@ -250,23 +251,34 @@ export function NotificationCenter({ storeId }: NotificationCenterProps) {
         <div className="px-4 py-2.5 bg-bg-elev-2/60 border-b border-line-soft">
           {permission === "granted" && isSubscribed ? (
             <div className="flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2 text-emerald-400 font-medium">
+              <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
                 <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
-                <span>Push notifications actives</span>
+                <span>Push actives</span>
               </div>
-              <button
-                onClick={sendTest}
-                disabled={pushLoading}
-                title="Tester l'envoi d'une notification push"
-                className="flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium bg-bg text-ink-2 hover:text-ink hover:bg-bg-elev border border-line transition-colors cursor-pointer"
-              >
-                {pushLoading ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
-                ) : (
-                  <Send className="h-3 w-3" />
-                )}
-                <span>Tester</span>
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={sendTest}
+                  disabled={pushLoading}
+                  title="Tester l'envoi d'une notification push"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium bg-bg text-ink-2 hover:text-ink hover:bg-bg-elev border border-line transition-colors cursor-pointer"
+                >
+                  {pushLoading ? (
+                    <Loader2 className="h-3 w-3 animate-spin" />
+                  ) : (
+                    <Send className="h-3 w-3" />
+                  )}
+                  <span>Tester</span>
+                </button>
+                <button
+                  onClick={unsubscribe}
+                  disabled={pushLoading}
+                  title="Désactiver les notifications sur ce navigateur"
+                  className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium text-ink-4 hover:text-red-400 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-colors cursor-pointer"
+                >
+                  <BellOff className="h-3 w-3" />
+                  <span className="hidden sm:inline">Désactiver</span>
+                </button>
+              </div>
             </div>
           ) : permission === "denied" ? (
             <div className="flex items-center gap-2 text-[11px] text-amber-400">
