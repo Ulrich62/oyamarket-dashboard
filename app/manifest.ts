@@ -10,8 +10,8 @@ export default function manifest(): MetadataRoute.Manifest {
     id: "oyamarket-dashboard",
     display: "standalone",
     orientation: "any",
-    background_color: "#0B0F17",
-    theme_color: "#0C9653",
+    background_color: "#0a0a0a",
+    theme_color: "#0a0a0a",
     icons: [
       {
         src: "/icon-192.png",
