@@ -1,0 +1,342 @@
+{
+  "product": {
+    "name": "Bouchon Pompe à Vide d'Air pour Vin avec Dateur Intégré OyaMarket™ (Conservation Hermétique 10 Jours, Anti-Oxydation & Anti-Fuite 360°)",
+    "slug": "bouchon-vide-air-vin-dateur",
+    "category": "Maison & Art de la Table",
+    "price": 4900,
+    "compareAtPrice": 9000,
+    "costPrice": 1200,
+    "stock": 120,
+    "imageUrl": "https://s.alicdn.com/@sc04/kf/H71295ea59fbf4999b821415f90fc7b05J.jpg",
+    "isFeatured": true,
+    "featuredOrder": 4,
+    "packs": [
+      {
+        "id": "pack-1-bouchon-vin",
+        "name": "1x Bouchon Pompe à Vide avec Dateur (Pack Découverte)",
+        "subtitle": "Idéal pour préserver vos bouteilles de rouge ou de blanc entamées",
+        "badge": "Offre Découverte",
+        "quantity": 1,
+        "price": 4900,
+        "compareAtPrice": 9000,
+        "isPopular": false,
+        "position": 0
+      },
+      {
+        "id": "pack-2-bouchon-vin",
+        "name": "2x Bouchons Pompe à Vide avec Dateur (Pack Duo Sérénité)",
+        "subtitle": "1 pour le rouge + 1 pour le blanc/rosé ou pour offrir (-9 100 FCFA d'économie)",
+        "badge": "🔥 LE PLUS POPULAIRE (Recommandé)",
+        "quantity": 2,
+        "price": 8900,
+        "compareAtPrice": 18000,
+        "isPopular": true,
+        "position": 1
+      },
+      {
+        "id": "pack-3-bouchon-vin",
+        "name": "3x Bouchons Pompe à Vide avec Dateur (Pack Trio Dégustation & Fêtes)",
+        "subtitle": "Équipement complet pour vos réceptions (Seulement 3 967 FCFA par bouchon)",
+        "badge": "💎 ÉCONOMIE MAXIMALE",
+        "quantity": 3,
+        "price": 11900,
+        "compareAtPrice": 27000,
+        "isPopular": false,
+        "position": 2
+      }
+    ]
+  },
+  "landingData": {
+    "heroImage": "https://s.alicdn.com/@sc04/kf/H71295ea59fbf4999b821415f90fc7b05J.jpg",
+    "headline": "Bouchon Pompe à Vide d'Air pour Vin avec Dateur OyaMarket™ – Dégustez Chaque Verre Comme au Premier Jour & Ne Gaspillez Plus Jamais Vos Bonnes Bouteilles",
+    "rating": 4.9,
+    "reviewsCount": 1180,
+    "stockBadge": "En stock à Cotonou • Expédition Express 24h-48h partout au Bénin • Paiement Cash ou MoMo après Vérification du Colis",
+    "keyArguments": [
+      "Dépression d'air puissante -0.038 MPa : extrait l'oxygène en 10 secondes pour stopper net l'oxydation et préserver tanins et arômes jusqu'à 10 jours",
+      "Bague de date rotative intégrée (1-31) : marquez d'un clic le jour d'ouverture pour ne plus jamais hésiter sur la fraîcheur de votre vin",
+      "Silicone alimentaire hermétique anti-fuite 360° : stockez votre bouteille à l'horizontale au frigo sans perdre la moindre goutte"
+    ],
+    "shippingRibbon": [
+      "🚚 Livraison Express à Cotonou, Calavi & tout le Bénin (24h-48h)",
+      "💵 Paiement à la Livraison (Ouvrez et vérifiez le colis devant le livreur avant de payer)",
+      "🛡️ Garantie Sérénité OyaMarket 30 Jours Satisfait ou Échangé à Neuf",
+      "⭐ Déjà plus de 2 400 amateurs de bon vin conquis au Bénin"
+    ],
+    "packs": [
+      {
+        "id": 1,
+        "quantity": 1,
+        "title": "Pack 1 : Découverte (1 Bouchon Pompe à Vide avec Dateur)",
+        "label": "Pack 1 : Découverte (1 Bouchon Pompe à Vide avec Dateur)",
+        "name": "1x Bouchon Pompe à Vide avec Dateur (Pack Découverte)",
+        "subtitle": "Idéal pour préserver vos bouteilles de rouge ou de blanc entamées",
+        "price": 4900,
+        "originalPrice": 9000,
+        "compareAtPrice": 9000,
+        "badge": "Offre Découverte",
+        "isPopular": false,
+        "popular": false
+      },
+      {
+        "id": 2,
+        "quantity": 2,
+        "title": "Pack 2 : Duo Sérénité (2 Bouchons Pompe à Vide avec Dateur) – RECOMMANDÉ",
+        "label": "Pack 2 : Duo Sérénité (2 Bouchons Pompe à Vide avec Dateur) – RECOMMANDÉ",
+        "name": "2x Bouchons Pompe à Vide avec Dateur (Pack Duo Sérénité)",
+        "subtitle": "1 pour le rouge + 1 pour le blanc/rosé ou pour offrir (-9 100 FCFA d'économie)",
+        "price": 8900,
+        "originalPrice": 18000,
+        "compareAtPrice": 18000,
+        "badge": "🔥 LE PLUS POPULAIRE (Recommandé)",
+        "isPopular": true,
+        "popular": true
+      },
+      {
+        "id": 3,
+        "quantity": 3,
+        "title": "Pack 3 : Trio Dégustation & Fêtes (3 Bouchons Pompe à Vide avec Dateur)",
+        "label": "Pack 3 : Trio Dégustation & Fêtes (3 Bouchons Pompe à Vide avec Dateur)",
+        "name": "3x Bouchons Pompe à Vide avec Dateur (Pack Trio Dégustation & Fêtes)",
+        "subtitle": "Équipement complet pour vos réceptions (Prix imbattable : 3 967 FCFA / bouchon)",
+        "price": 11900,
+        "originalPrice": 27000,
+        "compareAtPrice": 27000,
+        "badge": "💎 ÉCONOMIE MAXIMALE",
+        "isPopular": false,
+        "popular": false
+      }
+    ],
+    "trustBadges": [
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232043/oyamarket/icons/icon_livraison.png",
+        "title": "Livraison Express Partout au Bénin",
+        "subtitle": "Expédition sous 24h (Cotonou/Calavi) à 48h (Toutes localités)"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232045/oyamarket/icons/icon_paiement.png",
+        "title": "Paiement 100% à la Livraison",
+        "subtitle": "Ouvrez et testez le produit devant le livreur avant de régler"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232046/oyamarket/icons/icon_garantie.png",
+        "title": "Garantie Sérénité 30 Jours",
+        "subtitle": "Remplacement à neuf immédiat en cas de dysfonctionnement"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232047/oyamarket/icons/icon_support.png",
+        "title": "Support Client 7j/7 au Bénin",
+        "subtitle": "Conseils d'utilisation réactifs par WhatsApp & téléphone"
+      }
+    ],
+    "gallery": [
+      "https://s.alicdn.com/@sc04/kf/H71295ea59fbf4999b821415f90fc7b05J.jpg",
+      "https://s.alicdn.com/@sc04/kf/H8d55c7a3ff954e7aa235dcfa81cbefbbY.jpg",
+      "https://s.alicdn.com/@sc04/kf/H1fca82d92ff743b5a7ba9ccdf8a3c8614.jpg",
+      "https://s.alicdn.com/@sc04/kf/H570dbbfb809540b6863dcf83693f443ao.jpg",
+      "https://s.alicdn.com/@sc04/kf/H3e387c2b3dc14441b8a53e6b4e4776100.jpg",
+      "https://s.alicdn.com/@sc04/kf/H0122e2329b3543d8b1399f66085a11c1X.jpg"
+    ],
+    "twoStepsTitle": "Sous la chaleur du Bénin, une bouteille de vin ouverte tourne au vinaigre en moins de 48 heures",
+    "twoStepsDesc": "Vous achetez une excellente bouteille de vin rouge à 7 000, 12 000 ou 20 000 FCFA pour partager un moment convivial. Le problème ? Vous n'en buvez souvent qu'un ou deux verres. Dès que le bouchon de liège est retiré, l'oxygène pénètre dans la bouteille. Avec les températures élevées de Cotonou ou Parakou, l'oxydation s'accélère à une vitesse fulgurante : le lendemain ou le surlendemain, le vin a perdu tout son bouquet fruité, ses tanins deviennent râpeux et il développe un goût acide de vinaigre imbuvable. Vous vous retrouvez alors face au dilemme classique : vous forcer à finir la bouteille au détriment de votre santé, ou jeter la moitié de votre argent dans l'évier. Le Bouchon Pompe à Vide d'Air OyaMarket™ résout définitivement ce calvaire : en pompant quelques secondes, vous aspirez tout l'oxygène résiduel et mettez votre vin sous vide hermétique pour conserver toute sa subtilité aromatique jusqu'à 10 jours complets.",
+    "twoStepsBullets": [
+      "Pompe à vide intégrée : aucune pompe externe encombrante à transporter, tout se fait d'une seule main par pression du bouton",
+      "Barrière anti-oxydation sous vide (-0.038 MPa) : bloque la dégradation chimique de l'alcool et protège la rondeur des tanins",
+      "Bague de datation rotative : gardez l'esprit tranquille en réglant le jour exact d'ouverture de 1 à 31 sur le cadran"
+    ],
+    "beforeAfterImage": "https://s.alicdn.com/@sc04/kf/H8d55c7a3ff954e7aa235dcfa81cbefbbY.jpg",
+    "beforeAfter": {
+      "badge": "Plaisir & Zéro Gaspillage",
+      "title": "Savourez votre vin à votre rythme, sans jamais sacrifier sa qualité",
+      "description": "Que vous soyez amateur de vins de Bordeaux, de Bourgogne, de Côtes-du-Rhône ou de vins blancs frais, offrez-vous le luxe de déguster un verre en toute liberté le soir après le travail, en sachant que le reste de la bouteille vous attendra intact plusieurs jours plus tard.",
+      "image": "https://s.alicdn.com/@sc04/kf/H8d55c7a3ff954e7aa235dcfa81cbefbbY.jpg",
+      "benefits": [
+        {
+          "title": "Technologie de Mise Sous Vide Rapide en 10 Secondes",
+          "desc": "Enfoncez le bouchon et pressez le piston supérieur 10 à 15 fois : la résistance ressentie sous le doigt vous confirme que l'air a été totalement évacué de la bouteille."
+        },
+        {
+          "title": "Cœur en Silicone Alimentaire Souple 100% Inodore",
+          "desc": "Fabriqué en silicone haute pureté sans BPA, certifié pour le contact alimentaire : aucune altération du goût, aucun arrière-goût de plastique ni odeur parasite."
+        },
+        {
+          "title": "Étanchéité Totale Anti-Goutte & Stockage Couché",
+          "desc": "Son joint à double lèvre assure un verrouillage hermétique sous pression : couchez votre bouteille à l'horizontale sur la grille du réfrigérateur sans aucun risque de coulure."
+        }
+      ]
+    },
+    "benefitCards": [
+      {
+        "title": "Pompe à Dépression Manuelle Intégrée (-0.038 MPa)",
+        "desc": "Système de piston à clapet anti-retour haute précision qui extrait plus de 90% de l'air enfermé dans le goulot, stoppant ainsi immédiatement l'oxydation acétique provoquée par la chaleur tropicale."
+      },
+      {
+        "title": "Indicateur de Date Rotatif de Précision (1 à 31)",
+        "desc": "Plus besoin de chercher quand la bouteille a été débouchée. Faites simplement tourner la bague supérieure pour aligner le repère sur le jour du mois où vous l'avez ouverte."
+      },
+      {
+        "title": "Compatibilité Universelle avec 99% des Bouteilles",
+        "desc": "Conception conique optimisée pour tous les goulots standards de 750 ml d'un diamètre intérieur compris entre 18 et 19 mm (vins rouges, blancs doux et secs, rosés)."
+      }
+    ],
+    "threeInOneCards": [
+      {
+        "title": "Économie Immédiate sur Vos Achats de Vins",
+        "desc": "Ne jetez plus la moitié de vos bouteilles payées à prix d'or à la cave ou au supermarché. Chaque goutte est bue avec le même plaisir qu'au premier jour."
+      },
+      {
+        "title": "Consommation Responsable & Sans Contrainte",
+        "desc": "Prenez un seul verre pour accompagner votre repas en semaine sans vous sentir obligé de terminer la bouteille pour ne pas la gaspiller."
+      },
+      {
+        "title": "Design Épuré & Déverrouillage 'Pshhh' en 1 Seconde",
+        "desc": "Finition noire mate moderne qui sublime votre table. Pour resservir, inclinez légèrement le bouchon : entendez le souffle de décompression et dégustez !"
+      }
+    ],
+    "steps": [
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232038/oyamarket/icons/step_num_1.png",
+        "title": "Insérez le bouchon",
+        "desc": "Enfoncez fermement le bouchon OyaMarket™ dans le goulot de votre bouteille de vin entamée."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232039/oyamarket/icons/step_num_2.png",
+        "title": "Pompez pour faire le vide",
+        "desc": "Appuyez plusieurs fois (10 à 15 pressions) sur le piston central jusqu'à ressentir une forte résistance."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232040/oyamarket/icons/step_num_3.png",
+        "title": "Réglez la date du jour",
+        "desc": "Tournez la bague graduée supérieure pour positionner le chiffre correspondant au jour de débouchage."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232041/oyamarket/icons/step_num_4.png",
+        "title": "Rouvrez d'un geste simple",
+        "desc": "Pour déboucher à nouveau, basculez légèrement le bouchon sur le côté pour libérer le vide d'air avec un souffle 'pshht'."
+      }
+    ],
+    "videos": [],
+    "ugcVideos": [],
+    "unboxing": {
+      "image": "https://s.alicdn.com/@sc04/kf/H71295ea59fbf4999b821415f90fc7b05J.jpg",
+      "title": "Ce que contient votre colis OyaMarket™",
+      "items": [
+        "1x Bouchon Pompe à Vide d'Air Haute Précision OyaMarket™ avec échelle de date rotative (ou 2x / 3x selon le pack choisi)",
+        "1x Cœur d'étanchéité conique en silicone alimentaire certifié FDA sans BPA",
+        "1x Fiche explicative d'utilisation rapide et d'entretien illustrée en français",
+        "🎁 BONUS OFFERT (Valeur 5 000 FCFA) : Guide Numérique 'Les Secrets de Dégustation & Conservation du Vin sous Climat Tropical' envoyé directement sur votre WhatsApp après réception de votre commande"
+      ],
+      "ctaText": "Commander Mon Bouchon à Vide d'Air & Payer à la Livraison"
+    },
+    "unboxingImage": "https://s.alicdn.com/@sc04/kf/H71295ea59fbf4999b821415f90fc7b05J.jpg",
+    "unboxingItems": [
+      "1x Bouchon Pompe à Vide d'Air Haute Précision OyaMarket™ avec échelle de date rotative (ou 2x / 3x selon le pack choisi)",
+      "1x Cœur d'étanchéité conique en silicone alimentaire certifié FDA sans BPA",
+      "1x Fiche explicative d'utilisation rapide et d'entretien illustrée en français",
+      "🎁 BONUS OFFERT (Valeur 5 000 FCFA) : Guide Numérique 'Les Secrets de Dégustation & Conservation du Vin sous Climat Tropical' envoyé directement sur votre WhatsApp après réception de votre commande"
+    ],
+    "clientPhotos": [
+      "https://s.alicdn.com/@sc04/kf/H71295ea59fbf4999b821415f90fc7b05J.jpg",
+      "https://s.alicdn.com/@sc04/kf/H8d55c7a3ff954e7aa235dcfa81cbefbbY.jpg",
+      "https://s.alicdn.com/@sc04/kf/H1fca82d92ff743b5a7ba9ccdf8a3c8614.jpg",
+      "https://s.alicdn.com/@sc04/kf/H570dbbfb809540b6863dcf83693f443ao.jpg"
+    ],
+    "reviews": [
+      {
+        "name": "Armand Dossou",
+        "city": "Cotonou (Haie Vive)",
+        "avatar": "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "J'adore déguster un bon verre de Saint-Émilion le soir en rentrant du travail, mais comme ma femme ne boit pas de vin, le reste de la bouteille finissait toujours par tourner au bout de 2 jours à cause de la chaleur. J'ai commandé le Pack Duo à 8 900 FCFA. Le livreur est venu à la Haie Vive, j'ai ouvert le paquet devant lui pour vérifier le système de pompe avant de régler par MoMo. Le soir même, j'ai testé : on appuie sur le bouton 10 fois, on sent la résistance sous le doigt, et 6 jours plus tard quand j'ai rouvert avec le bruit 'pshht', le vin était exactement comme si je venais de le déboucher ! C'est rentabilisé dès la première bouteille sauvée."
+      },
+      {
+        "name": "Clarisse Agbodjan",
+        "city": "Abomey-Calavi (Arconville)",
+        "avatar": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Franchement génial ! Avant, quand j'ouvrais une bouteille pour recevoir des amies, le bouchon en liège se cassait souvent ou ne voulait plus rentrer. Là, ce bouchon noir s'enfonce parfaitement et donne un style très élégant à la bouteille. Ce que j'apprécie par-dessus tout, c'est la bague avec les chiffres : on met la date du jour d'ouverture et on sait exactement où on en est. Et le fait de pouvoir coucher la bouteille dans mon petit réfrigérateur sans que ça ne coule d'une seule goutte, c'est un vrai soulagement d'espace."
+      },
+      {
+        "name": "Gérard Kouassi",
+        "city": "Porto-Novo (Avakpa)",
+        "avatar": "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Reçu à Porto-Novo en 24h. Le service client m'a contacté sur WhatsApp pour caler l'heure de passage du livreur. J'ai inspecté le bouchon en silicone alimentaire, zéro odeur chimique. Pour le prix (4 900 FCFA), la finition est impeccable. Quand on pompe, on sent clairement le vide qui se crée et le bouton devient dur à enfoncer. 8 jours après ouverture d'un Cabernet Sauvignon, les arômes étaient intacts, aucune note acide. Je recommande à 100% à tous ceux qui aiment le vin."
+      },
+      {
+        "name": "Béatrice Hounwanou",
+        "city": "Cotonou (Cadjèhoun)",
+        "avatar": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "J'avais très peur de me faire arnaquer en commandant en ligne. Mais avec OyaMarket, le paiement à la livraison après ouverture du colis m'a rassurée. J'ai pris le pack de 2 : un pour le vin rouge sur mon bar et un pour le vin blanc moelleux dans la porte du frigo. C'est magique : lorsqu'on déverrouille le bouchon en le penchant légèrement, on entend distinctement le souffle d'air qui rentre ! C'est la preuve irréfutable que la bouteille était sous vide hermétique."
+      },
+      {
+        "name": "Rodrigue Mensah",
+        "city": "Parakou (Albarika)",
+        "avatar": "https://images.unsplash.com/photo-1507152832244-10d45c7eda57?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Livraison reçue à Parakou en 48h par le car avec relais livreur local. J'ai pris le Pack Trio Dégustation à 11 900 FCFA pour notre club d'œnologie du weekend. Ce bouchon fait le même travail que les kits d'aspiration professionnels qui coûtent 30 000 FCFA dans les caves spécialisées, mais en beaucoup plus compact car la pompe est directement intégrée dans la tête du bouchon. Très pratique et robuste."
+      },
+      {
+        "name": "Marc-Aurèle Tossou",
+        "city": "Cotonou (Fidjrossè)",
+        "avatar": "https://images.unsplash.com/photo-1589156280159-27698a70f29e?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Fini la frustration de jeter des demi-bouteilles de vin espagnol ou français qui ont tourné au vinaigre. En 10 pressions, la dépression est faite. J'ai laissé une bouteille de rouge 9 jours dans mon cellier : dégustation impeccable au 9ème jour, les tanins étaient fondus et souples sans aucune amertume. Pour 4 900 FCFA, c'est l'un des meilleurs achats utiles que j'ai faits cette année."
+      }
+    ],
+    "accordions": [
+      {
+        "title": "Technologie du Vide d'Air & Pourquoi le Vin Tourne au Vinaigre",
+        "content": "• Le phénomène d'oxydation acétique : Dès le débouchage d'une bouteille, l'oxygène de l'air entre en contact avec l'éthanol du vin. Les bactéries acétiques naturellement présentes s'activent et transforment l'alcool en acide acétique (le constituant principal du vinaigre). Au Bénin, ce phénomène est accéléré par la température ambiante de 28 à 32°C.\n• L'action de la pompe à vide OyaMarket™ : En créant une dépression d'environ -0.038 MPa, notre bouchon extrait l'oxygène en suspension dans la bouteille. Privé d'air, le vin ne s'oxyde plus. Ses arômes fruités, sa couleur brillante et ses tanins veloutés restent scellés sous vide protecteur pendant 7 à 10 jours complets (contre moins de 48h avec un bouchon ordinaire).\n• Preuve physique de la décompression : Lorsque vous souhaitez vous resservir un verre, une simple pression latérale libère le joint avec un 'pssshhht' sonore caractéristique attestant que le vide d'air a été maintenu intact depuis le premier jour.",
+        "defaultOpen": true
+      },
+      {
+        "title": "Matériaux Nobles, Compatibilité Universelle & Entretien",
+        "content": "• Silicone alimentaire certifié FDA : L'embout conique en contact direct avec le goulot est moulé en silicone alimentaire 100% pur, garanti sans BPA, sans phtalates et totalement inodore. Il n'altère en aucun cas la palette olfactive ou gustative des grands crus.\n• Bague de date rotative (1 à 31) : Une échelle graduée de haute précision intégrée sur le dôme supérieur permet d'enregistrer le jour précis d'ouverture pour gérer idéalement votre cave au quotidien.\n• Compatibilité universelle 99% : Conçu pour s'adapter à toutes les bouteilles de vin standard de 750 ml au goulot d'un diamètre intérieur de 18 à 19 mm (vins rouges, blancs secs ou liquoreux, rosés).\n• Étanchéité 360° anti-fuite : Grâce à sa compression sous vide, vous pouvez stocker vos bouteilles entamées debout sur votre bar ou complètement couchées sur une clayette de réfrigérateur sans aucune fuite.\n• Entretien facile : Il suffit de rincer l'embout en silicone sous un filet d'eau tiède après utilisation et d'essuyer avec un chiffon propre. Ne pas immerger totalement dans l'eau bouillante ni mettre au lave-vaisselle.",
+        "defaultOpen": false
+      },
+      {
+        "title": "Modalités de Livraison Partout au Bénin & Garantie Sérénité 30 Jours",
+        "content": "• 0 FCFA d'avance : Vous ne payez absolument rien au moment de passer commande sur le site. Aucune carte bancaire, aucun transfert préalable exigé.\n• Validation rapide par WhatsApp & Téléphone : Dès la commande passée, notre équipe basée au Bénin vous contacte pour confirmer votre adresse et caler l'horaire de livraison qui vous convient.\n• Délais express : 24 heures chrono pour Cotonou, Abomey-Calavi et Porto-Novo. 48 heures pour Parakou, Bohicon, Ouidah et toutes les autres villes de province.\n• Inversion totale du risque (Inspection avant paiement) : À la réception, notre livreur vous remet le colis. Vous l'ouvrez en sa présence, vous vérifiez le bouchon et testez le mécanisme de pompe. Vous ne réglez les 4 900 FCFA (ou le montant de votre pack) en espèces ou via Mobile Money (MTN / Moov) qu'une fois totalement conquis(e) !\n• Garantie Sérénité OyaMarket 30 Jours : En cas de souci ou de défaut de fabrication, nous procédons à un échange à neuf immédiat et sans discussion.",
+        "defaultOpen": false
+      }
+    ],
+    "faq": [
+      {
+        "q": "Comment savoir si le vide d'air est bien fait dans ma bouteille ?",
+        "a": "C'est extrêmement intuitif : après avoir inséré le bouchon fermement dans le goulot, vous pressez le piston supérieur plusieurs fois de suite. Au bout de 10 à 15 pressions, vous sentirez une nette résistance sous votre pouce et le bouton deviendra plus dur à enfoncer. Cela signifie que l'air a été complètement expulsé et que la bouteille est hermétiquement sous vide."
+      },
+      {
+        "q": "Ce bouchon s'adapte-t-il sur toutes les bouteilles de vin ?",
+        "a": "Oui, il est universel ! Son cœur conique en silicone alimentaire est calibré pour s'adapter à 99% des bouteilles de vin de 750 ml vendues dans le commerce (goulots de 18 à 19 mm de diamètre intérieur). Il fonctionne parfaitement pour tous les vins rouges, blancs et rosés."
+      },
+      {
+        "q": "Puis-je l'utiliser pour le Champagne ou les vins pétillants ?",
+        "a": "Non. Le bouchon à vide d'air sert à extraire l'air pour empêcher l'oxydation des vins tranquilles (rouge, blanc, rosé). Pour les vins effervescents comme le champagne, le crémant ou le prosecco, aspirer l'air détruirait les bulles de gaz carbonique. Il est donc exclusivement réservé aux vins non pétillants."
+      },
+      {
+        "q": "Combien de temps le vin reste-t-il frais et bon à boire ?",
+        "a": "Grâce au vide d'air de -0.038 MPa, le vin conserve ses arômes fruités, sa couleur et sa rondeur en bouche pendant 7 à 10 jours complets (et jusqu'à 14 jours si conservé au frais), contre seulement 24 à 48 heures avec un bouchon traditionnel sous notre climat chaud."
+      },
+      {
+        "q": "Puis-je coucher la bouteille dans mon réfrigérateur sans fuite ?",
+        "a": "Oui, absolument ! La dépression d'air plaque hermétiquement le silicone contre les parois internes du verre. Le joint est 100% étanche à 360°, ce qui vous permet de coucher la bouteille à l'horizontale sur une étagère de frigo sans risquer la moindre fuite de vin."
+      },
+      {
+        "q": "Comment se déroulent la livraison et le paiement au Bénin ?",
+        "a": "La commande est enregistrée sans aucun paiement préalable. Notre service client vous appelle pour confirmer votre quartier, puis notre livreur vous apporte le colis sous 24h à 48h. Vous déballez le colis en direct devant le livreur, vous inspectez le bouchon, et vous réglez les 4 900 FCFA (ou le prix de votre pack) sur place en espèces ou par Mobile Money (MTN MoMo / Moov Money)."
+      }
+    ],
+    "supportBanner": {
+      "title": "Une question sur le Bouchon à Vin OyaMarket™ ?",
+      "desc": "Notre équipe basée à Cotonou est joignable 7j/7 sur WhatsApp ou par téléphone pour vous conseiller avant et après votre commande."
+    }
+  }
+}

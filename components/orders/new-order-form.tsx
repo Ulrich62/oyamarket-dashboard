@@ -119,9 +119,9 @@ export function NewOrderForm({ products }: NewOrderFormProps) {
         {/* Colonne principale */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           {/* Client */}
-          <div className="rounded-2xl border border-line bg-bg-elev/30 p-6 flex flex-col gap-5">
-            <h2 className="text-sm font-medium text-ink">Informations client</h2>
-            <div className="grid grid-cols-2 gap-4">
+          <div className="rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-6 flex flex-col gap-5">
+            <h2 className="text-sm font-semibold text-ink">Informations client</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 id="customerName"
                 label="Nom complet *"
@@ -149,12 +149,12 @@ export function NewOrderForm({ products }: NewOrderFormProps) {
           </div>
 
           {/* Articles */}
-          <div className="rounded-2xl border border-line bg-bg-elev/30 p-6 flex flex-col gap-5">
-            <h2 className="text-sm font-medium text-ink">Articles</h2>
+          <div className="rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-6 flex flex-col gap-5">
+            <h2 className="text-sm font-semibold text-ink">Articles</h2>
 
             {/* Sélecteur produit */}
-            <div className="flex items-end gap-3">
-              <div className="flex-1">
+            <div className="flex flex-col sm:flex-row sm:items-end gap-3">
+              <div className="flex-1 min-w-0">
                 <label className="block text-[10px] uppercase tracking-[0.14em] text-ink-3 font-mono mb-1.5">
                   Ajouter un produit
                 </label>
@@ -180,6 +180,7 @@ export function NewOrderForm({ products }: NewOrderFormProps) {
                 icon={<Plus className="w-4 h-4" />}
                 onClick={addItem}
                 disabled={products.length === 0}
+                className="w-full sm:w-auto justify-center"
               >
                 Ajouter
               </Button>
@@ -196,7 +197,7 @@ export function NewOrderForm({ products }: NewOrderFormProps) {
                 {items.map((item, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-bg-elev border border-line-soft"
+                    className="flex flex-wrap sm:flex-nowrap items-center gap-3 p-3 rounded-xl bg-bg-elev border border-line-soft"
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-[13px] font-medium text-ink truncate">

@@ -23,7 +23,7 @@ export function SettingsTabs({ store }: SettingsTabsProps) {
   return (
     <div className="flex flex-col gap-6">
       {/* Tab bar */}
-      <div className="flex items-center gap-1 border-b border-line">
+      <div className="flex items-center gap-1 border-b border-line overflow-x-auto scrollbar-none -mx-1 px-1">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;

@@ -74,21 +74,21 @@ export default async function DashboardPage({
   ];
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6 sm:gap-8">
       {/* Header + filtre période */}
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-ink tracking-tight">Dashboard</h1>
-          <p className="text-sm text-ink-3 mt-0.5">Vue d'ensemble de votre activité</p>
+          <h1 className="text-xl sm:text-2xl font-semibold text-ink tracking-tight">Dashboard</h1>
+          <p className="text-xs sm:text-sm text-ink-3 mt-0.5">Vue d'ensemble de votre activité</p>
         </div>
 
-        <div className="flex items-center gap-1 bg-bg-elev border border-line rounded-xl p-1">
+        <div className="flex items-center gap-1 bg-bg-elev border border-line rounded-xl p-1 overflow-x-auto max-w-full">
           {PERIODS.map((p) => (
             <Link
               key={p.value}
               href={`/?period=${p.value}`}
               className={cn(
-                "px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors",
+                "px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-[13px] font-medium transition-colors whitespace-nowrap",
                 period === p.value
                   ? "bg-bg-elev-2 text-ink"
                   : "text-ink-3 hover:text-ink"
@@ -101,12 +101,12 @@ export default async function DashboardPage({
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {KPI_CARDS.map((card) => (
           <div
             key={card.label}
             className={cn(
-              "rounded-2xl border bg-bg-elev/30 p-5 flex flex-col gap-3",
+              "rounded-2xl border bg-bg-elev/30 p-4 sm:p-5 flex flex-col gap-3",
               card.highlight ? "border-yellow-400/30" : "border-line"
             )}
           >
@@ -118,7 +118,7 @@ export default async function DashboardPage({
                 {card.icon}
               </span>
             </div>
-            <p className={cn("text-3xl font-bold tracking-tight", card.color)}>
+            <p className={cn("text-2xl sm:text-3xl font-bold tracking-tight truncate", card.color)}>
               {card.value}
             </p>
           </div>
@@ -126,12 +126,12 @@ export default async function DashboardPage({
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Link
           href="/orders/new"
-          className="group flex items-center gap-3 rounded-2xl border border-line bg-bg-elev/30 px-5 py-4 hover:bg-bg-elev transition-colors"
+          className="group flex items-center gap-3 rounded-2xl border border-line bg-bg-elev/30 p-3.5 sm:px-5 sm:py-4 hover:bg-bg-elev transition-colors"
         >
-          <div className="w-9 h-9 rounded-xl bg-indigo-600/20 flex items-center justify-center group-hover:bg-indigo-600/30 transition-colors">
+          <div className="w-9 h-9 rounded-xl bg-indigo-600/20 flex items-center justify-center group-hover:bg-indigo-600/30 transition-colors shrink-0">
             <Plus className="w-4 h-4 text-indigo-400" />
           </div>
           <div>
@@ -141,9 +141,9 @@ export default async function DashboardPage({
         </Link>
         <Link
           href="/products/new"
-          className="group flex items-center gap-3 rounded-2xl border border-line bg-bg-elev/30 px-5 py-4 hover:bg-bg-elev transition-colors"
+          className="group flex items-center gap-3 rounded-2xl border border-line bg-bg-elev/30 p-3.5 sm:px-5 sm:py-4 hover:bg-bg-elev transition-colors"
         >
-          <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+          <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors shrink-0">
             <Package className="w-4 h-4 text-accent" />
           </div>
           <div>
@@ -154,15 +154,15 @@ export default async function DashboardPage({
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Revenue Chart */}
-        <div className="lg:col-span-2 rounded-2xl border border-line bg-bg-elev/30 p-6">
-          <div className="flex items-center justify-between mb-6">
+        <div className="lg:col-span-2 rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
             <div>
               <p className="text-[11px] uppercase tracking-[0.12em] text-ink-4 font-mono">
                 CA encaissé
               </p>
-              <p className="text-2xl font-bold text-ink mt-1">
+              <p className="text-xl sm:text-2xl font-bold text-ink mt-1">
                 {formatXOF(kpis.revenue)}
               </p>
             </div>
@@ -181,7 +181,7 @@ export default async function DashboardPage({
         </div>
 
         {/* Status Breakdown */}
-        <div className="rounded-2xl border border-line bg-bg-elev/30 p-6">
+        <div className="rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-6">
           <p className="text-[11px] uppercase tracking-[0.12em] text-ink-4 font-mono mb-6">
             Répartition des statuts
           </p>
@@ -196,13 +196,13 @@ export default async function DashboardPage({
       </div>
 
       {/* Funnel */}
-      <div className="rounded-2xl border border-line bg-bg-elev/30 p-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-6">
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
           <div>
             <p className="text-[11px] uppercase tracking-[0.12em] text-ink-4 font-mono">
               Funnel de conversion
             </p>
-            <p className="text-sm text-ink-3 mt-1">
+            <p className="text-xs sm:text-sm text-ink-3 mt-1">
               Leads → Confirmations → Livraisons
             </p>
           </div>
@@ -215,14 +215,14 @@ export default async function DashboardPage({
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
           {funnelData.map((item, i) => (
             <div key={item.name} className="text-center">
-              <p className="text-3xl font-bold text-ink">{item.value}</p>
-              <p className="text-[11px] text-ink-4 mt-1">{item.name}</p>
+              <p className="text-xl sm:text-3xl font-bold text-ink">{item.value}</p>
+              <p className="text-[10px] sm:text-[11px] text-ink-4 mt-1 truncate">{item.name}</p>
               {i > 0 && funnelData[i - 1].value > 0 && (
                 <p className="text-[10px] text-green-400 font-mono mt-0.5">
-                  {Math.round((item.value / funnelData[i - 1].value) * 100)}% taux
+                  {Math.round((item.value / funnelData[i - 1].value) * 100)}%
                 </p>
               )}
             </div>

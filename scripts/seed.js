@@ -1,7 +1,10 @@
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
+const fs = require("fs");
+const path = require("path");
 
 const prisma = new PrismaClient();
+const STORE_ID = "cmtxoxqor000112jrigl2lu6w";
 
 async function main() {
   console.log("🌱 Démarrage du seed complet OyaMarket...");
@@ -15,25 +18,34 @@ async function main() {
   await prisma.store.deleteMany();
   console.log("🧹 Données précédentes nettoyées.");
 
-  // 1. Utilisateur Administrateur
+  // 1. Utilisateurs Administrateurs
   const hashedPassword = await bcrypt.hash("Oyamarket@2026", 10);
-  const user = await prisma.user.upsert({
-    where: { email: "adimiulrich06@gmail.com" },
-    update: {
-      password: hashedPassword,
-      name: "Ulrich Adimi (Admin)",
-    },
-    create: {
-      email: "adimiulrich06@gmail.com",
-      password: hashedPassword,
-      name: "Ulrich Adimi (Admin)",
-    },
-  });
-  console.log("✅ Admin créé/actualisé :", user.email);
+  const adminConfigs = [
+    { email: "adimiulrich06@gmail.com", name: "Ulrich Adimi (Admin)" },
+    { email: "info@denemlabs.com", name: "Admin DenemLabs" },
+  ];
+  const adminUsers = [];
+  for (const config of adminConfigs) {
+    const u = await prisma.user.upsert({
+      where: { email: config.email },
+      update: {
+        password: hashedPassword,
+        name: config.name,
+      },
+      create: {
+        email: config.email,
+        password: hashedPassword,
+        name: config.name,
+      },
+    });
+    adminUsers.push(u);
+    console.log("✅ Admin créé/actualisé :", u.email);
+  }
 
   // 2. Boutique Officielle OyaMarket Bénin
   const store = await prisma.store.create({
     data: {
+      id: STORE_ID,
       name: "OyaMarket Bénin",
       currency: "XOF",
       pixelId: "128491829481928",
@@ -55,10 +67,10 @@ async function main() {
         },
       },
       members: {
-        create: {
-          userId: user.id,
+        create: adminUsers.map((u) => ({
+          userId: u.id,
           role: "ADMIN",
-        },
+        })),
       },
     },
   });
@@ -465,7 +477,62 @@ async function main() {
   });
   console.log("✅ Produits secondaires créés avec packs :", product2.name, ",", product3.name, ",", product4.name);
 
-  // 5. Commandes COD de Test (Pipeline réaliste au Bénin)
+  // 5. Importation automatique des fiches produits CRO depuis data/products/ (Bouchon vin, Ceinture EMS, Filtre eau, Caméra A9...)
+  const productsDir = path.join(__dirname, "../data/products");
+  const loadedProducts = {};
+  if (fs.existsSync(productsDir)) {
+    const files = fs.readdirSync(productsDir).filter((f) => f.endsWith(".json"));
+    for (const file of files) {
+      try {
+        const raw = fs.readFileSync(path.join(productsDir, file), "utf-8");
+        const { product: prodData, landingData } = JSON.parse(raw);
+
+        const createdProduct = await prisma.product.create({
+          data: {
+            storeId: store.id,
+            name: prodData.name,
+            slug: prodData.slug,
+            category: prodData.category,
+            price: prodData.price,
+            compareAtPrice: prodData.compareAtPrice,
+            costPrice: prodData.costPrice,
+            stock: prodData.stock,
+            isActive: true,
+            imageUrl: prodData.imageUrl,
+            isFeatured: prodData.isFeatured ?? false,
+            featuredOrder: prodData.featuredOrder ?? 0,
+            landingData: landingData,
+          },
+        });
+
+        const createdPacks = [];
+        if (Array.isArray(prodData.packs)) {
+          for (const pack of prodData.packs) {
+            const p = await prisma.productPack.create({
+              data: {
+                productId: createdProduct.id,
+                name: pack.name,
+                subtitle: pack.subtitle,
+                badge: pack.badge,
+                quantity: pack.quantity,
+                price: pack.price,
+                compareAtPrice: pack.compareAtPrice,
+                isPopular: pack.isPopular ?? false,
+                position: pack.position ?? 0,
+              },
+            });
+            createdPacks.push(p);
+          }
+        }
+        loadedProducts[prodData.slug] = { product: createdProduct, packs: createdPacks };
+        console.log(`✅ Fiche CRO importée (${file}) : ${createdProduct.name} avec ${createdPacks.length} packs`);
+      } catch (err) {
+        console.error(`❌ Erreur importation ${file} :`, err.message);
+      }
+    }
+  }
+
+  // 6. Commandes COD de Test (Pipeline réaliste au Bénin)
   const ordersData = [
     {
       customerName: "Sèna Houessou",
@@ -548,6 +615,49 @@ async function main() {
       totalAmount: 15000,
     },
   ];
+
+  // Commandes pour les nouveaux produits importés
+  if (loadedProducts["bouchon-vide-air-vin-dateur"] && loadedProducts["bouchon-vide-air-vin-dateur"].packs.length > 0) {
+    const vinProd = loadedProducts["bouchon-vide-air-vin-dateur"].product;
+    const vinPack = loadedProducts["bouchon-vide-air-vin-dateur"].packs[1] || loadedProducts["bouchon-vide-air-vin-dateur"].packs[0];
+    ordersData.push({
+      customerName: "Armand Dossou",
+      customerPhone: "+229 96 11 22 33",
+      customerCity: "Cotonou",
+      quartier: "Haie Vive",
+      notes: "Appeler avant de livrer au bureau",
+      status: "CONFIRMED",
+      productId: vinProd.id,
+      packId: vinPack.id,
+      packName: vinPack.name,
+      quantity: 1,
+      unitsCount: vinPack.quantity,
+      unitPrice: vinPack.price,
+      totalPrice: vinPack.price,
+      totalAmount: vinPack.price,
+    });
+  }
+
+  if (loadedProducts["ceinture-abdominale-ems-pro"] && loadedProducts["ceinture-abdominale-ems-pro"].packs.length > 0) {
+    const emsProd = loadedProducts["ceinture-abdominale-ems-pro"].product;
+    const emsPack = loadedProducts["ceinture-abdominale-ems-pro"].packs[0];
+    ordersData.push({
+      customerName: "Clarisse Agbodjan",
+      customerPhone: "+229 67 89 01 23",
+      customerCity: "Abomey-Calavi",
+      quartier: "Arconville",
+      notes: "Paiement par MoMo à la livraison",
+      status: "SHIPPED",
+      productId: emsProd.id,
+      packId: emsPack.id,
+      packName: emsPack.name,
+      quantity: 1,
+      unitsCount: emsPack.quantity,
+      unitPrice: emsPack.price,
+      totalPrice: emsPack.price,
+      totalAmount: emsPack.price,
+    });
+  }
 
   for (const o of ordersData) {
     await prisma.order.create({

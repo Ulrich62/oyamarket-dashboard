@@ -9,7 +9,7 @@ import { StatusBadge } from "@/components/ui/badge";
 import { updateOrderStatus, updateOrder, deleteOrder } from "@/lib/actions/orders";
 import { formatXOF, formatDate, ORDER_STATUS_CONFIG } from "@/lib/constants";
 import { OrderStatus } from "@prisma/client";
-import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown, User } from "lucide-react";
+import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown, User, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Order, OrderItem, Product, ProductPack } from "@prisma/client";
 
@@ -99,14 +99,17 @@ export function OrderDetail({ order }: OrderDetailProps) {
     field: string;
     label: string;
     value: string;
-    icon?: React.ReactNode;
+    icon: React.ReactNode;
   }) => (
-    <div className="group flex items-start justify-between gap-2 py-3 border-b border-line-soft last:border-0">
-      <div className="flex-1 min-w-0">
-        <p className="text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono mb-1">{label}</p>
+    <div className="flex items-center justify-between py-3 border-b border-line-soft last:border-0 group">
+      <div className="flex-1 min-w-0 pr-3">
+        <span className="text-[10px] uppercase tracking-[0.14em] text-ink-4 font-mono block mb-1">
+          {label}
+        </span>
         {editing === field ? (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mt-1">
             <input
+              type="text"
               autoFocus
               value={tempValues[field as keyof typeof tempValues]}
               onChange={(e) =>
@@ -133,7 +136,7 @@ export function OrderDetail({ order }: OrderDetailProps) {
             </button>
           </div>
         ) : (
-          <p className="text-[13px] text-ink flex items-center gap-1.5">
+          <p className="text-[13px] text-ink flex items-center gap-1.5 truncate">
             {icon}
             {value || <span className="text-ink-4 italic">Non renseigné</span>}
           </p>
@@ -142,21 +145,26 @@ export function OrderDetail({ order }: OrderDetailProps) {
       {editing !== field && (
         <button
           onClick={() => startEdit(field)}
-          className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-bg-elev text-ink-4 hover:text-ink-2"
+          className="opacity-70 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-bg-elev text-ink-4 hover:text-ink-2"
+          title="Modifier ce champ"
         >
-          <Pencil className="w-3 h-3" />
+          <Pencil className="w-3.5 h-3.5" />
         </button>
       )}
     </div>
   );
+
+  const cleanPhone = order.customerPhone.replace(/\D/g, "");
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Colonne principale */}
       <div className="lg:col-span-2 flex flex-col gap-6">
         {/* Informations client */}
-        <div className="rounded-2xl border border-line bg-bg-elev/30 p-6">
-          <h2 className="text-sm font-medium text-ink mb-2">Informations client</h2>
+        <div className="rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-sm font-semibold text-ink">Informations client</h2>
+          </div>
           <div className="flex flex-col">
             {renderInlineField({
               field: "customerName",
@@ -177,10 +185,32 @@ export function OrderDetail({ order }: OrderDetailProps) {
               icon: <MapPin className="w-3.5 h-3.5 text-ink-4" />,
             })}
           </div>
+
+          {/* Quick Call & WhatsApp Action Bar */}
+          <div className="flex flex-wrap items-center gap-2 pt-4 mt-2 border-t border-line-soft">
+            <a
+              href={`tel:${order.customerPhone}`}
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/25 hover:bg-blue-500/20 active:scale-95 transition-all"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>Appeler le client</span>
+            </a>
+            {cleanPhone && (
+              <a
+                href={`https://wa.me/${cleanPhone}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 hover:bg-emerald-500/20 active:scale-95 transition-all"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>Ouvrir dans WhatsApp</span>
+              </a>
+            )}
+          </div>
         </div>
 
         {/* Articles commandés */}
-        <div className="rounded-2xl border border-line bg-bg-elev/30 p-6">
+        <div className="rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-6">
           <h2 className="text-sm font-medium text-ink mb-4">Articles commandés</h2>
           <div className="flex flex-col gap-3">
             {order.items.map((item) => (

@@ -1,0 +1,340 @@
+{
+  "product": {
+    "name": "Purificateur d'Eau pour Robinet 6 Couches OyaMarket™ (Charbon Actif de Coco, Zéolite & Minéraux Naturels)",
+    "slug": "filtre-eau-robinet-charbon",
+    "category": "Maison & Cuisine",
+    "price": 9900,
+    "compareAtPrice": 17000,
+    "costPrice": 1800,
+    "stock": 85,
+    "imageUrl": "https://s.alicdn.com/@sc04/kf/Hca3c375919a94f1486baeaed0eda11e2l.png_960x960q80.jpg",
+    "isFeatured": true,
+    "featuredOrder": 3,
+    "packs": [
+      {
+        "id": "pack-1-filtre-eau",
+        "name": "1x Purificateur d'Eau pour Robinet 6 Couches (Pack Découverte)",
+        "subtitle": "Idéal pour tester sur l'évier de la cuisine ou le lavabo",
+        "badge": "Offre Découverte",
+        "quantity": 1,
+        "price": 9900,
+        "compareAtPrice": 17000,
+        "isPopular": false,
+        "position": 0
+      },
+      {
+        "id": "pack-2-filtre-eau",
+        "name": "2x Purificateurs d'Eau pour Robinet 6 Couches (Pack Duo Sérénité)",
+        "subtitle": "1 pour la cuisine + 1 pour la salle de bain ou en réserve (-2 900 FCFA d'économie)",
+        "badge": "🔥 LE PLUS POPULAIRE (Recommandé)",
+        "quantity": 2,
+        "price": 16900,
+        "compareAtPrice": 32000,
+        "isPopular": true,
+        "position": 1
+      },
+      {
+        "id": "pack-3-filtre-eau",
+        "name": "3x Purificateurs d'Eau pour Robinet 6 Couches (Pack Protection Totale)",
+        "subtitle": "Protection intégrale de toute la maison (Seulement 7 633 FCFA par purificateur)",
+        "badge": "💎 ÉCONOMIE MAXIMALE",
+        "quantity": 3,
+        "price": 22900,
+        "compareAtPrice": 48000,
+        "isPopular": false,
+        "position": 2
+      }
+    ]
+  },
+  "landingData": {
+    "heroImage": "https://s.alicdn.com/@sc04/kf/Hca3c375919a94f1486baeaed0eda11e2l.png_960x960q80.jpg",
+    "headline": "Purificateur d'Eau pour Robinet 6 Couches OyaMarket™ – Protégez Vos Enfants & Buvez une Eau Pure, Cristalline et Sans Chlore Ni Rouille Directement au Robinet",
+    "rating": 4.9,
+    "reviewsCount": 1640,
+    "stockBadge": "En stock à Cotonou • Expédition Express 24h-48h partout au Bénin • Paiement Cash ou MoMo après Vérification du Colis",
+    "keyArguments": [
+      "Filtration nanométrique 6 couches : bloque la rouille, la boue, le chlore piquant, les métaux lourds et les parasites intestinaux",
+      "Stop au gaspillage financier : économisez plus de 20 000 FCFA/mois en sachets d'eau douteux et bouteilles minérales",
+      "Installation universelle en 10 secondes chrono : compatible avec 99% des robinets ronds sans aucun outil ni plombier"
+    ],
+    "shippingRibbon": [
+      "🚚 Livraison Express à Cotonou, Calavi & tout le Bénin (24h-48h)",
+      "💵 Paiement à la Livraison (Ouvrez et vérifiez le colis devant le livreur avant de payer)",
+      "🛡️ Garantie Sérénité OyaMarket 30 Jours Satisfait ou Échangé à Neuf",
+      "⭐ Déjà plus de 3 120 familles béninoises protégées au quotidien"
+    ],
+    "packs": [
+      {
+        "id": 1,
+        "quantity": 1,
+        "title": "Pack 1 : Découverte (1 Purificateur 6 Couches)",
+        "label": "Pack 1 : Découverte (1 Purificateur 6 Couches)",
+        "name": "1x Purificateur d'Eau pour Robinet 6 Couches",
+        "subtitle": "Kit complet avec collier de serrage inox universel et notice d'installation",
+        "price": 9900,
+        "originalPrice": 17000,
+        "compareAtPrice": 17000,
+        "badge": "Offre Individuelle",
+        "isPopular": false,
+        "popular": false
+      },
+      {
+        "id": 2,
+        "quantity": 2,
+        "title": "Pack 2 : Duo Sérénité (2 Purificateurs 6 Couches) – RECOMMANDÉ",
+        "label": "Pack 2 : Duo Sérénité (2 Purificateurs 6 Couches) – RECOMMANDÉ",
+        "name": "2x Purificateurs d'Eau pour Robinet 6 Couches (Pack Duo)",
+        "subtitle": "1 pour la cuisine + 1 pour la salle de bain ou recharge de secours (Économie immédiate de 2 900 FCFA)",
+        "price": 16900,
+        "originalPrice": 32000,
+        "compareAtPrice": 32000,
+        "badge": "🔥 LE PLUS POPULAIRE (Recommandé)",
+        "isPopular": true,
+        "popular": true
+      },
+      {
+        "id": 3,
+        "quantity": 3,
+        "title": "Pack 3 : Protection Totale (3 Purificateurs 6 Couches)",
+        "label": "Pack 3 : Protection Totale (3 Purificateurs 6 Couches)",
+        "name": "3x Purificateurs d'Eau pour Robinet 6 Couches (Pack Famille)",
+        "subtitle": "Sécurité intégrale de toute la maison (Prix imbattable : 7 633 FCFA / filtre - Économie massive de 25 100 FCFA)",
+        "price": 22900,
+        "originalPrice": 48000,
+        "compareAtPrice": 48000,
+        "badge": "💎 ÉCONOMIE MAXIMALE",
+        "isPopular": false,
+        "popular": false
+      }
+    ],
+    "trustBadges": [
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232043/oyamarket/icons/icon_livraison.png",
+        "title": "Livraison Express Partout au Bénin",
+        "subtitle": "Expédition rapide 24h (Cotonou/Calavi) à 48h (Toutes provinces)"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232045/oyamarket/icons/icon_paiement.png",
+        "title": "Paiement 100% à la Livraison",
+        "subtitle": "Ouvrez et inspectez le colis avant de régler en espèces ou MoMo"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232046/oyamarket/icons/icon_garantie.png",
+        "title": "Garantie Sérénité 30 Jours",
+        "subtitle": "Remplacement à neuf immédiat et sans tracas en cas de défaut"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232047/oyamarket/icons/icon_support.png",
+        "title": "Support Technique 7j/7 au Bénin",
+        "subtitle": "Assistance d'installation WhatsApp & téléphonique dédiée"
+      }
+    ],
+    "gallery": [
+      "https://s.alicdn.com/@sc04/kf/Hca3c375919a94f1486baeaed0eda11e2l.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/Hf7e012bed37d41a88886cd9e9edcc6e9O.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/H82e53c8bcd6a45ab8f9de3f8a008f5c5B.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/H408a8b8e7de84b46aca8265c73484c84C.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/H5b70a71f1afd4b0e93a78f95b9f95517u.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/Hfca85412fbd24aefbdfb00caf279bcefh.png_960x960q80.jpg"
+    ],
+    "twoStepsTitle": "Chaque verre d'eau du robinet non filtrée expose votre famille aux impuretés, au chlore et aux tuyaux rouillés",
+    "twoStepsDesc": "Au Bénin, que vous soyez branché sur le réseau d'eau de la SONEB ou sur un forage de quartier, l'eau qui coule de votre robinet transporte souvent des particules invisibles : résidus d'anciennes canalisations rouillées, excès de chlore qui brûle la gorge, particules de sable et bactéries. Pour s'en prémunir, beaucoup de foyers dépensent une fortune chaque semaine en packs d'eau minérale lourds à porter ou en sachets d'eau 'pure water' dont personne ne contrôle l'hygiène réelle. Le Purificateur d'Eau 6 Couches OyaMarket™ élimine la menace à la source : encliquetez-le en 10 secondes sur votre robinet et obtenez instantanément une eau saine, douce, minéralisée et savoureuse pour toute la famille.",
+    "twoStepsBullets": [
+      "Élimine 99% des résidus nocifs : filtre le chlore résiduel, la rouille, les sédiments, les métaux lourds et les micro-parasites",
+      "Installation instantanée en 10 secondes : s'emboîte fermement sur votre robinet sans tournevis, ni travaux de plomberie",
+      "Buse aérateur anti-éclaboussures : réduit les projections d'eau sale sur votre plan de travail tout en économisant 30% d'eau"
+    ],
+    "beforeAfterImage": "https://s.alicdn.com/@sc04/kf/Hf7e012bed37d41a88886cd9e9edcc6e9O.png_960x960q80.jpg",
+    "beforeAfter": {
+      "badge": "Santé Familiale & Économies Réelles",
+      "title": "Offrez à vos enfants une eau d'une pureté irréprochable à chaque gorgée",
+      "description": "Que ce soit pour remplir les gourdes scolaires de vos enfants, rincer les légumes du marché, préparer les biberons ou cuisiner le riz sans goût chimique, le purificateur OyaMarket™ dresse une barrière infranchissable contre la saleté et les contaminants.",
+      "image": "https://s.alicdn.com/@sc04/kf/Hf7e012bed37d41a88886cd9e9edcc6e9O.png_960x960q80.jpg",
+      "benefits": [
+        {
+          "title": "Système de Purification 6 Niveaux Nanométriques",
+          "desc": "Associe charbon actif de coco haute densité, zéolite adsorbante, sulfite de calcium anti-chlore, pierres Maifan reminéralisantes et doubles filtres microniques."
+        },
+        {
+          "title": "Élimination Radicale du Chlore & des Mauvaises Odeurs",
+          "desc": "Fini l'odeur piquante de javel et l'arrière-goût métallique : l'eau retrouve une saveur douce, fraîche et agréable en bouche qui incite les enfants à bien s'hydrater."
+        },
+        {
+          "title": "Économie Directe de Plus de 20 000 FCFA par Mois",
+          "desc": "Plus besoin d'acheter ni de transporter des casiers d'eau minérale ou des paquets de 'pure water'. Un seul filtre traite plusieurs milliers de litres d'eau."
+        }
+      ]
+    },
+    "benefitCards": [
+      {
+        "title": "Filtration Nanométrique 6 Couches Synergiques",
+        "desc": "Chaque goutte traverse successivement le tissu non-tissé PVA, la zéolite naturelle, le sulfite de calcium, le charbon actif de coco, les pierres Maifan et le filtre micronique pour une neutralisation complète des impuretés."
+      },
+      {
+        "title": "Embout Souple Universel & Collier Inox Inclus",
+        "desc": "Moulé en silicone thermoformable ultra-élastique avec bague de serrage en acier inoxydable fournie : il s'adapte hermétiquement à tous les robinets de 15 à 32 mm sans aucun risque de fuite ni de décrochage."
+      },
+      {
+        "title": "Aérateur Anti-Éclaboussures & Économie d'Eau 30%",
+        "desc": "Diffuse un jet moussant doux, dense et uniforme qui empêche l'eau de rejaillir sur votre plan de travail ou vos vêtements pendant la vaisselle, tout en optimisant la facture d'eau de la maison."
+      }
+    ],
+    "threeInOneCards": [
+      {
+        "title": "Protection Santé & Zéro Maux de Ventre",
+        "desc": "Préservez vos enfants des amibes, vers intestinaux et bactéries opportunistes qui prolifèrent dans les vieilles canalisations d'eau non traitées."
+      },
+      {
+        "title": "Cuisine Plus Savoureuse & Fruits Sains",
+        "desc": "Rincez vos crudités, tomates et condiments sans y déposer de chlore ni de pesticides résiduels. Vos soupes, sauces et bouillies révèlent toute leur saveur naturelle."
+      },
+      {
+        "title": "Installation Éclair Sans Aucun Outil en 10s",
+        "desc": "Aucune dépense en plombier ni modification compliquée de tuyauterie : glissez simplement le manchon sur le col du robinet et profitez immédiatement d'une eau saine."
+      }
+    ],
+    "steps": [
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232038/oyamarket/icons/step_num_1.png",
+        "title": "Préparez votre robinet",
+        "desc": "Essuyez le bec de votre robinet de cuisine ou de salle de bain pour retirer les dépôts extérieurs ou dévissez l'ancien aérateur si présent."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232039/oyamarket/icons/step_num_2.png",
+        "title": "Emboîtez le purificateur OyaMarket™",
+        "desc": "Glissez l'embout en caoutchouc silicone souple directement sur l'embouchure de votre robinet jusqu'à ce qu'il soit bien enfoncé."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232040/oyamarket/icons/step_num_3.png",
+        "title": "Serrez le collier inox fourni",
+        "desc": "Ajustez la bague métallique de serrage à l'aide de sa molette intégrée pour verrouiller le filtre et garantir une étanchéité parfaite sous pression."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232041/oyamarket/icons/step_num_4.png",
+        "title": "Buvez et cuisinez en toute sérénité",
+        "desc": "Ouvrez l'eau et laissez couler 5 à 10 secondes : votre eau ressort limpide, déchlorée, adoucie et enrichie en minéraux bénéfiques !"
+      }
+    ],
+    "unboxing": {
+      "image": "https://s.alicdn.com/@sc04/kf/Hca3c375919a94f1486baeaed0eda11e2l.png_960x960q80.jpg",
+      "title": "Ce que contient votre coffret OyaMarket™",
+      "items": [
+        "1x Purificateur d'Eau pour Robinet 6 Couches OyaMarket™ (Charbon Actif de Coco, Zéolite & Minéraux Maifan)",
+        "1x Bague de fixation universelle en silicone élastique thermo-résistante (compatible robinets ronds de 15 à 32 mm)",
+        "1x Collier de serrage haute précision en acier inoxydable anti-corrosion avec vis de blocage",
+        "1x Guide d'installation rapide et d'entretien illustré en français",
+        "🎁 BONUS OFFERT (Valeur 5 000 FCFA) : Guide Numérique 'Guide Pratique de l'Eau Saine au Bénin : Comment Protéger sa Famille des Parasites & Bactéries' envoyé directement sur votre WhatsApp après réception du colis"
+      ],
+      "ctaText": "Commander Mon Purificateur d'Eau & Payer à la Livraison"
+    },
+    "unboxingImage": "https://s.alicdn.com/@sc04/kf/Hca3c375919a94f1486baeaed0eda11e2l.png_960x960q80.jpg",
+    "unboxingItems": [
+      "1x Purificateur d'Eau pour Robinet 6 Couches OyaMarket™ (Charbon Actif de Coco, Zéolite & Minéraux Maifan)",
+      "1x Bague de fixation universelle en silicone élastique thermo-résistante (compatible robinets ronds de 15 à 32 mm)",
+      "1x Collier de serrage haute précision en acier inoxydable anti-corrosion avec vis de blocage",
+      "1x Guide d'installation rapide et d'entretien illustré en français",
+      "🎁 BONUS OFFERT (Valeur 5 000 FCFA) : Guide Numérique 'Guide Pratique de l'Eau Saine au Bénin : Comment Protéger sa Famille des Parasites & Bactéries' envoyé directement sur votre WhatsApp après réception du colis"
+    ],
+    "clientPhotos": [
+      "https://s.alicdn.com/@sc04/kf/Hca3c375919a94f1486baeaed0eda11e2l.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/Hf7e012bed37d41a88886cd9e9edcc6e9O.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/H82e53c8bcd6a45ab8f9de3f8a008f5c5B.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/H408a8b8e7de84b46aca8265c73484c84C.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/H5b70a71f1afd4b0e93a78f95b9f95517u.png_960x960q80.jpg",
+      "https://s.alicdn.com/@sc04/kf/Hfca85412fbd24aefbdfb00caf279bcefh.png_960x960q80.jpg"
+    ],
+    "reviews": [
+      {
+        "name": "Marcellin Houessou",
+        "city": "Cotonou (Akpakpa PK3)",
+        "avatar": "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "À Akpakpa, l'eau du robinet sort souvent avec une coloration rougeâtre de rouille quand la SONEB rétablit la pression après coupure. J'étais très sceptique sur les achats en ligne, mais le fait de pouvoir payer à la livraison m'a convaincu. Le livreur est venu à mon domicile, j'ai ouvert le paquet, j'ai vérifié le filtre et le collier inox avant de payer les 9 900 FCFA. Je l'ai clipsé direct sur mon robinet de cuisine. C'est incroyable : l'eau sort totalement transparente, plus aucune trace de rouille ni cette odeur piquante de javel. Mes enfants boivent maintenant directement sans craindre les maux de ventre !"
+      },
+      {
+        "name": "Reine Dossou-Gbaguidi",
+        "city": "Abomey-Calavi (Tankpè)",
+        "avatar": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Chez nous à Tankpè, nous utilisons l'eau d'un forage de quartier. Elle laissait toujours un dépôt calcaire blanchâtre au fond des carafes et mes deux garçons se plaignaient constamment de coliques. J'ai pris le Pack Duo à 16 900 FCFA pour mettre un filtre à la cuisine et un au robinet du lavabo. Dès le premier jour, une différence spectaculaire : l'eau est douce, très agréable à boire et sans aucun arrière-goût terreux. En plus, nous économisons au bas mot 25 000 FCFA par mois qu'on jetait dans les sachets d'eau 'pure water' de rue !"
+      },
+      {
+        "name": "Serge Gandonou",
+        "city": "Porto-Novo (Ouando)",
+        "avatar": "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Livraison reçue au marché Ouando en moins de 24h chrono. J'ai inspecté la boîte devant le livreur et j'ai réglé par MoMo sans tracas. L'installation a pris 10 secondes montre en main : pas besoin de clé ni de téflon, l'embout élastique s'agrippe parfaitement au robinet et le collier inox bloque tout. Avant, quand je préparais les bouillies pour les enfants, l'odeur du chlore gâchait tout. Désormais, l'eau est pure comme de l'eau de source. Le jet anti-éclaboussures est un régal, fini l'eau qui gicle partout sur l'évier !"
+      },
+      {
+        "name": "Flora Hounkpati",
+        "city": "Cotonou (Fidjrossè)",
+        "avatar": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Je suis très pointilleuse sur l'hygiène alimentaire. Laver les salades et les crudités avec l'eau brute du robinet me faisait toujours peur à cause des amibes et des bactéries. Ce purificateur 6 couches a changé notre quotidien. Quand on regarde à travers le plastique transparent après 3 semaines, on voit nettement les particules et les saletés marron piégées dans la première couche de tissu PVA... Ça fait froid dans le dos de penser qu'on avalait tout ça avant ! Le service client OyaMarket m'a même écrit sur WhatsApp pour prendre des nouvelles."
+      },
+      {
+        "name": "Dr. Yacoubou Mama",
+        "city": "Parakou (Banikanni)",
+        "avatar": "https://images.unsplash.com/photo-1507152832244-10d45c7eda57?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "En tant que professionnel de santé à Parakou, je reçois chaque semaine des consultations pour parasitoses digestives d'origine hydrique. J'ai commandé le Pack 3 (Protection Totale) pour équiper les 3 robinets de ma maison. J'ai été surpris par la qualité technique : la combinaison zéolite naturelle, charbon actif de coco et pierres Maifan est scientifiquement reconnue pour neutraliser les composés volatils, retenir les métaux lourds et rééquilibrer le pH. Reçu en 48h à Parakou avec paiement à la réception. Un investissement indispensable pour toute famille soucieuse de sa santé."
+      },
+      {
+        "name": "Christian de Souza",
+        "city": "Cotonou (Haie Vive)",
+        "avatar": "https://images.unsplash.com/photo-1589156280159-27698a70f29e?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "J'en avais marre de stocker des dizaines de bouteilles en plastique vides dans ma cuisine et de porter des packs de 1,5L sous le soleil. Avec ce filtre OyaMarket™, j'ai résolu deux problèmes d'un coup : une eau de dégustation excellente pour le thé et le café sans arrière-goût de tuyauterie, et un jet mousseux doux qui ne projette plus d'eau hors du bac de l'évier. Le guide bonus reçu sur WhatsApp donne des conseils très pertinents pour prolonger la durée du filtre. Excellent rapport qualité/prix."
+      }
+    ],
+    "accordions": [
+      {
+        "title": "Composition Détaillée des 6 Couches de Filtration & Action Purifiante",
+        "content": "• Couche 1 - Tissu non-tissé PVA haute densité : Barrière mécanique initiale qui intercepte les macro-particules en suspension (sable, boue, débris végétaux, rouille des vieilles tuyauteries).\n• Couche 2 - Zéolite minérale microporeuse naturelle : Matériau volcanique échangeur d'ions qui adsorbe sélectivement les métaux lourds toxiques (plomb, mercure, fer rouillé, résidus d'arsenic) et piège l'ammoniaque.\n• Couche 3 - Granules de Sulfite de Calcium : Déchlorinateur à haute vitesse qui neutralise instantanément 99% du chlore libre résiduel responsable de l'odeur piquante d'eau de javel et de l'irritation des muqueuses.\n• Couche 4 - Charbon Actif de Coquille de Noix de Coco Ultra-Pur : Structure poreuse nanométrique supérieure qui élimine les composés organiques volatils (COV), résidus de pesticides, solvants chimiques et neutralise tout mauvais goût ou odeur parasitaire.\n• Couche 5 - Pierres Minérales Maifan Biomimétiques : Minéraux médicinaux naturels qui enrichissent l'eau filtrée en oligo-éléments essentiels (calcium, magnésium, potassium, sodium) et stabilisent le pH vers une eau douce et alcaline bienfaisante.\n• Couche 6 - Filtre Micronique de Sortie en Coton Compacté : Polissage ultime du flux d'eau qui retient toute micro-poussière restante et stabilise le jet avant l'aérateur à micro-buses.",
+        "defaultOpen": true
+      },
+      {
+        "title": "Compatibilité avec Vos Robinets & Installation Sans Outil en 10 Secondes",
+        "content": "• Compatibilité universelle (99% des foyers) : Grâce à son manchon extensible en silicone élastique thermoformable haute résistance, le Purificateur OyaMarket™ s'adapte à tous les robinets ronds standard d'un diamètre compris entre 15 mm et 32 mm.\n• Robinets compatibles : Robinets cols de cygne d'évier de cuisine, mélangeurs et mitigeurs récents ou anciens, robinets de lavabo de salle de bain, robinets extérieurs de jardin ou de buanderie.\n• Fixation renforcée anti-pression : Chaque filtre est livré avec un collier de serrage ajustable en acier inoxydable 304 anti-rouille doté d'une molette de réglage. Il garantit que le filtre reste fermement ancré sans glisser ni s'éjecter même sous une forte pression d'eau de la SONEB.\n• Zéro outil requis : Pas besoin de clé à molette, de tournevis spécifique, de téflon ni d'appel à un plombier. Vous le fixez en 10 secondes montre en main.\n• Durée de vie & Entretien : Chaque cartouche filtre entre 1 500 et 2 000 litres d'eau (environ 2 à 3 mois d'utilisation quotidienne pour une famille de 4 à 6 personnes). Dès que la première couche de tissu PVA brunit sous l'accumulation des impuretés retenues, il vous suffit de remplacer la cartouche pour repartir sur une protection optimale.",
+        "defaultOpen": false
+      },
+      {
+        "title": "Modalités de Livraison Partout au Bénin & Garantie Sérénité 30 Jours",
+        "content": "• Zéro avance financière exigée : Vous ne payez absolument rien à la commande sur notre boutique en ligne. Aucune carte bancaire, aucun code de transfert mobile money requis à l'avance.\n• Confirmation téléphonique immédiate : Dès la validation de votre panier, un conseiller clientèle OyaMarket basé au Bénin vous appelle pour vérifier vos coordonnées et caler votre créneau de livraison adapté à votre emploi du temps.\n• Délais de livraison express : 24 heures chrono pour Cotonou, Abomey-Calavi, Porto-Novo et leurs environs immédiats. 48 heures pour Parakou, Bohicon, Natitingou, Ouidah et le reste des villes du Bénin.\n• Inspection totale avant paiement (Inversion du Risque COD) : À l'arrivée de notre livreur à votre domicile ou lieu de travail, vous déballez le colis en sa présence, vous examinez le purificateur et ses accessoires. Vous ne réglez les 9 900 FCFA (ou le prix de votre pack) qu'une fois 100% rassuré(e) et satisfait(e).\n• Règlement flexible : Paiement en espèces en mains propres au livreur ou par Mobile Money (MTN MoMo / Moov Money) sur place.\n• Garantie Sérénité OyaMarket 30 Jours : Si le purificateur ne convient pas à votre robinet ou présente le moindre défaut de fabrication, nous envoyons un livreur pour procéder à un remplacement à neuf ou un échange immédiat et sans frais.",
+        "defaultOpen": false
+      }
+    ],
+    "faq": [
+      {
+        "q": "Ce filtre s'adapte-t-il vraiment sur mon robinet à la maison ?",
+        "a": "Oui, absolument ! Le purificateur OyaMarket™ est doté d'un embout en silicone élastique ultra-souple et extensible qui épouse parfaitement tous les robinets ronds dont le diamètre se situe entre 15 et 32 mm (ce qui représente 99% des robinets de cuisine et salle de bain au Bénin). De plus, le collier de serrage en acier inoxydable inclus dans votre coffret permet de resserrer la bague pour une étanchéité parfaite sans aucune fuite d'eau sur les côtés."
+      },
+      {
+        "q": "L'eau filtrée est-elle véritablement propre et buvable pour mes enfants ?",
+        "a": "Tout à fait. Le système de filtration 6 couches combine une filtration mécanique nanométrique (qui bloque les particules de rouille, sables et amibes) avec une absorption chimique naturelle par le charbon actif de coco et le sulfite de calcium (qui éliminent 99% du chlore et des odeurs). L'eau ressort saine, inodore et enrichie en minéraux naturels grâce aux pierres Maifan. Vous pouvez l'utiliser en toute sécurité pour boire, préparer les biberons de vos bébés, cuisiner ou rincer vos aliments."
+      },
+      {
+        "q": "Quelle est la durée de vie du filtre et quand faut-il le changer ?",
+        "a": "Un filtre traite efficacement entre 1 500 et 2 000 litres d'eau, ce qui équivaut en moyenne à 2 à 3 mois d'utilisation pour un foyer de 4 à 6 personnes. Grâce à son boîtier transparent ergonomique, vous voyez en temps réel les impuretés s'accumuler. Dès que la couche supérieure non-tissée brunit ou que le débit ralentit visiblement, il est temps de remplacer la tête de filtration. C'est pourquoi nous recommandons le Pack Duo (2 unités) ou le Pack Protection Totale (3 unités) pour assurer la couverture de toute l'année à tarif très réduit."
+      },
+      {
+        "q": "Fonctionne-t-il aussi bien sur l'eau de la SONEB que sur l'eau de forage ou de puits ?",
+        "a": "Oui ! Il est particulièrement performant dans les deux situations : sur l'eau de la SONEB, il neutralise l'excès de chlore piquant et la rouille des vieilles canalisations métalliques. Sur l'eau de forage ou de puits (très répandue à Calavi, Akpakpa, Ouando ou Parakou), la zéolite et le filtre PVA retiennent les particules sableuses, réduisent la dureté calcaire et suppriment tout goût terreux résiduel."
+      },
+      {
+        "q": "Comment fonctionne le paiement à la livraison au Bénin ?",
+        "a": "Chez OyaMarket, votre sécurité est absolue : vous ne versez aucun centime à l'avance. Vous passez simplement commande en indiquant votre nom, téléphone et ville. Notre service client vous appelle pour confirmer, puis notre livreur se déplace chez vous. Vous ouvrez le colis devant lui, vous inspectez le matériel et vous réglez uniquement une fois satisfait, en espèces ou par Mobile Money (MTN / Moov)."
+      },
+      {
+        "q": "Le filtre ne risque-t-il pas de réduire trop fortement la pression de l'eau ?",
+        "a": "Non. Le purificateur est doté d'une buse aérateur à micro-perforations de précision qui optimise le débit. Il maintient une pression de sortie agréable et vigoureuse tout en aérant le jet (effet anti-éclaboussures), ce qui permet même de réaliser une économie d'eau d'environ 30% par rapport à un robinet classique non équipé."
+      }
+    ]
+  }
+}

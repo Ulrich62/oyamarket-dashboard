@@ -253,8 +253,8 @@ export function MediaGallery({ initialMedias }: MediaGalleryProps) {
                     {media.format || media.resourceType}
                   </span>
 
-                  {/* Quick Action Overlay on hover */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-2">
+                  {/* Quick Action Overlay on hover (desktop) */}
+                  <div className="hidden md:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center gap-2 p-2">
                     <button
                       onClick={() => handleCopy(media.url, media.id)}
                       title="Copier le lien public"
@@ -300,13 +300,52 @@ export function MediaGallery({ initialMedias }: MediaGalleryProps) {
                 </div>
 
                 {/* Footer Info */}
-                <div className="p-3 flex flex-col gap-1 border-t border-line/60 bg-bg-elev/80">
+                <div className="p-2.5 sm:p-3 flex flex-col gap-1.5 border-t border-line/60 bg-bg-elev/80">
                   <p className="text-xs font-medium text-ink truncate" title={media.name}>
                     {media.name}
                   </p>
-                  <div className="flex items-center justify-between text-[11px] text-ink-3 font-mono">
+                  <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-ink-3 font-mono">
                     <span>{formatFileSize(media.bytes)}</span>
                     <span className="font-sans text-ink-4">{formatDate(media.createdAt)}</span>
+                  </div>
+
+                  {/* Mobile Touch Action Buttons Bar */}
+                  <div className="flex items-center justify-between pt-1.5 border-t border-line-soft md:hidden">
+                    <button
+                      onClick={() => handleCopy(media.url, media.id)}
+                      className={cn(
+                        "inline-flex items-center gap-1 text-[10px] font-medium px-2 py-1 rounded-md border transition-colors",
+                        copiedId === media.id
+                          ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+                          : "bg-bg-elev text-ink-3 hover:text-ink border-line"
+                      )}
+                    >
+                      {copiedId === media.id ? (
+                        <Check className="w-3 h-3 text-emerald-400" />
+                      ) : (
+                        <Copy className="w-3 h-3" />
+                      )}
+                      <span>{copiedId === media.id ? "Copié !" : "Lien"}</span>
+                    </button>
+
+                    <div className="flex items-center gap-1">
+                      <a
+                        href={media.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1 rounded-md text-ink-3 hover:text-ink bg-bg-elev border border-line"
+                        title="Ouvrir le média"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                      <button
+                        onClick={() => setMediaToDelete(media)}
+                        className="p-1 rounded-md text-red-400 bg-red-500/10 border border-red-500/20"
+                        title="Supprimer ce média"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </div>
                   </div>
                 </div>
 

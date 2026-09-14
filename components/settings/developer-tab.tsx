@@ -184,29 +184,29 @@ function EndpointCard({ ep }: { ep: Endpoint }) {
               <p className="text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono mb-2">
                 {ep.params ? "Query params" : "Request body (JSON)"}
               </p>
-              <div className="rounded-lg border border-line overflow-hidden">
+              <div className="rounded-lg border border-line overflow-x-auto">
                 <table className="w-full text-[12px]">
                   <thead>
                     <tr className="border-b border-line bg-bg-elev/60">
-                      <th className="text-left px-3 py-2 text-ink-4 font-mono font-medium">Champ</th>
-                      <th className="text-left px-3 py-2 text-ink-4 font-mono font-medium">Type</th>
-                      <th className="text-left px-3 py-2 text-ink-4 font-mono font-medium">Requis</th>
-                      <th className="text-left px-3 py-2 text-ink-4 font-mono font-medium">Description</th>
+                      <th className="text-left px-3 py-2 text-ink-4 font-mono font-medium whitespace-nowrap">Champ</th>
+                      <th className="text-left px-3 py-2 text-ink-4 font-mono font-medium whitespace-nowrap">Type</th>
+                      <th className="text-left px-3 py-2 text-ink-4 font-mono font-medium whitespace-nowrap">Requis</th>
+                      <th className="text-left px-3 py-2 text-ink-4 font-mono font-medium whitespace-nowrap">Description</th>
                     </tr>
                   </thead>
                   <tbody>
                     {(ep.params ?? ep.body)?.map((p) => (
                       <tr key={p.name} className="border-b border-line last:border-0">
-                        <td className="px-3 py-2 font-mono text-ink">{p.name}</td>
-                        <td className="px-3 py-2 text-blue-400 font-mono">{p.type}</td>
-                        <td className="px-3 py-2">
+                        <td className="px-3 py-2 font-mono text-ink whitespace-nowrap">{p.name}</td>
+                        <td className="px-3 py-2 text-blue-400 font-mono whitespace-nowrap">{p.type}</td>
+                        <td className="px-3 py-2 whitespace-nowrap">
                           {p.required ? (
                             <span className="text-accent text-[10px] font-bold">OUI</span>
                           ) : (
                             <span className="text-ink-4 text-[10px]">non</span>
                           )}
                         </td>
-                        <td className="px-3 py-2 text-ink-3">{p.description}</td>
+                        <td className="px-3 py-2 text-ink-3 min-w-[180px]">{p.description}</td>
                       </tr>
                     ))}
                   </tbody>

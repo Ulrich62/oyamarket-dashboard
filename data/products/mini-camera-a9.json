@@ -1,0 +1,342 @@
+{
+  "product": {
+    "name": "Mini Caméra de Surveillance Espion A9 HD 1080P OyaMarket™ (Wi-Fi, Vision Nocturne, Détection de Mouvement & Fixation Magnétique 360°)",
+    "slug": "mini-camera-a9-wifi-pro",
+    "category": "Sécurité & Maison",
+    "price": 9900,
+    "compareAtPrice": 17000,
+    "costPrice": 2800,
+    "stock": 68,
+    "imageUrl": "https://sc04.alicdn.com/kf/Hc62e560db32b4124a4aaa8ef9014ecfei.jpg",
+    "isFeatured": true,
+    "featuredOrder": 2,
+    "packs": [
+      {
+        "id": "pack-1-camera-a9",
+        "name": "1x Mini Caméra Espion A9 HD 1080P (Pack Découverte)",
+        "subtitle": "Idéal pour surveiller une pièce unique, une caisse ou une entrée",
+        "badge": "Offre Découverte",
+        "quantity": 1,
+        "price": 9900,
+        "compareAtPrice": 17000,
+        "isPopular": false,
+        "position": 0
+      },
+      {
+        "id": "pack-2-camera-a9",
+        "name": "2x Mini Caméras Espion A9 HD 1080P (Pack Duo Sécurité)",
+        "subtitle": "1 pour le salon + 1 pour la boutique ou la chambre des enfants (-2 900 FCFA d'économie)",
+        "badge": "🔥 LE PLUS POPULAIRE (Recommandé)",
+        "quantity": 2,
+        "price": 16900,
+        "compareAtPrice": 32000,
+        "isPopular": true,
+        "position": 1
+      },
+      {
+        "id": "pack-3-camera-a9",
+        "name": "3x Mini Caméras Espion A9 HD 1080P (Pack Protection Totale)",
+        "subtitle": "Protection intégrale de tous vos accès (Seulement 7 966 FCFA par caméra)",
+        "badge": "💎 ÉCONOMIE MAXIMALE",
+        "quantity": 3,
+        "price": 23900,
+        "compareAtPrice": 48000,
+        "isPopular": false,
+        "position": 2
+      }
+    ]
+  },
+  "landingData": {
+    "heroImage": "https://sc04.alicdn.com/kf/Hc62e560db32b4124a4aaa8ef9014ecfei.jpg",
+    "headline": "Mini Caméra Espion A9 HD 1080P OyaMarket™ – Gardez un Œil Discret sur Vos Proches, Votre Boutique & Vos Biens 24h/24 en Direct sur Votre Téléphone",
+    "rating": 4.9,
+    "reviewsCount": 1890,
+    "stockBadge": "En stock à Cotonou • Expédition Express 24h-48h partout au Bénin • Paiement Cash ou MoMo après Vérification du Colis",
+    "keyArguments": [
+      "Résolution Full HD 1080P grand angle 150° & Vision nocturne infrarouge 100% invisible",
+      "Détecteur de mouvement intelligent : alertes et photos envoyées en direct sur votre smartphone (Android & iOS)",
+      "Mode Hybride Connecté & Hors-Ligne : direct Wi-Fi mondial ou enregistrement automatique sur carte micro-SD (Anti-Délestage SBEE)"
+    ],
+    "shippingRibbon": [
+      "🚚 Livraison Express à Cotonou, Calavi & tout le Bénin (24h-48h)",
+      "💵 Paiement à la Livraison (Ouvrez et vérifiez le colis avant de payer)",
+      "🛡️ Garantie Sérénité OyaMarket 30 Jours Satisfait ou Échangé à Neuf",
+      "⭐ Déjà plus de 2 850 foyers et commerçants sécurisés au Bénin"
+    ],
+    "packs": [
+      {
+        "id": 1,
+        "quantity": 1,
+        "title": "Pack 1 : Découverte (1 Mini Caméra A9 HD 1080P)",
+        "label": "Pack 1 : Découverte (1 Mini Caméra A9 HD 1080P)",
+        "name": "1x Mini Caméra Espion A9 HD 1080P",
+        "subtitle": "Coffret complet avec support magnétique 360°, câble semi-rigide USB et notice",
+        "price": 9900,
+        "originalPrice": 17000,
+        "compareAtPrice": 17000,
+        "badge": "Offre Individuelle",
+        "isPopular": false,
+        "popular": false
+      },
+      {
+        "id": 2,
+        "quantity": 2,
+        "title": "Pack 2 : Duo Sécurité (2 Mini Caméras A9 HD 1080P) – RECOMMANDÉ",
+        "label": "Pack 2 : Duo Sécurité (2 Mini Caméras A9 HD 1080P) – RECOMMANDÉ",
+        "name": "2x Mini Caméras Espion A9 HD 1080P (Pack Duo)",
+        "subtitle": "1 pour le salon + 1 pour votre magasin ou chambre nounou (Économie immédiate de 2 900 FCFA)",
+        "price": 16900,
+        "originalPrice": 32000,
+        "compareAtPrice": 32000,
+        "badge": "🔥 LE PLUS POPULAIRE (Recommandé)",
+        "isPopular": true,
+        "popular": true
+      },
+      {
+        "id": 3,
+        "quantity": 3,
+        "title": "Pack 3 : Protection Totale (3 Mini Caméras A9 HD 1080P)",
+        "label": "Pack 3 : Protection Totale (3 Mini Caméras A9 HD 1080P)",
+        "name": "3x Mini Caméras Espion A9 HD 1080P (Pack Famille & Commerce)",
+        "subtitle": "Surveillance intégrale de tous vos accès (Prix imbattable : 7 966 FCFA / caméra - Économie de 24 100 FCFA)",
+        "price": 23900,
+        "originalPrice": 48000,
+        "compareAtPrice": 48000,
+        "badge": "💎 ÉCONOMIE MAXIMALE",
+        "isPopular": false,
+        "popular": false
+      }
+    ],
+    "trustBadges": [
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232043/oyamarket/icons/icon_livraison.png",
+        "title": "Livraison Express Partout au Bénin",
+        "subtitle": "Expédition rapide 24h (Cotonou/Calavi) à 48h (Toutes provinces)"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232045/oyamarket/icons/icon_paiement.png",
+        "title": "Paiement 100% à la Livraison",
+        "subtitle": "Ouvrez et inspectez le colis avant de régler en espèces ou MoMo"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232046/oyamarket/icons/icon_garantie.png",
+        "title": "Garantie Sérénité 30 Jours",
+        "subtitle": "Remplacement à neuf immédiat et sans tracas en cas de défaut"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232047/oyamarket/icons/icon_support.png",
+        "title": "Support Technique 7j/7 au Bénin",
+        "subtitle": "Assistance d'installation WhatsApp & téléphonique dédiée"
+      }
+    ],
+    "gallery": [
+      "https://sc04.alicdn.com/kf/Hc62e560db32b4124a4aaa8ef9014ecfei.jpg",
+      "https://sc04.alicdn.com/kf/Hd3c02cba3fd64e63b5704c822fea5a42w.jpg",
+      "https://sc04.alicdn.com/kf/H2434efae807b47118b113c90fc84815fq.jpg",
+      "https://sc04.alicdn.com/kf/H70cc0ca5147848858e73fb188e9e64ccK.jpg",
+      "https://sc04.alicdn.com/kf/H7c81a454e50a432cbefdb3f6b4648ebfx.jpg",
+      "https://sc04.alicdn.com/kf/H64bac5f53fb64a71b3738260491bd37e9.jpg"
+    ],
+    "twoStepsTitle": "Dormez sur vos deux oreilles : gardez le contrôle total sur votre maison ou commerce, même à l'autre bout de la ville",
+    "twoStepsDesc": "Faire appel à un installateur de caméras à Cotonou coûte souvent plus de 150 000 FCFA avec des tranchées, des trous dans les murs et des câbles apparents, sans compter les pannes récurrentes au moindre délestage électrique de la SBEE. La Mini Caméra A9 OyaMarket™ brise toutes ces contraintes : pas plus grosse qu'une pièce de 100 FCFA, elle se colle ou s'aimante discrètement en 2 minutes montre en main, fonctionne 24h/24 branchée ou sur batterie relais, et vous transmet en direct ce qui se passe chez vous sur votre téléphone.",
+    "twoStepsBullets": [
+      "Zéro technicien, zéro trou : se fixe en 2 secondes grâce à son puissant socle magnétique orientable à 360°",
+      "Alertes en temps réel : soyez instantanément prévenu avec notification et capture photo au moindre mouvement suspect",
+      "Parée contre les coupures SBEE : batterie interne de secours et enregistrement autonome sur carte micro-SD sans Wi-Fi"
+    ],
+    "beforeAfterImage": "https://sc04.alicdn.com/kf/Hd3c02cba3fd64e63b5704c822fea5a42w.jpg",
+    "beforeAfter": {
+      "badge": "Vigilance Discrète & Totale Sérénité",
+      "title": "Protégez ce qui compte le plus, sans que personne ne s'en doute",
+      "description": "Que ce soit pour vous assurer que la nounou s'occupe bien de vos enfants, vérifier la sincérité des employés à la caisse de votre magasin, surveiller votre véhicule ou dissuader les voleurs la nuit, la caméra A9 capture la vérité sans faire de bruit.",
+      "image": "https://sc04.alicdn.com/kf/Hd3c02cba3fd64e63b5704c822fea5a42w.jpg",
+      "benefits": [
+        {
+          "title": "Ultra-compacte (3,5 cm) & 100% Invisible",
+          "desc": "Se glisse n'importe où : sur un réfrigérateur, dans un pot de fleurs, derrière un livre ou sous une étagère sans éveiller le moindre soupçon."
+        },
+        {
+          "title": "Vision Nocturne Infrarouge Furtive",
+          "desc": "6 micro-LEDs infrarouges haute intensité non rougeoyantes qui n'émettent aucune lumière la nuit, pour filmer dans le noir absolu jusqu'à 8 mètres."
+        },
+        {
+          "title": "Autonomie Hybride & Résilience Hors-Ligne",
+          "desc": "Fonctionne en direct Wi-Fi à distance ou en boucle fermée autonome avec carte micro-SD (jusqu'à 128 Go) même en cas de coupure de courant ou de panne internet."
+        }
+      ]
+    },
+    "benefitCards": [
+      {
+        "title": "Grand Angle 150° Full HD 1080P",
+        "desc": "Lentille optique en verre multicouche qui couvre une pièce entière d'un seul coup d'œil sans distorsion ni angle mort."
+      },
+      {
+        "title": "Détecteur de Mouvement Intelligent",
+        "desc": "L'intelligence embarquée repère tout passage humain ou animal, déclenche instantanément l'enregistrement et envoie une alerte push avec photo sur votre téléphone."
+      },
+      {
+        "title": "Fixation Magnétique 360° Sans Travaux",
+        "desc": "Aimant intégré ultra-puissant : fixez la caméra sur toute surface métallique ou utilisez le support adhésif orientable multi-angles sans percer vos murs."
+      }
+    ],
+    "threeInOneCards": [
+      {
+        "title": "Grand Angle 150° Full HD 1080P",
+        "desc": "Lentille optique en verre multicouche qui couvre une pièce entière d'un seul coup d'œil sans distorsion ni angle mort."
+      },
+      {
+        "title": "Détecteur de Mouvement Intelligent",
+        "desc": "L'intelligence embarquée repère tout passage humain ou animal, déclenche instantanément l'enregistrement et envoie une alerte push avec photo sur votre téléphone."
+      },
+      {
+        "title": "Fixation Magnétique 360° Sans Travaux",
+        "desc": "Aimant intégré ultra-puissant : fixez la caméra sur toute surface métallique ou utilisez le support adhésif orientable multi-angles sans percer vos murs."
+      }
+    ],
+    "steps": [
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232038/oyamarket/icons/step_num_1.png",
+        "title": "Allumez la caméra",
+        "desc": "Appuyez sur le bouton ON pendant 3 secondes. Le voyant discret confirme que la caméra est prête."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232039/oyamarket/icons/step_num_2.png",
+        "title": "Connectez à votre smartphone",
+        "desc": "Téléchargez l'application gratuite (Android & iOS) et liez la caméra en 1 clic via son point Wi-Fi direct ou votre box."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232040/oyamarket/icons/step_num_3.png",
+        "title": "Positionnez où vous voulez",
+        "desc": "Posez ou aimantez la caméra sur son socle orientable 360° dans la pièce, le magasin ou le bureau à surveiller."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232041/oyamarket/icons/step_num_4.png",
+        "title": "Surveillez en direct 24h/24",
+        "desc": "Ouvrez l'application à tout moment depuis le bureau ou en déplacement pour regarder la vidéo en direct et revoir l'historique."
+      }
+    ],
+    "unboxing": {
+      "image": "https://sc04.alicdn.com/kf/H64bac5f53fb64a71b3738260491bd37e9.jpg",
+      "title": "Ce que contient votre coffret OyaMarket™",
+      "items": [
+        "1x Mini Caméra Espion A9 Full HD 1080P OyaMarket™ avec vision nocturne",
+        "1x Support magnétique orientable à 360° avec pastille adhésive 3M haute résistance",
+        "1x Câble semi-rigide en col de cygne USB (permet d'orienter la caméra branchée dans n'importe quel angle)",
+        "1x Câble standard de recharge rapide micro-USB renforcé",
+        "1x Manuel d'utilisation complet illustré en français avec QR Code d'aide vidéo",
+        "🎁 BONUS OFFERT (Valeur 5 000 FCFA) : Guide Numérique '10 Astuces Stratégiques pour Sécuriser sa Maison & son Commerce au Bénin' envoyé directement sur votre WhatsApp après réception du colis"
+      ],
+      "ctaText": "Commander Ma Mini Caméra & Payer à la Livraison"
+    },
+    "unboxingImage": "https://sc04.alicdn.com/kf/H64bac5f53fb64a71b3738260491bd37e9.jpg",
+    "unboxingItems": [
+      "1x Mini Caméra Espion A9 Full HD 1080P OyaMarket™ avec vision nocturne",
+      "1x Support magnétique orientable à 360° avec pastille adhésive 3M haute résistance",
+      "1x Câble semi-rigide en col de cygne USB (permet d'orienter la caméra branchée dans n'importe quel angle)",
+      "1x Câble standard de recharge rapide micro-USB renforcé",
+      "1x Manuel d'utilisation complet illustré en français avec QR Code d'aide vidéo",
+      "🎁 BONUS OFFERT (Valeur 5 000 FCFA) : Guide Numérique '10 Astuces Stratégiques pour Sécuriser sa Maison & son Commerce au Bénin' envoyé directement sur votre WhatsApp après réception du colis"
+    ],
+    "clientPhotos": [
+      "https://sc04.alicdn.com/kf/Hc62e560db32b4124a4aaa8ef9014ecfei.jpg",
+      "https://sc04.alicdn.com/kf/Hd3c02cba3fd64e63b5704c822fea5a42w.jpg",
+      "https://sc04.alicdn.com/kf/H2434efae807b47118b113c90fc84815fq.jpg",
+      "https://sc04.alicdn.com/kf/H70cc0ca5147848858e73fb188e9e64ccK.jpg",
+      "https://sc04.alicdn.com/kf/H7c81a454e50a432cbefdb3f6b4648ebfx.jpg",
+      "https://sc04.alicdn.com/kf/H64bac5f53fb64a71b3738260491bd37e9.jpg"
+    ],
+    "reviews": [
+      {
+        "name": "Arnaud Houndégbé",
+        "city": "Cotonou (Akpakpa PK3)",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "J'avais de gros doutes sur les annonces en ligne, surtout pour du matériel électronique. Mais comme OyaMarket propose le paiement à la livraison, je n'avais rien à perdre. Le livreur est arrivé à Akpakpa le lendemain de ma commande. J'ai ouvert le paquet, branché la caméra sur un powerbank et vérifié l'allumage avant de donner les 9 900 FCFA. C'est du solide ! Je l'ai installée au-dessus de ma caisse en boutique : en 4 jours, j'ai déjà repéré une tentative de vol. L'image est ultra nette même de nuit. Je recommande !"
+      },
+      {
+        "name": "Blandine Zannou",
+        "city": "Abomey-Calavi (Tankpè)",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Avec mon mari, nous partons travailler tôt et laissons notre bébé de 8 mois avec une nouvelle nounou. J'avais la boule au ventre toute la journée au service. J'ai pris le Pack Duo à 16 900 FCFA. Une caméra dans le salon et une dans la chambre d'enfant. L'installation a pris 3 minutes sur mon iPhone avec l'application. Maintenant, je peux regarder mon bébé en direct à tout moment. La vision nocturne est magique : même les lumières éteintes, on voit tout parfaitement sans loupiote rouge qui réveille le petit. Quel soulagement !"
+      },
+      {
+        "name": "Roland Sossoukpè",
+        "city": "Cotonou (Haie Vive)",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Ce qui m'inquiétait le plus, c'était les coupures SBEE et l'absence de Wi-Fi quand je voyage en province. J'ai mis une carte mémoire de 64 Go dedans. Même quand le courant coupe ou que la box s'éteint, la caméra continue d'enregistrer sur sa batterie interne puis se recharge dès le retour de l'électricité. Quand je rentre, je visionne tout depuis mon téléphone sans retirer la carte. Qualité 1080P irréprochable et support magnétique très robuste. Reçu à la Haie Vive en moins de 24h."
+      },
+      {
+        "name": "Clarisse Tossou",
+        "city": "Porto-Novo (Ouando)",
+        "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "J'ai commandé depuis Porto-Novo et j'ai été livrée le lendemain midi au marché Ouando. J'ai pu examiner le colis tranquillement avant de payer par Mobile Money au livreur. J'avais peur de ne pas savoir configurer l'application, mais le support WhatsApp d'OyaMarket m'a répondu en 5 minutes pour m'assister pas à pas. La détection de mouvement fonctionne à merveille : dès que quelqu'un passe devant ma porte de réserve, mon téléphone sonne avec la photo. Rapport qualité/prix imbattable à 9 900 FCFA !"
+      },
+      {
+        "name": "Kader Alidou",
+        "city": "Parakou (Banikanni)",
+        "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Habitant Parakou, beaucoup de boutiques refusent le paiement à la livraison ou demandent des frais exorbitants. OyaMarket m'a livré en 48h chrono à Banikanni sans aucune avance financière. J'ai pris le Pack 3 pour surveiller la cour, le magasin d'alimentation et le couloir. Les caméras sont minuscules, impossibles à remarquer si on ne sait pas où chercher. Le câble rigide fourni permet de les orienter exactement comme on veut. Vraiment très satisfait du professionnalisme."
+      },
+      {
+        "name": "Mireille Dossou-Yovo",
+        "city": "Cotonou (Fidjrossè)",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Le guide PDF offert sur WhatsApp après la livraison donne d'excellentes idées pour camoufler la caméra sans entraver le champ de vision. Je l'ai aimantée sur le côté de mon frigo dirigé vers l'entrée du salon. Elle est invisible ! La fluidité de la vidéo en direct sur mon téléphone est bluffante. Le service client m'a contactée pour vérifier si tout fonctionnait bien le lendemain. C'est rassurant d'avoir une vraie garantie 30 jours au Bénin. Merci OyaMarket !"
+      }
+    ],
+    "accordions": [
+      {
+        "title": "Spécifications Techniques, Connectivité & Autonomie",
+        "content": "• Modèle : Mini Caméra Espion Sans Fil A9 Full HD 1080P OyaMarket™\n• Résolution vidéo : Full HD 1080P (1920x1080) à 30 images par seconde avec lentille grand angle optique 150°\n• Vision nocturne : 6 micro-LEDs infrarouges 940 nm totalement invisibles la nuit (zéro lueur rougeoyante), portée 5 à 8 mètres\n• Détection de mouvement : Capteur volumétrique PIR intelligent avec déclenchement d'alerte instantanée et capture photo sur mobile\n• Connectivité sans fil : Wi-Fi 2.4 GHz 802.11 b/g/n (compatible direct Hotspot AP sans routeur et connexion réseau mondial)\n• Compatibilité application mobile : iOS (iPhone/iPad sur App Store) et Android (Google Play Store) - Application 100% gratuite et sans abonnement\n• Stockage : Emplacement pour carte micro-SD TF jusqu'à 128 Go (non incluse) avec enregistrement en boucle automatique (écrase les plus anciens fichiers)\n• Alimentation & Autonomie : Batterie Lithium-ion 300 mAh rechargeable intégrée (environ 60 min d'autonomie autonome en cas de coupure de courant). Fonctionne 24h/24 et 7j/7 en continu branchée sur chargeur USB, prise secteur ou batterie externe (Powerbank)\n• Dimensions & Poids : Diamètre 3,5 cm, épaisseur 2,5 cm, poids plume 29 grammes",
+        "defaultOpen": true
+      },
+      {
+        "title": "Guide d'Installation Rapide en 2 Minutes & Mode Sans Internet",
+        "content": "1. Déballage & Mise en charge : Branchez la caméra pendant 30 minutes avec le câble USB fourni avant la première utilisation.\n2. Téléchargement de l'application : Scannez le QR Code présent dans la notice ou sur l'emballage pour télécharger l'application gratuite sur votre smartphone Android ou iPhone.\n3. Connexion en mode Direct (Sans Wi-Fi / Sans Box) : Allumez la caméra en maintenant le bouton ON/OFF pendant 3 secondes. Sur votre smartphone, ouvrez les paramètres Wi-Fi et connectez-vous au réseau de la caméra (nommé 'ACCQ...' ou 'DBG...'). Ouvrez l'application : l'image en direct s'affiche immédiatement !\n4. Connexion à distance (Depuis n'importe où via Internet) : Dans l'application, cliquez sur l'icône Réglages > Wi-Fi, choisissez votre box Wi-Fi maison ou point d'accès 4G, et tapez votre mot de passe. La caméra est désormais reliée au cloud : vous pouvez regarder le direct depuis votre bureau ou en déplacement.\n5. Utilisation 100% Hors-Ligne avec Carte Micro-SD : Insérez simplement une carte micro-SD (jusqu'à 128 Go) avant d'allumer la caméra. Elle enregistre automatiquement et continuellement dès sa mise en marche, sans besoin de téléphone ni de connexion internet.\n6. Fixation : Retirez le film protecteur de la pastille adhésive du socle magnétique, collez le socle où vous souhaitez, puis aimantez simplement la caméra dessus et orientez-la dans la direction souhaitée.",
+        "defaultOpen": false
+      },
+      {
+        "title": "Modalités de Livraison Partout au Bénin & Garantie Sérénité 30 Jours",
+        "content": "• Zéro avance financière exigée : Vous ne payez absolument rien à la commande sur notre site internet. Aucune carte bancaire, aucun code de transfert mobile money requis à l'avance.\n• Confirmation téléphonique immédiate : Dès la validation de votre panier, un conseiller clientèle OyaMarket basé au Bénin vous appelle pour vérifier vos coordonnées et caler votre créneau de livraison.\n• Délais de livraison express : 24 heures chrono pour Cotonou, Abomey-Calavi, Porto-Novo et environs immédiats. 48 heures pour Parakou, Bohicon, Natitingou, Ouidah et le reste du Bénin.\n• Inspection totale avant paiement (Inversion du Risque) : À l'arrivée de notre livreur, ouvrez le colis en sa présence, vérifiez l'intégrité de l'appareil et des accessoires. Ne réglez les 9 900 FCFA (ou le prix de votre pack) qu'une fois 100% satisfait.\n• Garantie Sérénité OyaMarket 30 Jours : Si la caméra présente le moindre défaut de fabrication, nous envoyons un livreur pour procéder à un remplacement à neuf immédiat et sans frais.",
+        "defaultOpen": false
+      }
+    ],
+    "faq": [
+      {
+        "q": "L'installation est-elle compliquée pour quelqu'un qui n'y connaît rien ?",
+        "a": "Pas du tout ! Aucune compétence technique n'est requise. Il vous suffit de télécharger l'application gratuite sur votre téléphone, d'allumer la caméra et de suivre les 3 clics indiqués dans le guide illustré en français. En moins de 2 minutes, vous visualisez la vidéo en direct. Si vous avez la moindre interrogation, notre support WhatsApp local est disponible 7j/7 pour vous assister en direct."
+      },
+      {
+        "q": "Que se passe-t-il en cas de coupure de courant (délestage SBEE) ?",
+        "a": "La Mini Caméra A9 OyaMarket™ est spécialement pensée pour notre quotidien au Bénin. Elle intègre une batterie rechargeable de secours qui maintient l'enregistrement en cas de coupure. Dès que le courant revient, elle se remet en charge automatique sans aucune manipulation. Vous pouvez également la brancher sur une batterie externe (Powerbank) ordinaire pour une autonomie prolongée de plusieurs jours sans courant."
+      },
+      {
+        "q": "Peut-elle fonctionner si je n'ai pas de box Wi-Fi ou de connexion Internet ?",
+        "a": "Oui, parfaitement ! La caméra possède un double fonctionnement : 1) En mode Hotspot direct, elle émet son propre signal Wi-Fi local permettant de regarder le direct sur votre téléphone à proximité (10-15 mètres). 2) En mode Hors-Ligne autonome, insérez simplement une carte micro-SD (jusqu'à 128 Go) : la caméra enregistrera automatiquement toutes les vidéos 24h/24 en boucle sans avoir besoin de Wi-Fi."
+      },
+      {
+        "q": "Les voyants lumineux ou infrarouges sont-ils visibles la nuit ?",
+        "a": "Non ! La caméra est équipée de 6 micro-LEDs infrarouges de technologie furtive (longueur d'onde 940 nm). Elles sont totalement invisibles à l'œil humain dans l'obscurité (aucune lumière rougeoyante). De plus, vous pouvez désactiver tous les voyants de fonctionnement directement depuis l'application mobile pour une discrétion absolue."
+      },
+      {
+        "q": "Comment puis-je être certain(e) de ne pas me faire arnaquer ?",
+        "a": "Chez OyaMarket, nous appliquons la règle de l'inversion totale du risque : vous ne payez aucun centime à l'avance. À la livraison à votre domicile ou lieu de travail à Cotonou, Calavi ou en province, vous déballez le colis devant le livreur, vous examinez l'appareil et vous ne réglez qu'après vérification complète, en espèces ou par Mobile Money."
+      },
+      {
+        "q": "Que couvre la Garantie Sérénité OyaMarket de 30 jours ?",
+        "a": "Tous nos produits bénéficient d'une garantie échange standard de 30 jours. Si la caméra présente le moindre dysfonctionnement technique (problème de capteur, de charge ou de connexion), vous nous contactez par WhatsApp et nous organisons un échange standard gratuit à neuf directement chez vous."
+      }
+    ]
+  }
+}

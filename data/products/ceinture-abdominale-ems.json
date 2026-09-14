@@ -1,0 +1,334 @@
+{
+  "product": {
+    "name": "Ceinture Abdominale Électrostimulation EMS Sculpteur Pro OyaMarket™",
+    "slug": "ceinture-abdominale-ems-pro",
+    "category": "Santé & Fitness",
+    "price": 14900,
+    "compareAtPrice": 24000,
+    "costPrice": 4500,
+    "stock": 47,
+    "imageUrl": "https://www.10seconds.website/cdn/shop/files/61nTvAXLbmL._SL1000.webp?v=1727131615",
+    "isFeatured": true,
+    "featuredOrder": 1,
+    "packs": [
+      {
+        "id": "pack-1-ems",
+        "name": "1x Ceinture EMS Sculpteur Pro (Offre Découverte)",
+        "subtitle": "Idéal pour sculpter et raffermir sa sangle abdominale à son rythme",
+        "badge": "Offre Découverte",
+        "quantity": 1,
+        "price": 14900,
+        "compareAtPrice": 24000,
+        "isPopular": false,
+        "position": 0
+      },
+      {
+        "id": "pack-2-ems",
+        "name": "2x Ceintures EMS Sculpteur Pro (Pack Duo Sérénité)",
+        "subtitle": "1 pour vous + 1 pour votre partenaire / proche (-5 000 FCFA d'économie)",
+        "badge": "🔥 LE PLUS POPULAIRE (Recommandé)",
+        "quantity": 2,
+        "price": 24900,
+        "compareAtPrice": 45000,
+        "isPopular": true,
+        "position": 1
+      },
+      {
+        "id": "pack-3-ems",
+        "name": "3x Ceintures EMS Sculpteur Pro (Pack Famille / Maxi Économie)",
+        "subtitle": "Le tarif le plus bas : seulement 11 633 FCFA par ceinture",
+        "badge": "💎 ÉCONOMIE MAXIMALE",
+        "quantity": 3,
+        "price": 34900,
+        "compareAtPrice": 65000,
+        "isPopular": false,
+        "position": 2
+      }
+    ]
+  },
+  "landingData": {
+    "heroImage": "https://www.10seconds.website/cdn/shop/files/61nTvAXLbmL._SL1000.webp?v=1727131615",
+    "headline": "Ceinture Abdominale EMS Sculpteur Pro OyaMarket™ – Retrouvez un Ventre Plus Plat, Ferme & Dessiné en 15 Minutes par Jour, Sans Effort Ni Mal de Dos",
+    "rating": 4.9,
+    "reviewsCount": 1420,
+    "stockBadge": "En stock à Cotonou • Expédition Express 24h-48h partout au Bénin • Paiement à la Réception",
+    "keyArguments": [
+      "Technologie Bio-EMS Médicale : 200 contractions musculaires profondes par minute sans douleur",
+      "6 modes d'entraînement & 9 niveaux d'intensité progressifs adaptés à tous les niveaux",
+      "Sans fatigue lombaire ni cervicale : utilisez-la assis au bureau, en voiture ou devant la télé"
+    ],
+    "shippingRibbon": [
+      "🚚 Livraison Express Gratuite à Cotonou, Calavi & tout le Bénin (24-48h)",
+      "💵 Paiement Cash à la Livraison (Vérifiez le colis avant de payer)",
+      "🛡️ Garantie Sérénité OyaMarket 30 Jours Satisfait ou Échangé",
+      "⭐ Déjà plus de 3 400 clients satisfaits au Bénin"
+    ],
+    "packs": [
+      {
+        "id": 1,
+        "quantity": 1,
+        "title": "Pack 1 : Découverte (1 Ceinture EMS Pro)",
+        "label": "Pack 1 : Découverte (1 Ceinture EMS Pro)",
+        "name": "1x Ceinture EMS Sculpteur Pro",
+        "subtitle": "Coffret complet avec chargeur USB et guide d'utilisation",
+        "price": 14900,
+        "originalPrice": 24000,
+        "compareAtPrice": 24000,
+        "badge": "Offre Individuelle",
+        "isPopular": false,
+        "popular": false
+      },
+      {
+        "id": 2,
+        "quantity": 2,
+        "title": "Pack 2 : Duo Sérénité (2 Ceintures EMS Pro) – RECOMMANDÉ",
+        "label": "Pack 2 : Duo Sérénité (2 Ceintures EMS Pro) – RECOMMANDÉ",
+        "name": "2x Ceintures EMS Sculpteur Pro (Pack Duo)",
+        "subtitle": "1 pour vous + 1 pour votre conjoint(e) ou proche (-5 000 FCFA d'économie immédiate)",
+        "price": 24900,
+        "originalPrice": 45000,
+        "compareAtPrice": 45000,
+        "badge": "🔥 LE PLUS POPULAIRE (Recommandé)",
+        "isPopular": true,
+        "popular": true
+      },
+      {
+        "id": 3,
+        "quantity": 3,
+        "title": "Pack 3 : Famille / Maxi Économie (3 Ceintures EMS Pro)",
+        "label": "Pack 3 : Famille / Maxi Économie (3 Ceintures EMS Pro)",
+        "name": "3x Ceintures EMS Sculpteur Pro (Pack Famille)",
+        "subtitle": "Prix unitaire imbattable : 11 633 FCFA / unité (Économie de 30 100 FCFA)",
+        "price": 34900,
+        "originalPrice": 65000,
+        "compareAtPrice": 65000,
+        "badge": "💎 ÉCONOMIE MAXIMALE",
+        "isPopular": false,
+        "popular": false
+      }
+    ],
+    "trustBadges": [
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232043/oyamarket/icons/icon_livraison.png",
+        "title": "Livraison Express Partout au Bénin",
+        "subtitle": "Expédition rapide 24h (Cotonou/Calavi) à 48h (Provinces)"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232045/oyamarket/icons/icon_paiement.png",
+        "title": "Paiement 100% à la Livraison",
+        "subtitle": "Ouvrez et inspectez le colis avant de régler en espèces"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232046/oyamarket/icons/icon_garantie.png",
+        "title": "Garantie Tranquillité 30 Jours",
+        "subtitle": "Remplacement à neuf immédiat en cas de souci"
+      },
+      {
+        "icon": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232047/oyamarket/icons/icon_support.png",
+        "title": "Service Client Dédié 7j/7",
+        "subtitle": "Assistance téléphonique & WhatsApp à votre écoute"
+      }
+    ],
+    "gallery": [
+      "https://www.10seconds.website/cdn/shop/files/61nTvAXLbmL._SL1000.webp?v=1727131615",
+      "https://www.10seconds.website/cdn/shop/files/61-9975JrRL._AC_SY355.webp?v=1727131615",
+      "https://www.10seconds.website/cdn/shop/files/61hiGVtzLDL._SL1242.webp?v=1727131615"
+    ],
+    "twoStepsTitle": "Fini les courbatures au dos et les séances de crunchs interminables",
+    "twoStepsDesc": "Les exercices d'abdominaux classiques au sol imposent une tension douloureuse sur les disques lombaires et les vertèbres cervicales, sans parvenir à solliciter la couche musculaire profonde (le transverse). La technologie Bio-EMS d'OyaMarket active directement vos nerfs moteurs par micro-courants doux, provoquant des contractions intenses et homogènes même lorsque vous êtes confortablement assis.",
+    "twoStepsBullets": [
+      "Sollicite simultanément le grand droit, les obliques et le transverse profond",
+      "Zéro pression sur la colonne vertébrale, la nuque et les articulations",
+      "Seulement 15 minutes par jour équivalent à 200 répétitions d'abdominaux ciblés"
+    ],
+    "beforeAfterImage": "https://www.10seconds.website/cdn/shop/files/61hiGVtzLDL._SL1242.webp?v=1727131615",
+    "beforeAfter": {
+      "badge": "Transformation Visible en 3 Semaines",
+      "title": "Sculptez et raffermissez votre ventre sans forcer",
+      "description": "Une sangle abdominale tonifiée, un tour de taille affiné et un maintien postural renforcé dès les 20 premiers jours d'utilisation régulière.",
+      "image": "https://www.10seconds.website/cdn/shop/files/61hiGVtzLDL._SL1242.webp?v=1727131615",
+      "benefits": [
+        {
+          "title": "Activation des fibres profondes",
+          "desc": "Provoque des contractions bio-stimulées que le cerveau ne parvient pas toujours à recruter lors d'exercices volontaires."
+        },
+        {
+          "title": "Drainage & Raffermissement",
+          "desc": "Stimule la micro-circulation locale, accélérant le déstockage des graisses sous-cutanées et la fermeté cutanée."
+        },
+        {
+          "title": "Protection Posturale Complète",
+          "desc": "Renforce le gainage naturel du tronc sans tasser les disques vertébraux ni cambrer le bas du dos."
+        }
+      ]
+    },
+    "benefitCards": [
+      {
+        "title": "Technologie Bio-EMS Médicale",
+        "desc": "Micro-impulsions douces de basse fréquence qui imitent les signaux physiologiques du cerveau pour contracter et relâcher les muscles avec précision et sans à-coups."
+      },
+      {
+        "title": "6 Modes & 9 Niveaux d'Intensité",
+        "desc": "Du massage drainant doux à la tonification musculaire intense, personnalisez votre séance d'un simple clic selon vos objectifs et votre sensibilité."
+      },
+      {
+        "title": "Silicone Conducteur Économique",
+        "desc": "Électrodes permanentes en silicone de haute qualité : pas besoin d'acheter de coûteux patchs de gel adhésif de rechange. Une simple goutte d'eau suffit pour une conduction optimale !"
+      }
+    ],
+    "threeInOneCards": [
+      {
+        "title": "Technologie Bio-EMS Médicale",
+        "desc": "Micro-impulsions douces de basse fréquence qui imitent les signaux physiologiques du cerveau pour contracter et relâcher les muscles avec précision et sans à-coups."
+      },
+      {
+        "title": "6 Modes & 9 Niveaux d'Intensité",
+        "desc": "Du massage drainant doux à la tonification musculaire intense, personnalisez votre séance d'un simple clic selon vos objectifs et votre sensibilité."
+      },
+      {
+        "title": "Silicone Conducteur Économique",
+        "desc": "Électrodes permanentes en silicone de haute qualité : pas besoin d'acheter de coûteux patchs de gel adhésif de rechange. Une simple goutte d'eau suffit pour une conduction optimale !"
+      }
+    ],
+    "steps": [
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232038/oyamarket/icons/step_num_1.png",
+        "title": "Humidifiez la zone ou les électrodes",
+        "desc": "Passez un tissu légèrement humide sur votre abdomen ou sur les coussinets conducteurs en silicone pour assurer une transmission fluide et sans picotement."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232039/oyamarket/icons/step_num_2.png",
+        "title": "Ajustez la ceinture autour de votre taille",
+        "desc": "Enfilez la ceinture ergonomique OyaMarket. La bande velcro élastique s'ajuste parfaitement à toutes les morphologies, du S au XXL (65 à 125 cm)."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232040/oyamarket/icons/step_num_3.png",
+        "title": "Clipsez le module et choisissez votre niveau",
+        "desc": "Fixez le boîtier intelligent détachable, allumez avec le bouton central, sélectionnez l'un des 6 modes et montez progressivement l'intensité (niveaux 1 à 9)."
+      },
+      {
+        "num": "https://res.cloudinary.com/poqm6bs0/image/upload/v1789232041/oyamarket/icons/step_num_4.png",
+        "title": "Détendez-vous pendant 15 minutes",
+        "desc": "Continuez vos activités quotidiennes : travail sur ordinateur, lecture, repos ou tâches ménagères. L'appareil s'arrête automatiquement à la fin de la séance."
+      }
+    ],
+    "unboxing": {
+      "image": "https://www.10seconds.website/cdn/shop/files/61nTvAXLbmL._SL1000.webp?v=1727131615",
+      "title": "Ce que contient votre coffret OyaMarket™",
+      "items": [
+        "1x Ceinture Abdominale Ergonomique EMS OyaMarket™ en tissu technique respirant et lavable",
+        "1x Boîtier de commande intelligent haute précision avec affichage numérique LED",
+        "1x Câble de recharge rapide USB renforcé universel",
+        "1x Manuel d'utilisation détaillé et illustré en français",
+        "🎁 BONUS OFFERT (Valeur 7 500 FCFA) : Guide Numérique '14 Jours pour Raffermir son Ventre & Détoxifier son Organisme' envoyé directement sur votre WhatsApp après réception du colis"
+      ],
+      "ctaText": "Commander Mon Coffret & Payer à la Livraison"
+    },
+    "unboxingImage": "https://www.10seconds.website/cdn/shop/files/61nTvAXLbmL._SL1000.webp?v=1727131615",
+    "unboxingItems": [
+      "1x Ceinture Abdominale Ergonomique EMS OyaMarket™ en tissu technique respirant et lavable",
+      "1x Boîtier de commande intelligent haute précision avec affichage numérique LED",
+      "1x Câble de recharge rapide USB renforcé universel",
+      "1x Manuel d'utilisation détaillé et illustré en français",
+      "🎁 BONUS OFFERT (Valeur 7 500 FCFA) : Guide Numérique '14 Jours pour Raffermir son Ventre & Détoxifier son Organisme' envoyé directement sur votre WhatsApp après réception du colis"
+    ],
+    "clientPhotos": [
+      "https://www.10seconds.website/cdn/shop/files/61nTvAXLbmL._SL1000.webp?v=1727131615",
+      "https://www.10seconds.website/cdn/shop/files/61-9975JrRL._AC_SY355.webp?v=1727131615",
+      "https://www.10seconds.website/cdn/shop/files/61hiGVtzLDL._SL1242.webp?v=1727131615"
+    ],
+    "reviews": [
+      {
+        "name": "Marc-Aurèle Dossa",
+        "city": "Cotonou (Akpakpa)",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Franchement, j'étais très sceptique au départ avec toutes les arnaques qu'on voit passer sur Facebook. J'avais peur de recevoir un plastique inutile ou que ça me donne des chocs douloureux. Ce qui m'a rassuré, c'est le paiement à la livraison. Le livreur est venu à mon bureau à Akpakpa le lendemain, m'a laissé ouvrir le paquet et tester l'allumage du boîtier avant que je ne lui remette les 14 900 FCFA. Après 3 semaines d'utilisation quotidienne (15 min le soir en lisant), les résultats sont là : mes abdos sont raffermis et mon bas-ventre a visiblement dégonflé. Excellent rapport qualité/prix !"
+      },
+      {
+        "name": "Chantal Ahouansou",
+        "city": "Cotonou (Haie Vive)",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Après deux maternités, j'avais perdu tout le tonus de mon ventre et impossible de faire des abdos classiques sans me bloquer les lombaires. Cette ceinture OyaMarket a tout changé. Je la porte sous mon haut le matin en préparant les enfants. Les micro-impulsions ne font absolument pas mal, c'est une sensation de contraction douce mais très puissante. En un mois, ma taille s'est affinée de presque 4 cm. Livraison très courtoise à la Haie Vive."
+      },
+      {
+        "name": "Serge Agbodjogbé",
+        "city": "Abomey-Calavi (Tankpè)",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "J'ai pris le Pack Duo à 24 900 FCFA pour ma femme et moi. Livraison impeccable à Calavi Tankpè en moins de 24h. Le gros avantage par rapport aux autres ceintures, c'est qu'il n'y a pas besoin de racheter des gels collants qui coûtent une fortune : un peu d'eau sur le silicone et la conduction est parfaite. La batterie tient deux semaines sans recharge. On sent vraiment le travail musculaire dès le niveau 3. Nous recommandons à 100% !"
+      },
+      {
+        "name": "Ramatoulaye Bio-Guerro",
+        "city": "Parakou (Banikanni)",
+        "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Étant à Parakou, j'avais peur de devoir payer une avance ou que la livraison prenne une éternité. Le service client OyaMarket m'a appelée 30 minutes après ma commande pour confirmer, et j'ai été livrée en 48h chrono à Banikanni. J'ai payé en espèces après avoir ouvert le colis devant le livreur. L'appareil est très léger, pratique et puissant. Mes muscles abdominaux sont beaucoup plus gainés après 18 jours de traitement."
+      },
+      {
+        "name": "Christian Hounkpatin",
+        "city": "Porto-Novo (Ouando)",
+        "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Avec mes longues heures assis derrière un volant et au bureau, mon ventre avait pris du volume et j'avais mal au dos dès que j'essayais de faire du sport. Avec la ceinture EMS OyaMarket, aucun mal de dos ! Je règle sur le mode 4 (tonification profonde) pendant 15 minutes par jour. Le scratch est très résistant et s'adapte sans problème à mon tour de taille. Reçu rapidement à Ouando. Très satisfait de mon achat."
+      },
+      {
+        "name": "Estelle Mensah",
+        "city": "Cotonou (Fidjrossè)",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop",
+        "badge": "Achat vérifié • Client OyaMarket",
+        "stars": 5,
+        "text": "Le guide PDF offert sur WhatsApp après la livraison est une vraie mine d'or pour accompagner la ceinture. J'avais peur que ce soit douloureux, mais au contraire, la sensation est hyper relaxante tout en faisant bien travailler les muscles. Le fait de pouvoir payer à la livraison et de bénéficier de 30 jours de garantie m'a totalement rassurée. Merci OyaMarket pour votre sérieux !"
+      }
+    ],
+    "accordions": [
+      {
+        "title": "Spécifications Techniques, Matériaux & Autonomie",
+        "content": "• Technologie : Électrostimulation musculaire neuromusculaire (Bio-EMS basse fréquence sécurisée)\n• Niveaux & Modes : 6 modes d'entraînement ciblés (Échauffement, Brûlage de graisses, Tonification profonde, Endurance, Sculptage, Massage relaxant) et 9 niveaux d'intensité réglables\n• Surface de contact : 4 électrodes permanentes en silicone conducteur haute densité (ne nécessite aucun gel de rechange)\n• Matériau de la ceinture : Tissu technique respirant, doux pour la peau, élastique et lavable à la main (scratch velcro renforcé)\n• Compatibilité morphologique : Tour de taille ajustable de 65 cm à 125 cm (convient parfaitement aux hommes et aux femmes de la taille S au XXL)\n• Alimentation : Batterie Lithium-ion 200 mAh intégrée et rechargeable par câble micro-USB fourni\n• Autonomie : Jusqu'à 15 jours d'utilisation sur une seule charge (sur la base d'une séance quotidienne de 15 minutes)\n• Sécurité intégrée : Minuteur automatique avec arrêt programmé après 15 minutes d'activité",
+        "defaultOpen": true
+      },
+      {
+        "title": "Mode d'Emploi, Conseils d'Optimisation & Précautions",
+        "content": "1. Préparation : Pour une conductivité optimale et un confort sans picotement, humidifiez légèrement la zone abdominale ou les coussinets en silicone de la ceinture à l'aide d'un chiffon ou de quelques gouttes d'eau claire.\n2. Installation : Enroulez la ceinture autour de votre taille en plaçant les électrodes bien à plat contre votre peau au niveau des abdominaux. Ajustez le velcro fermement mais confortablement.\n3. Activation : Clipsez le boîtier de commande sur la ceinture, appuyez sur le bouton central pour allumer. Choisissez votre mode avec le bouton 'M' et commencez toujours par les intensités 1 ou 2 lors des premières séances, puis montez graduellement selon votre ressenti.\n4. Fréquence conseillée : 1 séance de 15 minutes, 1 à 2 fois par jour, 5 jours par semaine. Complétez avec une bonne hydratation (1,5L d'eau par jour) pour favoriser l'élimination des toxines.\n5. Entretien : Détachez systématiquement le boîtier électronique avant de nettoyer la ceinture. Nettoyez les coussinets conducteurs avec un chiffon doux humide. Ne pas immerger le boîtier électronique dans l'eau.\n6. Précautions d'emploi : Ne pas utiliser en cas de port d'un stimulateur cardiaque (pacemaker), pendant la grossesse, ou sur des plaies cutanées non cicatrisées.",
+        "defaultOpen": false
+      },
+      {
+        "title": "Modalités de Livraison Partout au Bénin & Garantie Sérénité 30 Jours",
+        "content": "• Commande sans risque : Vous ne payez RIEN en ligne. Votre commande est enregistrée instantanément sans carte bancaire ni prépaiement Mobile Money.\n• Confirmation rapide : Notre équipe logistique basée au Bénin vous contacte par téléphone ou WhatsApp dans les 2 heures pour confirmer votre adresse et planifier le créneau de passage du livreur.\n• Délais de livraison : 24 heures à Cotonou, Abomey-Calavi, Porto-Novo et environs. 48 heures pour Parakou, Bohicon, Natitingou et le reste du Bénin.\n• Contrôle avant paiement (Inversion Totale du Risque) : Lorsque le livreur se présente, vous avez le droit d'ouvrir le colis, d'examiner la ceinture et de vérifier le fonctionnement du boîtier. Vous ne réglez le montant qu'une fois 100% rassuré.\n• Garantie Sérénité OyaMarket 30 Jours : Tous nos produits bénéficient d'une garantie échange standard de 30 jours. Si votre appareil présente le moindre souci technique, nous envoyons un livreur pour procéder à un remplacement à neuf immédiat à nos frais.",
+        "defaultOpen": false
+      }
+    ],
+    "faq": [
+      {
+        "q": "Est-ce que les impulsions électriques sont douloureuses ou dangereuses ?",
+        "a": "Non, absolument pas ! La Ceinture EMS Pro OyaMarket diffuse des micro-courants de basse fréquence spécialement calibrés pour stimuler les nerfs moteurs sans agresser les tissus. Vous ressentirez une sensation de léger picotement agréable suivi de contractions musculaires régulières, comparables à celles d'un entraînement de gainage. De plus, vous avez le contrôle total : vous commencez au niveau 1 et ajustez l'intensité parmi les 9 paliers selon votre confort."
+      },
+      {
+        "q": "En combien de temps puis-je constater des résultats visibles sur mon ventre ?",
+        "a": "Dès la première semaine à raison de 15 minutes par jour, vous constaterez un raffermissement net de votre sangle abdominale et une meilleure posture au quotidien. Au bout de 3 à 4 semaines d'utilisation assidue associée à une alimentation équilibrée et une bonne hydratation, la majorité de nos clients constatent une diminution mesurable du tour de taille (entre 2 et 5 cm) et un ventre visiblement plus plat."
+      },
+      {
+        "q": "Dois-je acheter des patchs de gel adhésif de remplacement ?",
+        "a": "Non ! C'est l'un des plus grands avantages de notre modèle OyaMarket. Contrairement aux appareils bas de gamme qui vous obligent à racheter des recharges d'adhésif coûteuses tous les mois, notre ceinture utilise des électrodes en silicone conducteur permanent. Il vous suffit d'appliquer quelques gouttes d'eau sur les coussinets ou d'humidifier votre peau avant chaque séance. C'est plus hygiénique, écologique et 100% économique."
+      },
+      {
+        "q": "La ceinture est-elle adaptée à ma taille et à ma morphologie ?",
+        "a": "Oui, parfaitement. La ceinture est fabriquée dans un tissu technique élastique haute résistance doté d'une bande scratch velcro ultra-puissante. Elle s'adapte aux tours de taille allant de 65 cm à 125 cm, convenant ainsi à toutes les corpulences (femmes et hommes, du S au XXL). Elle s'applique aussi bien sur le ventre que sur le bas du dos si vous souhaitez soulager les tensions lombaires."
+      },
+      {
+        "q": "Comment se déroule la livraison et le paiement au Bénin ?",
+        "a": "Le processus est 100% transparent et sécurisé. Vous remplissez simplement le formulaire en choisissant votre pack. Notre équipe vous appelle pour valider la commande et l'horaire de livraison qui vous convient. À l'arrivée du livreur, vous inspectez le colis et vous réglez en espèces (ou via Mobile Money directement au livreur). Aucun paiement préalable n'est exigé !"
+      },
+      {
+        "q": "Que faire si l'appareil a un défaut ou si je ne suis pas satisfait ?",
+        "a": "Vous bénéficiez de notre Garantie Sérénité OyaMarket de 30 jours. Si le boîtier présente le moindre dysfonctionnement mécanique ou électronique, notre service après-vente basé à Cotonou procède à un échange standard à neuf directement chez vous, sans frais supplémentaires et sans tracasseries administratives."
+      }
+    ]
+  }
+}
