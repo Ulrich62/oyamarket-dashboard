@@ -1,6 +1,6 @@
 "use server";
 
-import { requireStoreId } from "@/lib/actions/store-context";
+import { requireStoreId, getCurrentMemberContext } from "@/lib/actions/store-context";
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
@@ -32,12 +32,20 @@ export async function getOrders(filters?: {
   status?: OrderStatus;
   assignedToId?: string;
 }) {
-  const storeId = await requireStoreId();
+  const context = await getCurrentMemberContext();
+  const storeId = context.storeId;
+
+  // Si le rôle est DELIVERY, filtrer automatiquement sur ses propres commandes assignées
+  const isDeliveryRole = context.role === "DELIVERY";
+  const effectiveAssignedToId = isDeliveryRole
+    ? context.userId
+    : filters?.assignedToId;
+
   return prisma.order.findMany({
     where: {
       storeId,
       ...(filters?.status && { status: filters.status }),
-      ...(filters?.assignedToId && { assignedToId: filters.assignedToId }),
+      ...(effectiveAssignedToId && { assignedToId: effectiveAssignedToId }),
     },
     include: {
       items: {
@@ -49,9 +57,16 @@ export async function getOrders(filters?: {
 }
 
 export async function getOrder(id: string) {
-  const storeId = await requireStoreId();
+  const context = await getCurrentMemberContext();
+  const storeId = context.storeId;
+
   return prisma.order.findFirst({
-    where: { id, storeId },
+    where: {
+      id,
+      storeId,
+      // Un livreur ne peut consulter que la commande qui lui est assignée
+      ...(context.role === "DELIVERY" ? { assignedToId: context.userId } : {}),
+    },
     include: {
       items: {
         include: { product: true, pack: true },
@@ -186,8 +201,44 @@ export async function updateOrder(
   return { success: true, order };
 }
 
+export async function assignOrderDelivery(
+  orderId: string,
+  deliveryAgentId: string | null
+) {
+  const context = await getCurrentMemberContext();
+  if (context.role === "DELIVERY") {
+    return { error: "Action non autorisée" };
+  }
+
+  if (deliveryAgentId) {
+    const agent = await prisma.storeMember.findFirst({
+      where: {
+        userId: deliveryAgentId,
+        storeId: context.storeId,
+      },
+    });
+    if (!agent) {
+      return { error: "Livreur introuvable dans cette boutique." };
+    }
+  }
+
+  const order = await prisma.order.update({
+    where: { id: orderId, storeId: context.storeId },
+    data: { assignedToId: deliveryAgentId },
+  });
+
+  revalidatePath("/orders");
+  revalidatePath(`/orders/${orderId}`);
+
+  return { success: true, order };
+}
+
 export async function deleteOrder(id: string) {
-  const storeId = await requireStoreId();
+  const context = await getCurrentMemberContext();
+  if (context.role === "DELIVERY") {
+    throw new Error("Action non autorisée pour les livreurs");
+  }
+  const storeId = context.storeId;
   await prisma.orderItem.deleteMany({ where: { orderId: id } });
   await prisma.order.delete({ where: { id, storeId } });
   revalidatePath("/orders");

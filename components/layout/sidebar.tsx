@@ -37,6 +37,23 @@ export function Sidebar({ stores, currentStoreId }: { stores: any[]; currentStor
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 
+  const currentMember = stores.find((s) => s.storeId === currentStoreId);
+  const currentRole: string = currentMember?.role || "STAFF";
+
+  const mainLinks = MAIN_LINKS.filter((link) => {
+    if (currentRole === "DELIVERY") {
+      return link.href === "/orders";
+    }
+    return true;
+  });
+
+  const orgLinks = ORG_LINKS.filter((link) => {
+    if (currentRole !== "ADMIN") {
+      return false;
+    }
+    return true;
+  });
+
   // Auto-collapse on tablet screens (768px - 1024px) for optimal workspace
   useEffect(() => {
     const handleResize = () => {
@@ -90,7 +107,7 @@ export function Sidebar({ stores, currentStoreId }: { stores: any[]; currentStor
               </div>
             )}
             <ul className="flex flex-col gap-1">
-              {MAIN_LINKS.map((link) => {
+              {mainLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
                 const Icon = link.icon;
                 
@@ -119,41 +136,43 @@ export function Sidebar({ stores, currentStoreId }: { stores: any[]; currentStor
             </ul>
           </div>
 
-          <div>
-            {!collapsed && (
-              <div className="px-2 mb-2">
-                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-4">Organisation</p>
-              </div>
-            )}
-            <ul className="flex flex-col gap-1">
-              {ORG_LINKS.map((link) => {
-                const isActive = pathname.startsWith(link.href);
-                const Icon = link.icon;
-                
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      title={collapsed ? link.name : undefined}
-                      className={cn(
-                        "group relative flex items-center rounded-xl text-[13px] font-medium transition-colors duration-150",
-                        collapsed ? "justify-center p-2.5" : "gap-2.5 px-3 py-2",
-                        isActive 
-                          ? "bg-bg-elev text-ink font-semibold" 
-                          : "text-ink-2 hover:text-ink hover:bg-bg-elev"
-                      )}
-                    >
-                      <Icon className={cn(
-                        "w-4 h-4 shrink-0 transition-colors",
-                        isActive ? "text-accent" : "text-ink-3 group-hover:text-ink-2"
-                      )} />
-                      {!collapsed && <span>{link.name}</span>}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          {orgLinks.length > 0 && (
+            <div>
+              {!collapsed && (
+                <div className="px-2 mb-2">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-4">Organisation</p>
+                </div>
+              )}
+              <ul className="flex flex-col gap-1">
+                {orgLinks.map((link) => {
+                  const isActive = pathname.startsWith(link.href);
+                  const Icon = link.icon;
+                  
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        title={collapsed ? link.name : undefined}
+                        className={cn(
+                          "group relative flex items-center rounded-xl text-[13px] font-medium transition-colors duration-150",
+                          collapsed ? "justify-center p-2.5" : "gap-2.5 px-3 py-2",
+                          isActive 
+                            ? "bg-bg-elev text-ink font-semibold" 
+                            : "text-ink-2 hover:text-ink hover:bg-bg-elev"
+                        )}
+                      >
+                        <Icon className={cn(
+                          "w-4 h-4 shrink-0 transition-colors",
+                          isActive ? "text-accent" : "text-ink-3 group-hover:text-ink-2"
+                        )} />
+                        {!collapsed && <span>{link.name}</span>}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </nav>
 
         {/* Footer controls: Collapse Toggle & Sign Out */}

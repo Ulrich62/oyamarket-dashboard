@@ -1,8 +1,9 @@
 import { getOrders } from "@/lib/actions/orders";
+import { getDeliveryAgents, getCurrentUserRole } from "@/lib/actions/team";
 import { formatXOF, formatDate, ORDER_STATUS_CONFIG } from "@/lib/constants";
 import { OrderStatus } from "@prisma/client";
 import Link from "next/link";
-import { Plus, ShoppingCart, Phone, MapPin, MessageCircle, ArrowRight } from "lucide-react";
+import { Plus, ShoppingCart, Phone, MapPin, MessageCircle, ArrowRight, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -25,8 +26,18 @@ export default async function OrdersPage({
   const params = await searchParams;
   const statusFilter = params?.status as OrderStatus | undefined;
 
-  const orders = await getOrders(
-    statusFilter ? { status: statusFilter } : undefined
+  const [orders, deliveryAgents, userContext] = await Promise.all([
+    getOrders(statusFilter ? { status: statusFilter } : undefined),
+    getDeliveryAgents(),
+    getCurrentUserRole(),
+  ]);
+
+  const isDeliveryUser = userContext?.role === "DELIVERY";
+  const agentMap = new Map(
+    deliveryAgents.map((a) => [
+      a.userId,
+      a.user.name || a.user.email || "Livreur",
+    ])
   );
 
   // Compteurs par statut
@@ -45,22 +56,28 @@ export default async function OrdersPage({
       {/* Header */}
       <div className="flex items-start sm:items-center justify-between gap-3 flex-wrap">
         <div>
-          <h1 className="text-xl sm:text-2xl font-semibold text-ink tracking-tight">Commandes</h1>
+          <h1 className="text-xl sm:text-2xl font-semibold text-ink tracking-tight">
+            {isDeliveryUser ? "Mes Livraisons" : "Commandes"}
+          </h1>
           <p className="text-xs sm:text-sm text-ink-3 mt-0.5">
-            {orders.length} commande{orders.length !== 1 ? "s" : ""}
-            {urgent > 0 && (
+            {orders.length} {isDeliveryUser ? "course" : "commande"}
+            {orders.length !== 1 ? "s" : ""}
+            {isDeliveryUser && " assignée" + (orders.length !== 1 ? "s" : "")}
+            {urgent > 0 && !isDeliveryUser && (
               <span className="ml-1.5 text-yellow-400 font-medium">
                 · {urgent} requi{urgent > 1 ? "èrent" : "ert"} action
               </span>
             )}
           </p>
         </div>
-        <Link href="/orders/new">
-          <Button icon={<Plus className="w-4 h-4" />}>
-            <span className="hidden sm:inline">Nouvelle commande</span>
-            <span className="sm:hidden">Créer</span>
-          </Button>
-        </Link>
+        {!isDeliveryUser && (
+          <Link href="/orders/new">
+            <Button icon={<Plus className="w-4 h-4" />}>
+              <span className="hidden sm:inline">Nouvelle commande</span>
+              <span className="sm:hidden">Créer</span>
+            </Button>
+          </Link>
+        )}
       </div>
 
       {/* Filtre par statuts */}
@@ -131,9 +148,21 @@ export default async function OrdersPage({
                       >
                         {order.customerName}
                       </Link>
-                      <span className="text-[10px] font-mono text-ink-4">
-                        #{order.id.slice(-6).toUpperCase()}
-                      </span>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className="text-[10px] font-mono text-ink-4">
+                          #{order.id.slice(-6).toUpperCase()}
+                        </span>
+                        {order.assignedToId ? (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
+                            <Truck className="w-3 h-3" />
+                            <span className="truncate max-w-[110px]">{agentMap.get(order.assignedToId) || "Livreur"}</span>
+                          </span>
+                        ) : (
+                          <span className="text-[9px] font-mono text-ink-4/80 bg-bg-elev px-1.5 py-0.2 rounded border border-line-soft">
+                            Non assigné
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="shrink-0">
                       <StatusBadge status={order.status} />
@@ -229,6 +258,9 @@ export default async function OrdersPage({
                       Produits
                     </th>
                     <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
+                      Livreur
+                    </th>
+                    <th className="text-left px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
                       Date
                     </th>
                     <th className="text-right px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono font-medium whitespace-nowrap">
@@ -243,7 +275,7 @@ export default async function OrdersPage({
                       className="border-b border-line-soft last:border-0 hover:bg-bg-elev/50 transition-colors"
                     >
                       {/* Client */}
-                      <td className="px-4 py-3 min-w-[200px]">
+                      <td className="px-4 py-3 min-w-[190px]">
                         <div>
                           <p className="font-medium text-ink">{order.customerName}</p>
                           <p className="text-[12px] text-ink-3 flex items-center gap-1 mt-0.5 whitespace-nowrap">
@@ -270,10 +302,24 @@ export default async function OrdersPage({
                       <td className="px-4 py-3 text-ink-3 text-[12px] whitespace-nowrap">
                         {order.items.reduce((sum, item) => sum + (item.unitsCount || item.quantity), 0)} unité{order.items.reduce((sum, item) => sum + (item.unitsCount || item.quantity), 0) > 1 ? "s" : ""}
                         {order.items[0] && (
-                          <p className="text-ink-4 truncate max-w-[180px]">
+                          <p className="text-ink-4 truncate max-w-[160px]">
                             {order.items[0].packName || order.items[0].product?.name}
                             {order.items.length > 1 && ` +${order.items.length - 1}`}
                           </p>
+                        )}
+                      </td>
+
+                      {/* Livreur */}
+                      <td className="px-4 py-3 text-[12px] whitespace-nowrap">
+                        {order.assignedToId ? (
+                          <span className="inline-flex items-center gap-1.5 font-medium text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
+                            <Truck className="w-3.5 h-3.5" />
+                            <span className="truncate max-w-[130px]">{agentMap.get(order.assignedToId) || "Livreur"}</span>
+                          </span>
+                        ) : (
+                          <span className="text-ink-4 text-[11px] italic bg-bg-elev/50 px-2 py-0.5 rounded-md border border-line-soft">
+                            Non assigné
+                          </span>
                         )}
                       </td>
 

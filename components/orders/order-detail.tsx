@@ -6,12 +6,24 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ConfirmModal } from "@/components/ui/confirm-modal";
 import { StatusBadge } from "@/components/ui/badge";
-import { updateOrderStatus, updateOrder, deleteOrder } from "@/lib/actions/orders";
+import { updateOrderStatus, updateOrder, deleteOrder, assignOrderDelivery } from "@/lib/actions/orders";
 import { formatXOF, formatDate, ORDER_STATUS_CONFIG } from "@/lib/constants";
-import { OrderStatus } from "@prisma/client";
-import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown, User, MessageCircle } from "lucide-react";
+import { OrderStatus, Role } from "@prisma/client";
+import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown, User, MessageCircle, Truck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Order, OrderItem, Product, ProductPack } from "@prisma/client";
+
+export interface DeliveryAgentItem {
+  id: string;
+  userId: string;
+  role: Role;
+  user: {
+    id: string;
+    name: string | null;
+    email: string | null;
+    phone: string | null;
+  };
+}
 
 type OrderWithItems = Order & {
   items: (OrderItem & { product: Product; pack?: ProductPack | null })[];
@@ -19,6 +31,8 @@ type OrderWithItems = Order & {
 
 interface OrderDetailProps {
   order: OrderWithItems;
+  deliveryAgents?: DeliveryAgentItem[];
+  currentUserRole?: Role;
 }
 
 const STATUS_OPTIONS = Object.entries(ORDER_STATUS_CONFIG).map(([value, cfg]) => ({
@@ -26,10 +40,19 @@ const STATUS_OPTIONS = Object.entries(ORDER_STATUS_CONFIG).map(([value, cfg]) =>
   label: cfg.label,
 }));
 
-export function OrderDetail({ order }: OrderDetailProps) {
+export function OrderDetail({
+  order,
+  deliveryAgents,
+  currentUserRole = "STAFF",
+}: OrderDetailProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isDeleting, startDeleteTransition] = useTransition();
+  const [isAssigning, startAssignTransition] = useTransition();
+
+  const [assignedDriverId, setAssignedDriverId] = useState<string | null>(
+    order.assignedToId || null
+  );
 
   // Inline editing states
   const [editing, setEditing] = useState<string | null>(null);
@@ -77,6 +100,28 @@ export function OrderDetail({ order }: OrderDetailProps) {
       router.refresh();
     });
   };
+
+  const handleAssignDriver = (newDriverId: string) => {
+    const targetId = newDriverId === "unassigned" ? null : newDriverId;
+    startAssignTransition(async () => {
+      try {
+        const res = await assignOrderDelivery(order.id, targetId);
+        if (res.error) {
+          toast.error(res.error);
+        } else {
+          setAssignedDriverId(targetId);
+          toast.success(
+            targetId ? "Livreur assigné avec succès !" : "Commande désassignée"
+          );
+          router.refresh();
+        }
+      } catch (err: any) {
+        toast.error(err.message || "Erreur lors de l'assignation");
+      }
+    });
+  };
+
+  const assignedDriver = deliveryAgents?.find((a) => a.userId === assignedDriverId);
 
   const confirmDeleteOrder = () => {
     startDeleteTransition(async () => {
@@ -303,6 +348,106 @@ export function OrderDetail({ order }: OrderDetailProps) {
           </div>
         </div>
 
+        {/* Livreur COD Assigné Card */}
+        <div className="rounded-2xl border border-line bg-bg-elev/30 p-5 flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Truck className="w-4 h-4 text-emerald-400" />
+              <p className="text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono">
+                Livreur COD Assigné
+              </p>
+            </div>
+            {assignedDriver && (
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
+                Assigné
+              </span>
+            )}
+          </div>
+
+          {currentUserRole !== "DELIVERY" ? (
+            <div className="space-y-2.5">
+              <div className="relative">
+                <select
+                  value={assignedDriverId || "unassigned"}
+                  disabled={isAssigning}
+                  onChange={(e) => handleAssignDriver(e.target.value)}
+                  className={cn(
+                    "w-full appearance-none rounded-xl border border-line bg-bg-elev py-2.5 pl-3 pr-8 text-xs text-ink focus:border-ink-3 focus:outline-none cursor-pointer transition-colors",
+                    isAssigning && "opacity-60 cursor-not-allowed"
+                  )}
+                >
+                  <option value="unassigned" className="bg-[#121214] text-ink-4">
+                    -- Non assigné (Aucun livreur) --
+                  </option>
+                  {deliveryAgents?.map((agent) => (
+                    <option
+                      key={agent.id}
+                      value={agent.userId}
+                      className="bg-[#121214] text-ink"
+                    >
+                      {agent.user.name || agent.user.email} (
+                      {agent.role === "DELIVERY" ? "Livreur" : "Staff"}
+                      {agent.user.phone ? ` • ${agent.user.phone}` : ""})
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-4" />
+              </div>
+
+              {assignedDriver && (
+                <div className="rounded-xl border border-line-soft bg-bg-elev/60 p-3 flex flex-col gap-2 mt-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-xs text-ink">
+                      {assignedDriver.user.name || assignedDriver.user.email}
+                    </span>
+                    <span className="text-[10px] text-ink-4 font-mono">
+                      {assignedDriver.role === "DELIVERY" ? "Livreur" : "Staff"}
+                    </span>
+                  </div>
+
+                  {assignedDriver.user.phone && (
+                    <div className="flex items-center justify-between pt-1 border-t border-line-soft">
+                      <span className="text-[11px] font-mono text-ink-3">
+                        {assignedDriver.user.phone}
+                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <a
+                          href={`https://wa.me/${assignedDriver.user.phone.replace(/\D/g, "")}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1 rounded-md text-emerald-400 hover:bg-emerald-500/15 transition-colors"
+                          title="WhatsApp"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5" />
+                        </a>
+                        <a
+                          href={`tel:${assignedDriver.user.phone}`}
+                          className="p-1 rounded-md text-blue-400 hover:bg-blue-500/15 transition-colors"
+                          title="Appeler"
+                        >
+                          <Phone className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-3 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400 shrink-0">
+                <Truck className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-ink">Votre mission de livraison</p>
+                <p className="text-[11px] text-ink-4 mt-0.5">
+                  Cette commande vous est directement assignée pour livraison.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Metadata */}
         <div className="rounded-2xl border border-line bg-bg-elev/30 p-5 flex flex-col gap-3">
           <p className="text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono">Détails</p>
@@ -324,15 +469,17 @@ export function OrderDetail({ order }: OrderDetailProps) {
           </div>
         </div>
 
-        {/* Danger zone */}
-        <Button
-          variant="danger"
-          onClick={() => setShowDeleteModal(true)}
-          icon={<Trash2 className="w-3.5 h-3.5" />}
-          className="w-full justify-center cursor-pointer"
-        >
-          Supprimer la commande
-        </Button>
+        {/* Danger zone (Admins / Staff only) */}
+        {currentUserRole !== "DELIVERY" && (
+          <Button
+            variant="danger"
+            onClick={() => setShowDeleteModal(true)}
+            icon={<Trash2 className="w-3.5 h-3.5" />}
+            className="w-full justify-center cursor-pointer"
+          >
+            Supprimer la commande
+          </Button>
+        )}
       </div>
 
       {/* Confirmation Modal for Order Deletion */}

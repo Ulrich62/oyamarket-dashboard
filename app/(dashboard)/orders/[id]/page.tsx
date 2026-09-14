@@ -1,4 +1,5 @@
 import { getOrder } from "@/lib/actions/orders";
+import { getDeliveryAgents, getCurrentUserRole } from "@/lib/actions/team";
 import { OrderDetail } from "@/components/orders/order-detail";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -13,7 +14,11 @@ export default async function OrderPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const order = await getOrder(id);
+  const [order, deliveryAgents, userContext] = await Promise.all([
+    getOrder(id),
+    getDeliveryAgents(),
+    getCurrentUserRole(),
+  ]);
 
   if (!order) notFound();
 
@@ -45,7 +50,11 @@ export default async function OrderPage({
         <StatusBadge status={order.status} />
       </div>
 
-      <OrderDetail order={order} />
+      <OrderDetail
+        order={order}
+        deliveryAgents={deliveryAgents as any}
+        currentUserRole={userContext?.role || "STAFF"}
+      />
     </div>
   );
 }

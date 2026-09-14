@@ -80,6 +80,23 @@ export function MobileNav({ isOpen, onClose, stores, currentStoreId }: MobileNav
     await signOut({ callbackUrl: "/login" });
   };
 
+  const currentMember = stores.find((s) => s.storeId === currentStoreId);
+  const currentRole: string = currentMember?.role || "STAFF";
+
+  const mainLinks = MAIN_LINKS.filter((link) => {
+    if (currentRole === "DELIVERY") {
+      return link.href === "/orders";
+    }
+    return true;
+  });
+
+  const orgLinks = ORG_LINKS.filter((link) => {
+    if (currentRole !== "ADMIN") {
+      return false;
+    }
+    return true;
+  });
+
   return createPortal(
     <div className="fixed inset-0 z-50 md:hidden flex">
       {/* Backdrop */}
@@ -98,12 +115,10 @@ export function MobileNav({ isOpen, onClose, stores, currentStoreId }: MobileNav
       >
         {/* Drawer Header */}
         <div className="p-4 border-b border-line flex items-center justify-between gap-2">
-          <div className="flex-1 min-w-0">
-            <StoreSwitcher stores={stores} currentStoreId={currentStoreId} />
-          </div>
+          <StoreSwitcher stores={stores} currentStoreId={currentStoreId} />
           <button
             onClick={onClose}
-            className="p-2 -mr-1 rounded-lg text-ink-3 hover:text-ink hover:bg-bg-elev transition-colors shrink-0"
+            className="p-1.5 rounded-lg text-ink-3 hover:text-ink hover:bg-bg-elev transition-colors"
             aria-label="Fermer le menu"
           >
             <X className="w-5 h-5" />
@@ -111,13 +126,13 @@ export function MobileNav({ isOpen, onClose, stores, currentStoreId }: MobileNav
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex-1 p-4 flex flex-col gap-6">
+        <nav className="p-3.5 flex flex-col gap-6 flex-1">
           <div>
             <div className="px-2 mb-2">
               <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-4">Boutique</p>
             </div>
             <ul className="flex flex-col gap-1">
-              {MAIN_LINKS.map((link) => {
+              {mainLinks.map((link) => {
                 const isActive =
                   pathname === link.href ||
                   (link.href !== "/" && pathname.startsWith(link.href));
@@ -149,40 +164,42 @@ export function MobileNav({ isOpen, onClose, stores, currentStoreId }: MobileNav
             </ul>
           </div>
 
-          <div>
-            <div className="px-2 mb-2">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-4">Organisation</p>
-            </div>
-            <ul className="flex flex-col gap-1">
-              {ORG_LINKS.map((link) => {
-                const isActive = pathname.startsWith(link.href);
-                const Icon = link.icon;
+          {orgLinks.length > 0 && (
+            <div>
+              <div className="px-2 mb-2">
+                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-4">Organisation</p>
+              </div>
+              <ul className="flex flex-col gap-1">
+                {orgLinks.map((link) => {
+                  const isActive = pathname.startsWith(link.href);
+                  const Icon = link.icon;
 
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={onClose}
-                      className={cn(
-                        "group flex items-center rounded-xl text-[14px] font-medium transition-colors gap-3 px-3 py-2.5",
-                        isActive
-                          ? "bg-accent/10 text-accent font-semibold"
-                          : "text-ink-2 hover:text-ink hover:bg-bg-elev active:bg-bg-elev-2"
-                      )}
-                    >
-                      <Icon
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        onClick={onClose}
                         className={cn(
-                          "w-4 h-4 shrink-0",
-                          isActive ? "text-accent" : "text-ink-3 group-hover:text-ink-2"
+                          "group flex items-center rounded-xl text-[14px] font-medium transition-colors gap-3 px-3 py-2.5",
+                          isActive
+                            ? "bg-accent/10 text-accent font-semibold"
+                            : "text-ink-2 hover:text-ink hover:bg-bg-elev active:bg-bg-elev-2"
                         )}
-                      />
-                      <span>{link.name}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+                      >
+                        <Icon
+                          className={cn(
+                            "w-4 h-4 shrink-0",
+                            isActive ? "text-accent" : "text-ink-3 group-hover:text-ink-2"
+                          )}
+                        />
+                        <span>{link.name}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </nav>
 
         {/* Drawer Footer / User Info & Sign Out */}

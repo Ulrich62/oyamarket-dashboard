@@ -30,31 +30,57 @@ export async function requireStoreId(): Promise<string> {
   return member.storeId;
 }
 
-export async function requireAdminStoreId(): Promise<{ storeId: string; role: Role }> {
+export async function getCurrentMemberContext() {
   const session = await auth();
-  if (!session?.user) throw new Error("Non autorisé");
-  const user = session.user;
+  if (!session?.user?.id) throw new Error("Non autorisé");
+  const userId = session.user.id;
 
   const cookieStore = await cookies();
   const storeIdCookie = cookieStore.get("store_id")?.value;
-  
-  if (storeIdCookie) {
-    const member = await prisma.storeMember.findUnique({
-      where: { userId_storeId: { userId: user.id!, storeId: storeIdCookie! } },
-      select: { storeId: true, role: true },
-    });
-    if (member && member.role === "ADMIN") return { storeId: member.storeId, role: member.role };
+
+  const memberFromCookie = storeIdCookie
+    ? await prisma.storeMember.findUnique({
+        where: { userId_storeId: { userId, storeId: storeIdCookie } },
+        include: { user: true, store: true },
+      })
+    : null;
+
+  const finalMember =
+    memberFromCookie ||
+    (await prisma.storeMember.findFirst({
+      where: { userId },
+      include: { user: true, store: true },
+    }));
+
+  if (!finalMember) throw new Error("Aucune boutique trouvée");
+
+  return {
+    userId,
+    storeId: finalMember.storeId,
+    role: finalMember.role,
+    memberId: finalMember.id,
+    user: finalMember.user,
+    store: finalMember.store,
+  };
+}
+
+export async function requireAdminStoreId(): Promise<{
+  storeId: string;
+  role: Role;
+  userId: string;
+  memberId: string;
+}> {
+  const context = await getCurrentMemberContext();
+  if (context.role !== "ADMIN") {
+    throw new Error("Accès réservé aux administrateurs");
   }
 
-  const member = await prisma.storeMember.findFirst({
-    where: { userId: user.id! },
-    select: { storeId: true, role: true },
-  });
-  
-  if (!member) throw new Error("Aucune boutique trouvée");
-  if (member.role !== "ADMIN") throw new Error("Accès réservé aux admins");
-
-  return { storeId: member.storeId, role: member.role };
+  return {
+    storeId: context.storeId,
+    role: context.role,
+    userId: context.userId,
+    memberId: context.memberId,
+  };
 }
 
 export async function switchStore(storeId: string) {
