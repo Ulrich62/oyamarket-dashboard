@@ -1,7 +1,8 @@
 import { getProduct } from "@/lib/actions/products";
+import { getCurrentMemberContext } from "@/lib/actions/store-context";
 import { ProductForm } from "@/components/products/product-form";
 import { DeleteProductButton } from "@/components/products/delete-product-button";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -12,6 +13,17 @@ export default async function EditProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  let context;
+  try {
+    context = await getCurrentMemberContext();
+  } catch {
+    context = null;
+  }
+
+  if (context?.role === "DELIVERY") {
+    redirect("/orders");
+  }
+
   const { id } = await params;
   const product = await getProduct(id);
 

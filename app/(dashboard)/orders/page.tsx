@@ -110,16 +110,22 @@ export default async function OrdersPage({
             <ShoppingCart className="w-7 h-7 text-ink-3" />
           </div>
           <div>
-            <p className="text-ink font-medium">Aucune commande</p>
+            <p className="text-ink font-medium">
+              {isDeliveryUser ? "Aucune livraison assignée" : "Aucune commande"}
+            </p>
             <p className="text-ink-3 text-xs sm:text-sm mt-1">
-              Les commandes de votre boutique apparaîtront ici.
+              {isDeliveryUser
+                ? "Aucune course ne vous a été assignée pour le moment."
+                : "Les commandes de votre boutique apparaîtront ici."}
             </p>
           </div>
-          <Link href="/orders/new">
-            <Button size="sm" icon={<Plus className="w-3.5 h-3.5" />}>
-              Créer une commande manuelle
-            </Button>
-          </Link>
+          {!isDeliveryUser && (
+            <Link href="/orders/new">
+              <Button size="sm" icon={<Plus className="w-3.5 h-3.5" />}>
+                Créer une commande manuelle
+              </Button>
+            </Link>
+          )}
         </div>
       )}
 

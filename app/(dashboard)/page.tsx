@@ -1,4 +1,6 @@
 import { getDashboardKPIs, getOrdersOverTime, getStatusBreakdown, type PeriodFilter } from "@/lib/actions/analytics";
+import { getCurrentMemberContext } from "@/lib/actions/store-context";
+import { redirect } from "next/navigation";
 import { RevenueChart, FunnelChart, StatusPie } from "@/components/analytics/charts";
 import { formatXOF } from "@/lib/constants";
 import Link from "next/link";
@@ -26,6 +28,17 @@ export default async function DashboardPage({
 }: {
   searchParams: Promise<{ period?: string }>;
 }) {
+  let context;
+  try {
+    context = await getCurrentMemberContext();
+  } catch {
+    context = null;
+  }
+
+  if (context?.role === "DELIVERY") {
+    redirect("/orders");
+  }
+
   const params = await searchParams;
   const period = (params?.period ?? "30d") as PeriodFilter;
 

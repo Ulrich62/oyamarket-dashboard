@@ -1,4 +1,6 @@
 import { getProducts } from "@/lib/actions/products";
+import { getCurrentMemberContext } from "@/lib/actions/store-context";
+import { redirect } from "next/navigation";
 import { formatXOF } from "@/lib/constants";
 import Link from "next/link";
 import { Plus, Package, ImageOff, ToggleLeft, ToggleRight, Star, ArrowRight } from "lucide-react";
@@ -9,6 +11,17 @@ import { DeleteProductButton } from "@/components/products/delete-product-button
 export const dynamic = "force-dynamic";
 
 export default async function ProductsPage() {
+  let context;
+  try {
+    context = await getCurrentMemberContext();
+  } catch {
+    context = null;
+  }
+
+  if (context?.role === "DELIVERY") {
+    redirect("/orders");
+  }
+
   const products = await getProducts();
   const featuredCount = products.filter((p) => p.isFeatured).length;
 

@@ -1,4 +1,6 @@
 import { getProducts } from "@/lib/actions/products";
+import { getCurrentMemberContext } from "@/lib/actions/store-context";
+import { redirect } from "next/navigation";
 import { NewOrderForm } from "@/components/orders/new-order-form";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -6,6 +8,17 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 export default async function NewOrderPage() {
+  let context;
+  try {
+    context = await getCurrentMemberContext();
+  } catch {
+    context = null;
+  }
+
+  if (context?.role === "DELIVERY") {
+    redirect("/orders");
+  }
+
   const products = await getProducts();
   const activeProducts = products.filter((p) => p.isActive);
 
