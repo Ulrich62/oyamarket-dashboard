@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -75,14 +75,6 @@ export function ProductForm({ product }: ProductFormProps) {
   const [isDeleting, startDeleteTransition] = useTransition();
   const [isUploading, setIsUploading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [saveAction, setSaveAction] = useState<"stay" | "close">("stay");
-  const saveActionRef = useRef<"stay" | "close">("stay");
-
-  const triggerSave = (action: "stay" | "close") => {
-    saveActionRef.current = action;
-    setSaveAction(action);
-  };
-
   const [activeTab, setActiveTab] = useState<"general" | "packs" | "media" | "routine" | "reviews" | "faq">("general");
 
   const raw = (product?.landingData as any) || {};
@@ -326,18 +318,12 @@ export function ProductForm({ product }: ProductFormProps) {
         return;
       }
 
-      const action = saveActionRef.current;
       if (isEditing) {
         toast.success("Modifications enregistrées avec succès !");
         router.refresh();
-        if (action === "close") {
-          router.push("/products");
-        }
       } else {
         toast.success("Produit créé avec succès !");
-        if (action === "close") {
-          router.push("/products");
-        } else if ("product" in result && result.product?.id) {
+        if ("product" in result && result.product?.id) {
           router.push(`/products/${result.product.id}`);
         } else {
           router.push("/products");
@@ -587,26 +573,15 @@ export function ProductForm({ product }: ProductFormProps) {
           })}
         </div>
 
-        {/* Boutons d'action rapides */}
+        {/* Bouton d'action rapide */}
         <div className="flex items-center gap-2 shrink-0">
           <Button
             type="submit"
-            loading={isPending && saveAction === "stay"}
-            onClick={() => triggerSave("stay")}
-            className="text-xs h-8 px-3"
+            loading={isPending}
+            className="text-xs h-8 px-3.5"
             icon={<Save className="w-3.5 h-3.5" />}
           >
-            {isEditing ? "Enregistrer" : "Créer et continuer"}
-          </Button>
-
-          <Button
-            type="submit"
-            variant="secondary"
-            loading={isPending && saveAction === "close"}
-            onClick={() => triggerSave("close")}
-            className="text-xs h-8 px-3"
-          >
-            {isEditing ? "Enregistrer et quitter" : "Créer et quitter"}
+            {isEditing ? "Enregistrer" : "Créer le produit"}
           </Button>
         </div>
       </div>
@@ -1616,29 +1591,18 @@ export function ProductForm({ product }: ProductFormProps) {
           <div className="flex flex-col gap-2">
             <Button
               type="submit"
-              loading={isPending && saveAction === "stay"}
-              onClick={() => triggerSave("stay")}
+              loading={isPending}
               className="w-full justify-center text-sm py-3"
               icon={<Save className="w-4 h-4" />}
             >
-              {isEditing ? "Enregistrer les modifications" : "Créer et continuer"}
-            </Button>
-
-            <Button
-              type="submit"
-              variant="secondary"
-              loading={isPending && saveAction === "close"}
-              onClick={() => triggerSave("close")}
-              className="w-full justify-center text-xs py-2.5"
-            >
-              {isEditing ? "Enregistrer et quitter" : "Créer et quitter"}
+              {isEditing ? "Enregistrer les modifications" : "Créer le produit"}
             </Button>
 
             <Button
               type="button"
-              variant="ghost"
+              variant="secondary"
               onClick={() => router.push("/products")}
-              className="w-full justify-center text-xs text-ink-3 hover:text-ink"
+              className="w-full justify-center text-xs py-2.5"
             >
               Retour au catalogue
             </Button>
