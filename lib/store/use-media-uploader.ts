@@ -1,25 +1,31 @@
 import { create } from "zustand";
 
+export type OnUploadedHandler = (url: string, posterUrl?: string | null) => void;
+
 interface MediaUploaderState {
   isOpen: boolean;
   lastUploadedUrl: string | null;
-  onUploadedCallback: ((url: string) => void) | null;
-  openUploader: (options?: { onUploaded?: (url: string) => void }) => void;
+  lastUploadedPosterUrl: string | null;
+  onUploadedCallback: OnUploadedHandler | null;
+  openUploader: (options?: { onUploaded?: OnUploadedHandler } | OnUploadedHandler) => void;
   closeUploader: () => void;
   toggleUploader: () => void;
-  setLastUploadedUrl: (url: string | null) => void;
+  setLastUploadedUrl: (url: string | null, posterUrl?: string | null) => void;
 }
 
 export const useMediaUploader = create<MediaUploaderState>((set) => ({
   isOpen: false,
   lastUploadedUrl: null,
+  lastUploadedPosterUrl: null,
   onUploadedCallback: null,
-  openUploader: (options) =>
-    set({
+  openUploader: (options) => {
+    const callback = typeof options === "function" ? options : options?.onUploaded || null;
+    return set({
       isOpen: true,
-      onUploadedCallback: options?.onUploaded || null,
-    }),
+      onUploadedCallback: callback,
+    });
+  },
   closeUploader: () => set({ isOpen: false }),
   toggleUploader: () => set((state) => ({ isOpen: !state.isOpen })),
-  setLastUploadedUrl: (url) => set({ lastUploadedUrl: url }),
+  setLastUploadedUrl: (url, posterUrl = null) => set({ lastUploadedUrl: url, lastUploadedPosterUrl: posterUrl }),
 }));

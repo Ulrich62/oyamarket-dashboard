@@ -18,7 +18,11 @@ export interface CloudinaryUploadResult {
   bytes: number;
   width?: number;
   height?: number;
+  poster_url?: string;
 }
+
+import { getVideoPosterUrl, type VideoPosterOptions } from "./cloudinary-utils";
+export { getVideoPosterUrl, type VideoPosterOptions };
 
 /**
  * Upload an in-memory buffer to Cloudinary in the dedicated oyamarket folder/bucket.
@@ -47,6 +51,10 @@ export async function uploadBufferToCloudinary(
           console.error("Cloudinary upload error:", error);
           return reject(error ?? new Error("Upload Cloudinary échoué"));
         }
+
+        const isVideo = result.resource_type === "video";
+        const posterUrl = isVideo ? getVideoPosterUrl(result.secure_url) : undefined;
+
         resolve({
           url: result.url,
           secure_url: result.secure_url,
@@ -56,6 +64,7 @@ export async function uploadBufferToCloudinary(
           bytes: result.bytes,
           width: result.width,
           height: result.height,
+          poster_url: posterUrl,
         });
       }
     );

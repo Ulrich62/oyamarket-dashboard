@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { uploadBufferToCloudinary } from "@/lib/cloudinary";
+import { uploadBufferToCloudinary, getVideoPosterUrl } from "@/lib/cloudinary";
 import { prisma } from "@/lib/prisma";
 
 const corsHeaders = {
@@ -76,11 +76,17 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    const posterUrl = uploadResult.poster_url || (isVideo ? getVideoPosterUrl(uploadResult.secure_url) : null);
+
     return NextResponse.json(
       {
         success: true,
         url: media.url,
-        media,
+        posterUrl,
+        media: {
+          ...media,
+          posterUrl,
+        },
       },
       { status: 201, headers: corsHeaders }
     );

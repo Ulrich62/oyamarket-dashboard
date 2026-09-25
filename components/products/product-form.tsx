@@ -8,6 +8,8 @@ import { ConfirmModal } from "@/components/ui/confirm-modal";
 import { Input, Textarea } from "@/components/ui/input";
 import { createProduct, updateProduct, deleteProduct } from "@/lib/actions/products";
 import { uploadProductImage } from "@/lib/actions/upload";
+import { useMediaUploader } from "@/lib/store/use-media-uploader";
+import { getVideoPosterUrl } from "@/lib/cloudinary-utils";
 import {
   ImagePlus, Trash2, X, Plus, Sparkles, Video,
   Layers, MessageSquare, HelpCircle, FileText, CheckCircle2,
@@ -68,6 +70,7 @@ interface ProductFormProps {
 
 export function ProductForm({ product }: ProductFormProps) {
   const router = useRouter();
+  const { openUploader } = useMediaUploader();
   const [isPending, startTransition] = useTransition();
   const [isDeleting, startDeleteTransition] = useTransition();
   const [isUploading, setIsUploading] = useState(false);
@@ -360,7 +363,31 @@ export function ProductForm({ product }: ProductFormProps) {
       updated[index] = { videoUrl: "", poster: "", caption: "", stars: 5 };
     }
     updated[index] = { ...updated[index], [field]: val };
+
+    // Si l'URL vidéo change et que le poster est vide, tenter de générer automatiquement le poster Cloudinary
+    if (field === "videoUrl" && val.trim() && !updated[index].poster) {
+      const autoPoster = getVideoPosterUrl(val.trim());
+      if (autoPoster && autoPoster !== val.trim()) {
+        updated[index].poster = autoPoster;
+      }
+    }
+
     setLandingData({ ...landingData, videos: updated });
+  };
+
+  const handleGeneratePoster = (index: number) => {
+    const v = landingData.videos?.[index];
+    if (!v?.videoUrl) {
+      toast.error("Veuillez d'abord renseigner l'URL de la vidéo.");
+      return;
+    }
+    const poster = getVideoPosterUrl(v.videoUrl);
+    if (poster && poster !== v.videoUrl) {
+      updateVideo(index, "poster", poster);
+      toast.success("Poster de prévisualisation généré !");
+    } else {
+      toast.error("Impossible d'extraire automatiquement le poster (l'URL n'est pas un média Cloudinary standard).");
+    }
   };
 
   // Helper Galerie
@@ -841,7 +868,32 @@ export function ProductForm({ product }: ProductFormProps) {
                   const v = landingData.videos?.[idx] || { videoUrl: "", poster: "", caption: "", stars: 5 };
                   return (
                     <div key={idx} className="p-4 rounded-xl border border-line bg-bg flex flex-col gap-3">
-                      <span className="text-xs font-bold text-ink">Reel #{idx + 1}</span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-ink">Reel #{idx + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            openUploader((url: string, posterUrl?: string | null) => {
+                              const autoPoster = posterUrl || getVideoPosterUrl(url);
+                              const updated = [...landingData.videos];
+                              if (!updated[idx]) {
+                                updated[idx] = { videoUrl: "", poster: "", caption: "", stars: 5 };
+                              }
+                              updated[idx] = {
+                                ...updated[idx],
+                                videoUrl: url,
+                                poster: autoPoster || updated[idx].poster,
+                              };
+                              setLandingData({ ...landingData, videos: updated });
+                              toast.success("Vidéo et poster associés avec succès !");
+                            });
+                          }}
+                          className="inline-flex items-center gap-1.5 text-xs text-brand hover:underline font-medium cursor-pointer"
+                        >
+                          <Video className="w-3.5 h-3.5" />
+                          Uploader via Cloudinary
+                        </button>
+                      </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <Input
                           label="URL Vidéo MP4"
@@ -849,12 +901,41 @@ export function ProductForm({ product }: ProductFormProps) {
                           value={v.videoUrl}
                           onChange={(e) => updateVideo(idx, "videoUrl", e.target.value)}
                         />
-                        <Input
-                          label="Image Poster de Prévisualisation"
-                          placeholder="https://res.cloudinary.com/.../poster.jpg"
-                          value={v.poster}
-                          onChange={(e) => updateVideo(idx, "poster", e.target.value)}
-                        />
+                        <div className="flex flex-col gap-1.5">
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-medium text-ink">Image Poster de Prévisualisation</label>
+                            {v.videoUrl && (
+                              <button
+                                type="button"
+                                onClick={() => handleGeneratePoster(idx)}
+                                className="text-[11px] text-purple-400 hover:text-purple-300 hover:underline cursor-pointer"
+                              >
+                                Auto-générer poster
+                              </button>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            {v.poster ? (
+                              <div className="relative w-9 h-9 rounded-lg border border-line overflow-hidden shrink-0 bg-black/40">
+                                <img
+                                  src={v.poster}
+                                  alt="Poster"
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    (e.target as HTMLElement).style.display = "none";
+                                  }}
+                                />
+                              </div>
+                            ) : null}
+                            <input
+                              type="text"
+                              placeholder="https://res.cloudinary.com/.../poster.jpg"
+                              value={v.poster}
+                              onChange={(e) => updateVideo(idx, "poster", e.target.value)}
+                              className="w-full h-9 rounded-xl border border-line bg-bg-elev px-3 text-xs text-ink placeholder:text-ink-4 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-colors"
+                            />
+                          </div>
+                        </div>
                       </div>
                       <Input
                         label="Citation / Avis sous la vidéo"

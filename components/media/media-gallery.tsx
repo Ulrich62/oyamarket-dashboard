@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { ConfirmModal } from "@/components/ui/confirm-modal";
 import { useMediaUploader } from "@/lib/store/use-media-uploader";
 import { deleteMedia } from "@/lib/actions/media";
+import { getVideoPosterUrl } from "@/lib/cloudinary-utils";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/constants";
 import { toast } from "sonner";
@@ -32,7 +33,7 @@ export function MediaGallery({ initialMedias }: MediaGalleryProps) {
   const [medias, setMedias] = useState<Media[]>(initialMedias);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<"ALL" | "image" | "video">("ALL");
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [mediaToDelete, setMediaToDelete] = useState<Media | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -62,15 +63,15 @@ export function MediaGallery({ initialMedias }: MediaGalleryProps) {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const handleCopy = (url: string, id: string) => {
+  const handleCopy = (url: string, key: string, label: string) => {
     try {
       if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(url).catch(() => {});
       }
     } catch {}
-    setCopiedId(id);
-    toast.success("Lien public copié dans le presse-papier");
-    setTimeout(() => setCopiedId(null), 2000);
+    setCopiedKey(key);
+    toast.success(label);
+    setTimeout(() => setCopiedKey(null), 2000);
   };
 
   const confirmDelete = () => {
@@ -228,10 +229,11 @@ export function MediaGallery({ initialMedias }: MediaGalleryProps) {
                 <div className="relative aspect-square w-full bg-black/40 overflow-hidden flex items-center justify-center">
                   {isVideo ? (
                     <div className="relative w-full h-full flex items-center justify-center bg-black/50 group-hover:bg-black/30 transition-colors">
-                      <video
-                        src={media.url}
-                        className="w-full h-full object-cover"
-                        preload="metadata"
+                      <img
+                        src={getVideoPosterUrl(media.url)}
+                        alt={media.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <div className="w-10 h-10 rounded-full bg-black/70 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white shadow-lg">
@@ -256,22 +258,48 @@ export function MediaGallery({ initialMedias }: MediaGalleryProps) {
                   {/* Quick Action Overlay on hover (desktop) */}
                   <div className="hidden md:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center gap-2 p-2">
                     <button
-                      onClick={() => handleCopy(media.url, media.id)}
-                      title="Copier le lien public"
-                      aria-label="Copier le lien public"
+                      onClick={() => handleCopy(media.url, media.id, "Lien public copié dans le presse-papier !")}
+                      title="Copier le lien direct du média"
+                      aria-label="Copier le lien direct du média"
                       className={cn(
                         "p-2 rounded-xl transition-all shadow-md backdrop-blur-sm border",
-                        copiedId === media.id
+                        copiedKey === media.id
                           ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
                           : "bg-bg-elev-2/95 hover:bg-bg-elev-2 text-ink border-line hover:border-ink-3"
                       )}
                     >
-                      {copiedId === media.id ? (
-                        <Check className="w-4 h-4" />
+                      {copiedKey === media.id ? (
+                        <Check className="w-4 h-4 text-emerald-400" />
                       ) : (
                         <Copy className="w-4 h-4" />
                       )}
                     </button>
+
+                    {isVideo && (
+                      <button
+                        onClick={() =>
+                          handleCopy(
+                            getVideoPosterUrl(media.url),
+                            `${media.id}-poster`,
+                            "Lien du poster copié dans le presse-papier !"
+                          )
+                        }
+                        title="Copier le lien du Poster de Prévisualisation (Cover JPG)"
+                        aria-label="Copier le lien du Poster de Prévisualisation"
+                        className={cn(
+                          "p-2 rounded-xl transition-all shadow-md backdrop-blur-sm border",
+                          copiedKey === `${media.id}-poster`
+                            ? "bg-purple-500/20 text-purple-400 border-purple-500/40"
+                            : "bg-bg-elev-2/95 hover:bg-bg-elev-2 text-purple-400 border-purple-500/30 hover:border-purple-400"
+                        )}
+                      >
+                        {copiedKey === `${media.id}-poster` ? (
+                          <Check className="w-4 h-4 text-purple-400" />
+                        ) : (
+                          <ImageIcon className="w-4 h-4" />
+                        )}
+                      </button>
+                    )}
 
                     <a
                       href={media.url}
@@ -310,25 +338,52 @@ export function MediaGallery({ initialMedias }: MediaGalleryProps) {
                   </div>
 
                   {/* Mobile Touch Action Buttons Bar */}
-                  <div className="flex items-center justify-between pt-1.5 border-t border-line-soft md:hidden">
-                    <button
-                      onClick={() => handleCopy(media.url, media.id)}
-                      className={cn(
-                        "inline-flex items-center gap-1 text-[10px] font-medium px-2 py-1 rounded-md border transition-colors",
-                        copiedId === media.id
-                          ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
-                          : "bg-bg-elev text-ink-3 hover:text-ink border-line"
-                      )}
-                    >
-                      {copiedId === media.id ? (
-                        <Check className="w-3 h-3 text-emerald-400" />
-                      ) : (
-                        <Copy className="w-3 h-3" />
-                      )}
-                      <span>{copiedId === media.id ? "Copié !" : "Lien"}</span>
-                    </button>
+                  <div className="flex items-center justify-between pt-1.5 border-t border-line-soft md:hidden gap-1">
+                    <div className="flex items-center gap-1 flex-wrap">
+                      <button
+                        onClick={() => handleCopy(media.url, media.id, "Lien copié !")}
+                        className={cn(
+                          "inline-flex items-center gap-1 text-[10px] font-medium px-2 py-1 rounded-md border transition-colors",
+                          copiedKey === media.id
+                            ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+                            : "bg-bg-elev text-ink-3 hover:text-ink border-line"
+                        )}
+                      >
+                        {copiedKey === media.id ? (
+                          <Check className="w-3 h-3 text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3 h-3" />
+                        )}
+                        <span>{copiedKey === media.id ? "Copié !" : "Lien"}</span>
+                      </button>
 
-                    <div className="flex items-center gap-1">
+                      {isVideo && (
+                        <button
+                          onClick={() =>
+                            handleCopy(
+                              getVideoPosterUrl(media.url),
+                              `${media.id}-poster`,
+                              "Poster copié !"
+                            )
+                          }
+                          className={cn(
+                            "inline-flex items-center gap-1 text-[10px] font-medium px-2 py-1 rounded-md border transition-colors",
+                            copiedKey === `${media.id}-poster`
+                              ? "bg-purple-500/20 text-purple-400 border-purple-500/30"
+                              : "bg-bg-elev text-purple-400 border-purple-500/20 hover:border-purple-400"
+                          )}
+                        >
+                          {copiedKey === `${media.id}-poster` ? (
+                            <Check className="w-3 h-3 text-purple-400" />
+                          ) : (
+                            <ImageIcon className="w-3 h-3 text-purple-400" />
+                          )}
+                          <span>{copiedKey === `${media.id}-poster` ? "Copié !" : "Poster"}</span>
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-1 shrink-0">
                       <a
                         href={media.url}
                         target="_blank"
