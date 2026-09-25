@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useRef, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import { getVideoPosterUrl } from "@/lib/cloudinary-utils";
 import {
   ImagePlus, Trash2, X, Plus, Sparkles, Video,
   Layers, MessageSquare, HelpCircle, FileText, CheckCircle2,
-  ChevronRight, Star
+  ChevronRight, Star, Save
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product, ProductPack } from "@prisma/client";
@@ -75,6 +75,14 @@ export function ProductForm({ product }: ProductFormProps) {
   const [isDeleting, startDeleteTransition] = useTransition();
   const [isUploading, setIsUploading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [saveAction, setSaveAction] = useState<"stay" | "close">("stay");
+  const saveActionRef = useRef<"stay" | "close">("stay");
+
+  const triggerSave = (action: "stay" | "close") => {
+    saveActionRef.current = action;
+    setSaveAction(action);
+  };
+
   const [activeTab, setActiveTab] = useState<"general" | "packs" | "media" | "routine" | "reviews" | "faq">("general");
 
   const raw = (product?.landingData as any) || {};
@@ -318,8 +326,23 @@ export function ProductForm({ product }: ProductFormProps) {
         return;
       }
 
-      toast.success(isEditing ? "Produit mis à jour avec succès !" : "Produit créé avec succès !");
-      router.push("/products");
+      const action = saveActionRef.current;
+      if (isEditing) {
+        toast.success("Modifications enregistrées avec succès !");
+        router.refresh();
+        if (action === "close") {
+          router.push("/products");
+        }
+      } else {
+        toast.success("Produit créé avec succès !");
+        if (action === "close") {
+          router.push("/products");
+        } else if ("product" in result && result.product?.id) {
+          router.push(`/products/${result.product.id}`);
+        } else {
+          router.push("/products");
+        }
+      }
     });
   };
 
@@ -539,28 +562,53 @@ export function ProductForm({ product }: ProductFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      {/* Barre de navigation par onglets */}
-      <div className="flex items-center gap-1 border-b border-line pb-3 overflow-x-auto scrollbar-none">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          const isActiveTab = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id as any)}
-              className={cn(
-                "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium transition-all whitespace-nowrap cursor-pointer",
-                isActiveTab
-                  ? "bg-ink text-bg shadow-sm"
-                  : "text-ink-3 hover:text-ink hover:bg-bg-elev"
-              )}
-            >
-              <Icon className="w-3.5 h-3.5" />
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
+      {/* Barre de navigation par onglets & actions rapides */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line pb-3">
+        <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActiveTab = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id as any)}
+                className={cn(
+                  "flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium transition-all whitespace-nowrap cursor-pointer",
+                  isActiveTab
+                    ? "bg-ink text-bg shadow-sm"
+                    : "text-ink-3 hover:text-ink hover:bg-bg-elev"
+                )}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Boutons d'action rapides */}
+        <div className="flex items-center gap-2 shrink-0">
+          <Button
+            type="submit"
+            loading={isPending && saveAction === "stay"}
+            onClick={() => triggerSave("stay")}
+            className="text-xs h-8 px-3"
+            icon={<Save className="w-3.5 h-3.5" />}
+          >
+            {isEditing ? "Enregistrer" : "Créer et continuer"}
+          </Button>
+
+          <Button
+            type="submit"
+            variant="secondary"
+            loading={isPending && saveAction === "close"}
+            onClick={() => triggerSave("close")}
+            className="text-xs h-8 px-3"
+          >
+            {isEditing ? "Enregistrer et quitter" : "Créer et quitter"}
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1568,19 +1616,31 @@ export function ProductForm({ product }: ProductFormProps) {
           <div className="flex flex-col gap-2">
             <Button
               type="submit"
-              loading={isPending}
+              loading={isPending && saveAction === "stay"}
+              onClick={() => triggerSave("stay")}
               className="w-full justify-center text-sm py-3"
+              icon={<Save className="w-4 h-4" />}
             >
-              {isEditing ? "Enregistrer les modifications" : "Créer le produit"}
+              {isEditing ? "Enregistrer les modifications" : "Créer et continuer"}
+            </Button>
+
+            <Button
+              type="submit"
+              variant="secondary"
+              loading={isPending && saveAction === "close"}
+              onClick={() => triggerSave("close")}
+              className="w-full justify-center text-xs py-2.5"
+            >
+              {isEditing ? "Enregistrer et quitter" : "Créer et quitter"}
             </Button>
 
             <Button
               type="button"
-              variant="secondary"
+              variant="ghost"
               onClick={() => router.push("/products")}
-              className="w-full justify-center"
+              className="w-full justify-center text-xs text-ink-3 hover:text-ink"
             >
-              Annuler
+              Retour au catalogue
             </Button>
 
             {isEditing && (
