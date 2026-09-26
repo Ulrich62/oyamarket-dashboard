@@ -1489,36 +1489,69 @@ export function ProductForm({ product }: ProductFormProps) {
                 Image Produit
               </label>
               {imageUrl ? (
-                <div className="relative aspect-square rounded-xl overflow-hidden border border-line">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={imageUrl} alt="Aperçu" className="w-full h-full object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => setImageUrl("")}
-                    className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 flex items-center justify-center hover:bg-black/80 transition-colors cursor-pointer"
-                  >
-                    <X className="w-3.5 h-3.5 text-white" />
-                  </button>
+                <div className="flex flex-col gap-2">
+                  <div className="relative aspect-square rounded-xl overflow-hidden border border-line bg-bg-elev group">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={imageUrl} alt="Aperçu" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setImageUrl("")}
+                      className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 flex items-center justify-center hover:bg-black/80 transition-colors cursor-pointer"
+                      title="Retirer l'image"
+                    >
+                      <X className="w-3.5 h-3.5 text-white" />
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <label className="flex-1 py-1.5 px-2.5 rounded-lg border border-line bg-bg-elev/40 hover:bg-bg-elev text-center text-xs text-ink font-medium cursor-pointer transition-colors">
+                      <span>{isUploading ? "Upload..." : "Remplacer"}</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                        disabled={isUploading}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => openUploader((url: string) => setImageUrl(url))}
+                      className="flex-1 py-1.5 px-2.5 rounded-lg border border-line bg-bg-elev/40 hover:bg-bg-elev text-xs text-ink font-medium transition-colors cursor-pointer"
+                    >
+                      Médiathèque
+                    </button>
+                  </div>
                 </div>
               ) : (
-                <label
-                  className={cn(
-                    "flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-line aspect-square cursor-pointer transition-colors",
-                    "hover:border-ink-4 hover:bg-bg-elev"
-                  )}
-                >
-                  <ImagePlus className="w-6 h-6 text-ink-4" />
-                  <span className="text-xs text-ink-3">
-                    {isUploading ? "Upload en cours..." : "Ajouter une image"}
-                  </span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    disabled={isUploading}
-                  />
-                </label>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className={cn(
+                      "flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-line aspect-square cursor-pointer transition-colors",
+                      "hover:border-ink-4 hover:bg-bg-elev"
+                    )}
+                  >
+                    <ImagePlus className="w-6 h-6 text-ink-4" />
+                    <span className="text-xs text-ink-3">
+                      {isUploading ? "Upload en cours..." : "Téléverser depuis l'ordinateur"}
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      disabled={isUploading}
+                    />
+                  </label>
+
+                  <button
+                    type="button"
+                    onClick={() => openUploader((url: string) => setImageUrl(url))}
+                    className="w-full py-2 px-3 rounded-xl border border-line bg-bg-elev/50 hover:bg-bg-elev text-xs font-medium text-ink flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Layers className="w-3.5 h-3.5 text-ink-3" />
+                    <span>Choisir depuis la médiathèque</span>
+                  </button>
+                </div>
               )}
             </div>
           </div>
