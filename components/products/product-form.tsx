@@ -8,6 +8,7 @@ import { ConfirmModal } from "@/components/ui/confirm-modal";
 import { Input, Textarea } from "@/components/ui/input";
 import { createProduct, updateProduct, deleteProduct } from "@/lib/actions/products";
 import { uploadProductImage } from "@/lib/actions/upload";
+import { SortableImageGrid } from "@/components/products/sortable-image-grid";
 import { useMediaUploader } from "@/lib/store/use-media-uploader";
 import { getVideoPosterUrl } from "@/lib/cloudinary-utils";
 import {
@@ -414,6 +415,10 @@ export function ProductForm({ product }: ProductFormProps) {
     setLandingData({ ...landingData, gallery: updated });
   };
 
+  const reorderGalleryImages = (newGallery: string[]) => {
+    setLandingData((prev) => ({ ...prev, gallery: newGallery }));
+  };
+
   // Helper Photos Clientes UGC
   const addClientPhoto = (url: string) => {
     if (!url.trim()) return;
@@ -427,6 +432,10 @@ export function ProductForm({ product }: ProductFormProps) {
     const updated = [...(landingData.clientPhotos || [])];
     updated.splice(index, 1);
     setLandingData({ ...landingData, clientPhotos: updated });
+  };
+
+  const reorderClientPhotos = (newPhotos: string[]) => {
+    setLandingData((prev) => ({ ...prev, clientPhotos: newPhotos }));
   };
 
   // Helper Cartes Bénéfices 3-en-1
@@ -974,9 +983,14 @@ export function ProductForm({ product }: ProductFormProps) {
 
             {/* Galerie d'Images Infographiques */}
             <div className="pt-6 border-t border-line">
-              <h2 className="text-sm font-semibold text-ink mb-1">Galerie d'Images (Infographies 2 Colonnes)</h2>
+              <div className="flex items-center justify-between mb-1">
+                <h2 className="text-sm font-semibold text-ink">Galerie d'Images (Infographies 2 Colonnes)</h2>
+                <span className="text-xs text-ink-3">
+                  {(landingData.gallery || []).length} infographie{(landingData.gallery || []).length > 1 ? "s" : ""}
+                </span>
+              </div>
               <p className="text-xs text-ink-3 mb-4">
-                Images haute résolution illustrant les bénéfices sous l'image principale.
+                Images haute résolution illustrant les bénéfices sous l'image principale. Glissez-déposez pour définir l'ordre d'affichage.
               </p>
 
               <div className="flex gap-2 mb-4">
@@ -985,6 +999,16 @@ export function ProductForm({ product }: ProductFormProps) {
                   id="new-gallery-url"
                   placeholder="Coller l'URL d'une image infographique Cloudinary..."
                   className="flex-1 p-2 bg-bg-elev rounded-lg text-xs border border-line text-ink"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      const el = document.getElementById("new-gallery-url") as HTMLInputElement;
+                      if (el && el.value) {
+                        addGalleryImage(el.value);
+                        el.value = "";
+                      }
+                    }
+                  }}
                 />
                 <Button
                   type="button"
@@ -999,30 +1023,37 @@ export function ProductForm({ product }: ProductFormProps) {
                 >
                   Ajouter
                 </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    openUploader((url: string) => addGalleryImage(url));
+                  }}
+                  icon={<Layers className="w-3.5 h-3.5" />}
+                >
+                  Médiathèque
+                </Button>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {(landingData.gallery || []).map((url, idx) => (
-                  <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-line bg-bg group">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={url} alt={`Galerie ${idx + 1}`} className="w-full h-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => removeGalleryImage(idx)}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 flex items-center justify-center text-white transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
+              <SortableImageGrid
+                images={landingData.gallery || []}
+                onReorder={reorderGalleryImages}
+                onRemove={removeGalleryImage}
+                emptyMessage="Aucune image infographique dans la galerie. Ajoutez-en via URL ou médiathèque ci-dessus."
+              />
             </div>
 
             {/* Photos Clientes UGC */}
             <div className="pt-6 border-t border-line">
-              <h2 className="text-sm font-semibold text-ink mb-1">Photos Clientes UGC (Preuve Sociale Réelle)</h2>
+              <div className="flex items-center justify-between mb-1">
+                <h2 className="text-sm font-semibold text-ink">Photos Clientes UGC (Preuve Sociale Réelle)</h2>
+                <span className="text-xs text-ink-3">
+                  {(landingData.clientPhotos || []).length} photo{(landingData.clientPhotos || []).length > 1 ? "s" : ""}
+                </span>
+              </div>
               <p className="text-xs text-ink-3 mb-4">
-                Photos prises par les clientes montrant l'appareil reçu.
+                Photos prises par les clientes montrant l'appareil reçu. Glissez-déposez pour définir l'ordre d'affichage.
               </p>
 
               <div className="flex gap-2 mb-4">
@@ -1031,6 +1062,16 @@ export function ProductForm({ product }: ProductFormProps) {
                   id="new-ugc-url"
                   placeholder="Coller l'URL d'une photo cliente UGC..."
                   className="flex-1 p-2 bg-bg-elev rounded-lg text-xs border border-line text-ink"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      const el = document.getElementById("new-ugc-url") as HTMLInputElement;
+                      if (el && el.value) {
+                        addClientPhoto(el.value);
+                        el.value = "";
+                      }
+                    }
+                  }}
                 />
                 <Button
                   type="button"
@@ -1045,23 +1086,25 @@ export function ProductForm({ product }: ProductFormProps) {
                 >
                   Ajouter
                 </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    openUploader((url: string) => addClientPhoto(url));
+                  }}
+                  icon={<Layers className="w-3.5 h-3.5" />}
+                >
+                  Médiathèque
+                </Button>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {(landingData.clientPhotos || []).map((url, idx) => (
-                  <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-line bg-bg group">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={url} alt={`Photo cliente ${idx + 1}`} className="w-full h-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => removeClientPhoto(idx)}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 flex items-center justify-center text-white transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
+              <SortableImageGrid
+                images={landingData.clientPhotos || []}
+                onReorder={reorderClientPhotos}
+                onRemove={removeClientPhoto}
+                emptyMessage="Aucune photo cliente pour le moment. Ajoutez-en via URL ou médiathèque ci-dessus."
+              />
             </div>
           </div>
 
