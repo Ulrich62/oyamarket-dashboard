@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { createOrderNotification } from "@/lib/notifications";
+import { sendMetaCapiLead } from "@/lib/actions/meta-capi";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -26,6 +27,7 @@ export async function OPTIONS() {
  *   customerCity?: string,
  *   quartier?: string,
  *   notes?: string,
+ *   eventId?: string,    // Meta event_id for Lead deduplication
  *   fbc?: string,        // Facebook click ID (from _fbc cookie)
  *   fbp?: string,        // Facebook browser ID (from _fbp cookie)
  *   items: [{ productId: string, quantity: number, price: number }]
@@ -39,6 +41,7 @@ const OrderSchema = z.object({
   customerCity: z.string().optional().nullable(),
   quartier: z.string().optional().nullable(),
   notes: z.string().optional().nullable(),
+  eventId: z.string().optional().nullable(),
   fbc: z.string().optional().nullable(),
   fbp: z.string().optional().nullable(),
   items: z
@@ -79,15 +82,16 @@ export async function POST(req: NextRequest) {
     customerCity,
     quartier,
     notes,
+    eventId,
     fbc,
     fbp,
     items,
   } = parsed.data;
 
-  // Verify store exists
+  // Verify store exists and retrieve pixel / CAPI configuration
   const store = await prisma.store.findUnique({
     where: { id: storeId },
-    select: { id: true },
+    select: { id: true, pixelId: true, capiToken: true },
   });
   if (!store) {
     return NextResponse.json(
@@ -213,5 +217,35 @@ export async function POST(req: NextRequest) {
     console.error("[Orders] Notification dispatch failed:", notifErr);
   });
 
-  return NextResponse.json({ success: true, order }, { status: 201, headers: corsHeaders });
+  // Meta CAPI : Déclenchement sécurisé du Lead côté serveur pour déduplication Pixel
+  const leadEventId = eventId || `lead_${order.id}_${Date.now()}`;
+  if (store.pixelId && store.capiToken) {
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || null;
+    const clientUserAgent = req.headers.get("user-agent") || null;
+    const sourceUrl = req.headers.get("referer") || undefined;
+    const firstProduct = products[0];
+
+    sendMetaCapiLead({
+      pixelId: store.pixelId,
+      capiToken: store.capiToken,
+      orderId: order.id,
+      eventId: leadEventId,
+      customerName,
+      customerPhone,
+      customerCity: customerCity ?? undefined,
+      totalAmount,
+      currency: "XOF",
+      fbc: fbc ?? undefined,
+      fbp: fbp ?? undefined,
+      clientIp,
+      clientUserAgent,
+      sourceUrl,
+      contentName: firstProduct?.name ?? "Commande OyaMarket",
+      contentIds: productIds,
+    }).catch((capiErr) => {
+      console.error("[META CAPI Lead] Erreur non-bloquante:", capiErr);
+    });
+  }
+
+  return NextResponse.json({ success: true, order, eventId: leadEventId }, { status: 201, headers: corsHeaders });
 }

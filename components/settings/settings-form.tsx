@@ -147,24 +147,50 @@ export function SettingsForm({ store }: SettingsFormProps) {
           </p>
         </div>
 
-        {/* Workflow CAPI */}
-        <div className="rounded-xl bg-bg-elev border border-line p-4">
-          <p className="text-[11px] text-ink-4 font-mono mb-3 uppercase tracking-wider">Workflow de tracking</p>
+        {/* Workflow CAPI & Stratégie d'Attribution */}
+        <div className="rounded-xl bg-bg-elev border border-line p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <p className="text-[11px] text-ink-4 font-mono uppercase tracking-wider">Workflow de tracking & Attribution Meta</p>
+            <span className="text-[10px] bg-accent/10 text-accent font-medium px-2 py-0.5 rounded-full">
+              EMQ Haute Précision
+            </span>
+          </div>
+
           <div className="flex flex-col gap-2">
             {[
-              { step: "1", event: "Lead (Pixel + CAPI)", trigger: "Soumission du formulaire vitrine", color: "text-blue-400" },
-              { step: "2", event: "Purchase (CAPI uniquement)", trigger: "Passage au statut Livrée & Encaissée", color: "text-accent" },
+              {
+                step: "1",
+                event: "Lead (Pixel + CAPI Dédupliqué)",
+                trigger: "Soumission du formulaire vitrine (Recommandé en Cold Launch)",
+                color: "text-blue-400",
+                desc: "Déclenché simultanément par le navigateur et le serveur avec un event_id identique pour 0 doublon. C'est l'événement recommandé pour optimiser vos campagnes de cold testing (volume rapide)."
+              },
+              {
+                step: "2",
+                event: "Purchase (CAPI Post-Livraison)",
+                trigger: "Passage au statut 'Livrée & Encaissée' (24h à 72h plus tard)",
+                color: "text-accent",
+                desc: "Envoyé uniquement après encaissement effectif des espèces à la livraison. Les numéros sont normalisés au format Bénin ARCEP (22901XXXXXXXX) pour un score EMQ maximal."
+              },
             ].map((item) => (
-              <div key={item.step} className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-bg-elev-2 border border-line flex items-center justify-center text-[10px] font-mono text-ink-4 shrink-0">
-                  {item.step}
-                </span>
-                <div className="flex-1">
-                  <span className={`text-[12px] font-medium ${item.color}`}>{item.event}</span>
-                  <span className="text-[11px] text-ink-4 ml-2">— {item.trigger}</span>
+              <div key={item.step} className="p-2.5 rounded-lg bg-bg-elev-2/60 border border-line/60 flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-bg-elev border border-line flex items-center justify-center text-[10px] font-mono text-ink-4 shrink-0">
+                    {item.step}
+                  </span>
+                  <span className={`text-[12px] font-semibold ${item.color}`}>{item.event}</span>
+                  <span className="text-[11px] text-ink-4 ml-auto text-right text-[10px]">— {item.trigger}</span>
                 </div>
+                <p className="text-[11px] text-ink-3 pl-7 leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
             ))}
+          </div>
+
+          {/* Règle d'attribution COD essentielle */}
+          <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-3 text-[11px] text-amber-200/90 leading-relaxed">
+            <span className="font-semibold text-amber-300">⚠️ Règle d'Attribution Meta Ads Manager :</span> Pour le modèle Cash on Delivery au Bénin, la livraison intervient 24h à 72h après la commande. Configurez impérativement la fenêtre d'attribution de vos ensembles de publicités sur <strong className="text-white">« 7 jours après le clic / 1 jour après la vue »</strong> pour relier les événements Purchase CAPI aux annonces sources.
           </div>
         </div>
       </div>

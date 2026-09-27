@@ -82,8 +82,9 @@ fetch(\`${BASE_URL}/api/v1/products/\${productId}?storeId=${storeId}\`)
       body: [
         { name: "storeId", type: "string", required: true, description: "Identifiant de la boutique" },
         { name: "customerName", type: "string", required: true, description: "Nom complet du client" },
-        { name: "customerPhone", type: "string", required: true, description: "Téléphone du client" },
+        { name: "customerPhone", type: "string", required: true, description: "Téléphone du client (format national 01XXXXXXXX ou E.164)" },
         { name: "quartier", type: "string", required: false, description: "Zone / quartier de livraison" },
+        { name: "eventId", type: "string", required: false, description: "event_id Meta pour déduplication Pixel + CAPI Lead" },
         { name: "fbc", type: "string", required: false, description: "Cookie _fbc (Facebook Click ID)" },
         { name: "fbp", type: "string", required: false, description: "Cookie _fbp (Facebook Browser ID)" },
         {
@@ -99,8 +100,9 @@ fetch(\`${BASE_URL}/api/v1/products/\${productId}?storeId=${storeId}\`)
   body: JSON.stringify({
     storeId: "${storeId}",
     customerName: "Adama Traoré",
-    customerPhone: "+22997000000",
+    customerPhone: "0196551628",
     quartier: "Cadjehoun, Cotonou",
+    eventId: "lead_" + Date.now(),
     fbc: document.cookie.match(/_fbc=([^;]+)/)?.[1],
     fbp: document.cookie.match(/_fbp=([^;]+)/)?.[1],
     items: [
@@ -115,7 +117,8 @@ fetch(\`${BASE_URL}/api/v1/products/\${productId}?storeId=${storeId}\`)
     "status": "NEW",
     "totalAmount": 8500,
     "createdAt": "2026-09-03T08:00:00.000Z"
-  }
+  },
+  "eventId": "lead_1789345000"
 }`,
     },
   ];
