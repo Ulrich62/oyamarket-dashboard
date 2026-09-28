@@ -3,14 +3,25 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { subMinutes } from "date-fns";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
+function getCorsHeaders(req: NextRequest) {
+  const origin = req.headers.get("origin");
+  const headers: Record<string, string> = {
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  };
 
-export async function OPTIONS() {
-  return new NextResponse(null, { status: 200, headers: corsHeaders });
+  if (origin) {
+    headers["Access-Control-Allow-Origin"] = origin;
+    headers["Access-Control-Allow-Credentials"] = "true";
+  } else {
+    headers["Access-Control-Allow-Origin"] = "*";
+  }
+
+  return headers;
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, { status: 200, headers: getCorsHeaders(req) });
 }
 
 /**
@@ -19,18 +30,21 @@ export async function OPTIONS() {
  * Intègre une déduplication par fenêtre de 15 minutes pour éviter le spam.
  */
 const TrackSchema = z.object({
-  storeId: z.string().min(1, "storeId requis"),
-  visitorId: z.string().min(1, "visitorId requis"),
-  path: z.string().min(1, "path requis"),
-  slug: z.string().optional().nullable(),
-  referrer: z.string().optional().nullable(),
-  device: z.string().optional().nullable(),
+  storeId: z.string().trim().min(1, "storeId requis"),
+  visitorId: z.string().trim().min(1, "visitorId requis"),
+  path: z.string().trim().min(1, "path requis"),
+  slug: z.string().trim().optional().nullable(),
+  referrer: z.string().trim().optional().nullable(),
+  device: z.string().trim().optional().nullable(),
 });
 
 export async function POST(req: NextRequest) {
+  const corsHeaders = getCorsHeaders(req);
+
   let body: unknown;
   try {
-    body = await req.json();
+    const raw = await req.text();
+    body = JSON.parse(raw);
   } catch {
     return NextResponse.json(
       { error: "Corps de requête invalide" },
@@ -57,6 +71,19 @@ export async function POST(req: NextRequest) {
     (userAgent && /Mobile|Android|iPhone|iPad/i.test(userAgent) ? "mobile" : "desktop");
 
   try {
+    // Vérifier l'existence du store pour éviter un crash FK
+    const storeExists = await prisma.store.findUnique({
+      where: { id: storeId },
+      select: { id: true },
+    });
+
+    if (!storeExists) {
+      return NextResponse.json(
+        { error: "Boutique introuvable" },
+        { status: 404, headers: corsHeaders }
+      );
+    }
+
     // Déduplication légère : Si le même visitorId sur le même path a déjà été tracké dans les 15 dernières minutes,
     // on ne gonfle pas la base inutilement
     const fifteenMinutesAgo = subMinutes(new Date(), 15);
