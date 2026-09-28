@@ -236,12 +236,30 @@
       "🎁 BONUS OFFERT (Valeur 5 000 FCFA) : Guide Numérique 'Guide Pratique de l'Eau Saine au Bénin : Comment Protéger sa Famille des Parasites & Bactéries' envoyé directement sur votre WhatsApp après réception du colis"
     ],
     "clientPhotos": [
-      "https://s.alicdn.com/@sc04/kf/Hca3c375919a94f1486baeaed0eda11e2l.png_960x960q80.jpg",
-      "https://s.alicdn.com/@sc04/kf/Hf7e012bed37d41a88886cd9e9edcc6e9O.png_960x960q80.jpg",
-      "https://s.alicdn.com/@sc04/kf/H82e53c8bcd6a45ab8f9de3f8a008f5c5B.png_960x960q80.jpg",
-      "https://s.alicdn.com/@sc04/kf/H408a8b8e7de84b46aca8265c73484c84C.png_960x960q80.jpg",
-      "https://s.alicdn.com/@sc04/kf/H5b70a71f1afd4b0e93a78f95b9f95517u.png_960x960q80.jpg",
-      "https://s.alicdn.com/@sc04/kf/Hfca85412fbd24aefbdfb00caf279bcefh.png_960x960q80.jpg"
+      "https://res.cloudinary.com/poqm6bs0/image/upload/v1790610540/oyamarket/products/filtre-eau-robinet-charbon/ugc_verre_filtre_cuisine.jpg",
+      "https://res.cloudinary.com/poqm6bs0/image/upload/v1790610541/oyamarket/products/filtre-eau-robinet-charbon/ugc_installation_robinet.jpg",
+      "https://res.cloudinary.com/poqm6bs0/image/upload/v1790610542/oyamarket/products/filtre-eau-robinet-charbon/ugc_deballage_colis_client.jpg",
+      "https://res.cloudinary.com/poqm6bs0/image/upload/v1790610544/oyamarket/products/filtre-eau-robinet-charbon/ugc_remplissage_carafe_cuisine.jpg"
+    ],
+    "ugcVideos": [
+      {
+        "videoUrl": "https://res.cloudinary.com/poqm6bs0/video/upload/v1790608172/oyamarket/media/0914_7_-1_1790608171926.mov",
+        "poster": "https://res.cloudinary.com/poqm6bs0/video/upload/so_auto/v1790608172/oyamarket/media/0914_7_-1_1790608171926.jpg",
+        "caption": "« Même sur le robinet de la cour, l'eau sort limpide sans sable ni boue ! »",
+        "stars": 5
+      },
+      {
+        "videoUrl": "https://res.cloudinary.com/poqm6bs0/video/upload/v1790608357/oyamarket/media/0914_8_-1_1790608356425.mov",
+        "poster": "https://res.cloudinary.com/poqm6bs0/video/upload/so_auto/v1790608357/oyamarket/media/0914_8_-1_1790608356425.jpg",
+        "caption": "« Fini l'odeur piquante de chlore, l'eau est douce et agréable à boire au robinet. »",
+        "stars": 5
+      },
+      {
+        "videoUrl": "https://res.cloudinary.com/poqm6bs0/video/upload/v1790608378/oyamarket/media/0914_9_-1_1790608377030.jpg",
+        "poster": "https://res.cloudinary.com/poqm6bs0/video/upload/so_auto/v1790608378/oyamarket/media/0914_9_-1_1790608377030.jpg",
+        "caption": "« Colis bien reçu et vérifié avec le livreur à Cotonou avant de payer. Tout est conforme ! »",
+        "stars": 5
+      }
     ],
     "reviews": [
       {
