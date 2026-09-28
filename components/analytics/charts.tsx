@@ -117,14 +117,13 @@ export function FunnelChart({ data }: FunnelChartProps) {
           cursor={{ fill: "rgba(250,248,243,0.04)" }}
         />
         <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-          {data.map((_, idx) => (
-            <Cell
-              key={idx}
-              fill={
-                idx === 0 ? "#4f46e5" : idx === 1 ? "#22c55e" : "#c9f266"
-              }
-            />
-          ))}
+          {data.map((_, idx) => {
+            const colors =
+              data.length === 4
+                ? ["#38bdf8", "#818cf8", "#22c55e", "#c9f266"]
+                : ["#818cf8", "#22c55e", "#c9f266"];
+            return <Cell key={idx} fill={colors[idx] || "#c9f266"} />;
+          })}
         </Bar>
       </BarChart>
     </ResponsiveContainer>

@@ -26,6 +26,7 @@ model Store {
   medias       Media[]
   notifications     Notification[]
   pushSubscriptions PushSubscription[]
+  pageViews         PageView[]
 }
 
 model Product {
@@ -220,4 +221,21 @@ model PushSubscription {
   createdAt DateTime @default(now())
 
   @@index([storeId])
+}
+
+model PageView {
+  id        String   @id @default(cuid())
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  visitorId String
+  path      String
+  slug      String?
+  referrer  String?
+  device    String?  @default("mobile")
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([storeId, createdAt])
+  @@index([storeId, visitorId, createdAt])
+  @@index([storeId, path])
 }

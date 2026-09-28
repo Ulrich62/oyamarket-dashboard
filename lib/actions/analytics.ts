@@ -19,7 +19,7 @@ export async function getDashboardKPIs(period: PeriodFilter = "30d") {
   const storeId = await requireStoreId();
   const since = getPeriodStart(period);
 
-  const [allOrders, periodOrders] = await Promise.all([
+  const [allOrders, periodOrders, uniqueVisitorsGroup, totalPageViews] = await Promise.all([
     prisma.order.findMany({
       where: { storeId },
       select: { status: true, totalAmount: true, createdAt: true },
@@ -27,6 +27,13 @@ export async function getDashboardKPIs(period: PeriodFilter = "30d") {
     prisma.order.findMany({
       where: { storeId, createdAt: { gte: since } },
       select: { status: true, totalAmount: true, createdAt: true },
+    }),
+    prisma.pageView.groupBy({
+      by: ["visitorId"],
+      where: { storeId, createdAt: { gte: since } },
+    }),
+    prisma.pageView.count({
+      where: { storeId, createdAt: { gte: since } },
     }),
   ]);
 
@@ -45,14 +52,20 @@ export async function getDashboardKPIs(period: PeriodFilter = "30d") {
 
   const toShip = allOrders.filter((o) => o.status === "CONFIRMED").length;
 
-  // Funnel complet
-  const total = periodOrders.length;
+  // Funnel complet (Visiteurs -> Leads -> Confirmées -> Livrées)
+  const totalLeads = periodOrders.length;
   const confirmed = periodOrders.filter(
     (o) =>
       o.status === "CONFIRMED" ||
       o.status === "SHIPPED" ||
       o.status === "DELIVERED"
   ).length;
+
+  const visitorsCount = uniqueVisitorsGroup.length;
+  const visitorConversionRate =
+    visitorsCount > 0
+      ? Math.round((totalLeads / visitorsCount) * 1000) / 10
+      : 0;
 
   return {
     revenue,
@@ -62,8 +75,12 @@ export async function getDashboardKPIs(period: PeriodFilter = "30d") {
     totalOrders: periodOrders.length,
     deliveredCount: delivered.length,
     confirmedCount: confirmed,
+    visitorsCount,
+    totalPageViews,
+    visitorConversionRate,
     funnel: {
-      leads: total,
+      visitors: visitorsCount,
+      leads: totalLeads,
       confirmed,
       delivered: delivered.length,
     },

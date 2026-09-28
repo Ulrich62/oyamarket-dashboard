@@ -49,6 +49,7 @@ export default async function DashboardPage({
   ]);
 
   const funnelData = [
+    { name: "Visiteurs", value: kpis.funnel.visitors },
     { name: "Leads", value: kpis.funnel.leads },
     { name: "Confirmées", value: kpis.funnel.confirmed },
     { name: "Livrées", value: kpis.funnel.delivered },
@@ -216,7 +217,7 @@ export default async function DashboardPage({
               Funnel de conversion
             </p>
             <p className="text-xs sm:text-sm text-ink-3 mt-1">
-              Leads → Confirmations → Livraisons
+              Visiteurs → Leads → Confirmations → Livraisons
             </p>
           </div>
           <Link
@@ -228,15 +229,17 @@ export default async function DashboardPage({
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
+        <div className="grid grid-cols-4 gap-2 sm:gap-4 mb-6">
           {funnelData.map((item, i) => (
             <div key={item.name} className="text-center">
-              <p className="text-xl sm:text-3xl font-bold text-ink">{item.value}</p>
+              <p className="text-lg sm:text-3xl font-bold text-ink">{item.value.toLocaleString("fr-FR")}</p>
               <p className="text-[10px] sm:text-[11px] text-ink-4 mt-1 truncate">{item.name}</p>
-              {i > 0 && funnelData[i - 1].value > 0 && (
+              {i > 0 && funnelData[i - 1].value > 0 ? (
                 <p className="text-[10px] text-green-400 font-mono mt-0.5">
                   {Math.round((item.value / funnelData[i - 1].value) * 100)}%
                 </p>
+              ) : (
+                <p className="text-[10px] text-ink-4 font-mono mt-0.5">{i === 0 ? "100%" : "-"}</p>
               )}
             </div>
           ))}

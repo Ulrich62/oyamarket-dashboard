@@ -65,6 +65,7 @@ export default async function AnalyticsPage({
   ]);
 
   const funnelData = [
+    { name: "Visiteurs", value: kpis.funnel.visitors },
     { name: "Leads", value: kpis.funnel.leads },
     { name: "Confirmées", value: kpis.funnel.confirmed },
     { name: "Livrées", value: kpis.funnel.delivered },
@@ -77,7 +78,7 @@ export default async function AnalyticsPage({
         <div>
           <h1 className="text-xl sm:text-2xl font-semibold text-ink tracking-tight">Analytics</h1>
           <p className="text-xs sm:text-sm text-ink-3 mt-0.5">
-            Performances et conversion de votre boutique
+            Performances, trafic et conversion de votre boutique
           </p>
         </div>
 
@@ -100,17 +101,38 @@ export default async function AnalyticsPage({
       </div>
 
       {/* Métriques clés */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
         {[
-          { label: "CA Encaissé", value: formatXOF(kpis.revenue), note: "Commandes livrées uniquement" },
-          { label: "Taux de Closing", value: `${kpis.closingRate}%`, note: "Livrées / Total commandes" },
-          { label: "Commandes totales", value: kpis.totalOrders, note: "Toutes commandes de la période" },
-          { label: "Livrées", value: kpis.deliveredCount, note: "Encaissement confirmé" },
+          {
+            label: "Visiteurs Uniques",
+            value: kpis.visitorsCount.toLocaleString("fr-FR"),
+            note: `${kpis.totalPageViews} page(s) vue(s)`,
+          },
+          {
+            label: "Taux Conversion (Lead)",
+            value: `${kpis.visitorConversionRate}%`,
+            note: "Commandes / Visiteurs",
+          },
+          {
+            label: "Taux de Closing",
+            value: `${kpis.closingRate}%`,
+            note: "Livrées / Total commandes",
+          },
+          {
+            label: "Commandes totales",
+            value: kpis.totalOrders,
+            note: `${kpis.deliveredCount} commande(s) livrée(s)`,
+          },
+          {
+            label: "CA Encaissé",
+            value: formatXOF(kpis.revenue),
+            note: "Commandes livrées uniquement",
+          },
         ].map((stat) => (
           <div key={stat.label} className="rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-5 flex flex-col justify-between">
             <div>
               <p className="text-[10px] uppercase tracking-[0.12em] text-ink-4 font-mono">{stat.label}</p>
-              <p className="text-2xl sm:text-3xl font-bold text-ink mt-2 truncate">{stat.value}</p>
+              <p className="text-xl sm:text-2xl font-bold text-ink mt-2 truncate">{stat.value}</p>
             </div>
             <p className="text-[11px] text-ink-4 mt-2">{stat.note}</p>
           </div>
@@ -139,17 +161,19 @@ export default async function AnalyticsPage({
         {/* Funnel */}
         <div className="rounded-2xl border border-line bg-bg-elev/30 p-4 sm:p-6">
           <p className="text-[11px] uppercase tracking-[0.12em] text-ink-4 font-mono mb-4">
-            Funnel de conversion
+            Funnel de conversion (Visiteurs → Ventes)
           </p>
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 mb-6">
             {funnelData.map((item, i) => (
               <div key={item.name} className="text-center">
-                <p className="text-xl sm:text-2xl font-bold text-ink">{item.value}</p>
+                <p className="text-lg sm:text-2xl font-bold text-ink">{item.value.toLocaleString("fr-FR")}</p>
                 <p className="text-[10px] sm:text-[11px] text-ink-4 mt-1 truncate">{item.name}</p>
-                {i > 0 && funnelData[i - 1].value > 0 && (
+                {i > 0 && funnelData[i - 1].value > 0 ? (
                   <p className="text-[10px] text-green-400 font-mono mt-0.5">
                     {Math.round((item.value / funnelData[i - 1].value) * 100)}%
                   </p>
+                ) : (
+                  <p className="text-[10px] text-ink-4 font-mono mt-0.5">{i === 0 ? "100%" : "-"}</p>
                 )}
               </div>
             ))}
