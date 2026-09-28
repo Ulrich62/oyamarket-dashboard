@@ -54,7 +54,7 @@ async function main() {
       homeData: {
         announcements: [
           "Paiement à la livraison partout au Bénin 🇧🇯 🛵",
-          "Livraison GRATUITE dès 25.000 FCFA d'achat 🎁",
+          "Livraison GRATUITE partout au Bénin 🎁",
         ],
         hero: {
           title: "L'Excellence, Livrée.",
