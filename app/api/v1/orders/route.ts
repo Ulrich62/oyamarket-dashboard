@@ -4,14 +4,25 @@ import { z } from "zod";
 import { createOrderNotification } from "@/lib/notifications";
 import { sendMetaCapiLead } from "@/lib/actions/meta-capi";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
+function getCorsHeaders(req: NextRequest) {
+  const origin = req.headers.get("origin");
+  const headers: Record<string, string> = {
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  };
 
-export async function OPTIONS() {
-  return new NextResponse(null, { status: 200, headers: corsHeaders });
+  if (origin) {
+    headers["Access-Control-Allow-Origin"] = origin;
+    headers["Access-Control-Allow-Credentials"] = "true";
+  } else {
+    headers["Access-Control-Allow-Origin"] = "*";
+  }
+
+  return headers;
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, { status: 200, headers: getCorsHeaders(req) });
 }
 
 /**
@@ -35,20 +46,20 @@ export async function OPTIONS() {
  */
 
 const OrderSchema = z.object({
-  storeId: z.string().min(1, "storeId requis"),
-  customerName: z.string().min(1, "customerName requis"),
-  customerPhone: z.string().min(1, "customerPhone requis"),
-  customerCity: z.string().optional().nullable(),
-  quartier: z.string().optional().nullable(),
-  notes: z.string().optional().nullable(),
-  eventId: z.string().optional().nullable(),
-  fbc: z.string().optional().nullable(),
-  fbp: z.string().optional().nullable(),
+  storeId: z.string().trim().min(1, "storeId requis"),
+  customerName: z.string().trim().min(1, "customerName requis"),
+  customerPhone: z.string().trim().min(1, "customerPhone requis"),
+  customerCity: z.string().trim().optional().nullable(),
+  quartier: z.string().trim().optional().nullable(),
+  notes: z.string().trim().optional().nullable(),
+  eventId: z.string().trim().optional().nullable(),
+  fbc: z.string().trim().optional().nullable(),
+  fbp: z.string().trim().optional().nullable(),
   items: z
     .array(
       z.object({
-        productId: z.string().min(1),
-        packId: z.string().optional().nullable(),
+        productId: z.string().trim().min(1),
+        packId: z.string().trim().optional().nullable(),
         quantity: z.number().int().positive().default(1),
         price: z.number().int().nonnegative().optional(),
       })
@@ -57,6 +68,7 @@ const OrderSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const corsHeaders = getCorsHeaders(req);
   let body: unknown;
   try {
     body = await req.json();
