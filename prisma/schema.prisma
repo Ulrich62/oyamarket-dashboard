@@ -27,6 +27,7 @@ model Store {
   notifications     Notification[]
   pushSubscriptions PushSubscription[]
   pageViews         PageView[]
+  sessions          UserSession[]
 }
 
 model Product {
@@ -239,3 +240,53 @@ model PageView {
   @@index([storeId, visitorId, createdAt])
   @@index([storeId, path])
 }
+
+model UserSession {
+  id               String         @id @default(cuid())
+  storeId          String
+  store            Store          @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  visitorId        String
+  device           String?        @default("mobile")
+  browser          String?
+  networkType      String?        // "4g", "3g", "2g", "wifi"
+  screenSize       String?        // "390x844"
+  fbclid           String?
+  utmSource        String?
+  utmCampaign      String?
+  utmContent       String?
+  path             String         @default("/")
+  slug             String?
+  maxScrollDepth   Int            @default(0)   // 25, 50, 75, 100
+  durationSeconds  Int            @default(0)
+  activeSection    String?
+  selectedPack     String?
+  formStarted      Boolean        @default(false)
+  lastFieldTouched String?
+  hasOrdered       Boolean        @default(false)
+  hasWhatsApp      Boolean        @default(false)
+  hasRageClick     Boolean        @default(false)
+  orderId          String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  events           SessionEvent[]
+
+  @@index([storeId, createdAt])
+  @@index([visitorId])
+  @@index([storeId, hasOrdered])
+  @@index([storeId, formStarted])
+}
+
+model SessionEvent {
+  id         String      @id @default(cuid())
+  sessionId  String
+  session    UserSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  eventType  String      // "PAGE_VIEW", "SCROLL", "SECTION_DWELL", "CAROUSEL", "PACK_SELECT", "FIELD_FOCUS", "FIELD_BLUR", "FIELD_ERROR", "RAGE_CLICK", "WHATSAPP_CLICK", "ORDER_SUCCESS"
+  payload    Json?
+  timestamp  DateTime    @default(now())
+
+  @@index([sessionId])
+  @@index([eventType])
+  @@index([timestamp])
+}
+

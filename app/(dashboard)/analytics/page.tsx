@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { getCurrentMemberContext } from "@/lib/actions/store-context";
 import { ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RawDataExport } from "@/components/analytics/raw-data-export";
 
 export const dynamic = "force-dynamic";
 
@@ -99,6 +100,9 @@ export default async function AnalyticsPage({
           ))}
         </div>
       </div>
+
+      {/* Export des Données Brutes (JSON / SQL) */}
+      <RawDataExport currentPeriod={period} />
 
       {/* Métriques clés */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
