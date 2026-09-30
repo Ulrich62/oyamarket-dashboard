@@ -1,5 +1,12 @@
 import { OrderStatus } from "@prisma/client";
 
+// Commandes nécessitant une action prioritaire (à traiter / relancer)
+export const TO_PROCESS_STATUSES: OrderStatus[] = [
+  "NEW",
+  "PENDING_CONFIRMATION",
+  "UNREACHABLE",
+];
+
 // Mapping des statuts COD vers leur libellé français et couleur
 export const ORDER_STATUS_CONFIG: Record<
   OrderStatus,

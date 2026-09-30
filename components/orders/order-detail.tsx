@@ -8,9 +8,9 @@ import { ConfirmModal } from "@/components/ui/confirm-modal";
 import { StatusBadge } from "@/components/ui/badge";
 import { updateOrderStatus, updateOrder, deleteOrder, assignOrderDelivery } from "@/lib/actions/orders";
 import { formatXOF, formatDate, ORDER_STATUS_CONFIG } from "@/lib/constants";
+import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown, User, MessageCircle, Truck, FileText, Clock } from "lucide-react";
+import { cn, formatWhatsAppPhone } from "@/lib/utils";
 import { OrderStatus, Role } from "@prisma/client";
-import { Phone, MapPin, Package, Pencil, Check, X, Trash2, ChevronDown, User, MessageCircle, Truck } from "lucide-react";
-import { cn } from "@/lib/utils";
 import type { Order, OrderItem, Product, ProductPack } from "@prisma/client";
 
 export interface DeliveryAgentItem {
@@ -60,9 +60,13 @@ export function OrderDetail({
     customerName: order.customerName,
     customerPhone: order.customerPhone,
     quartier: order.quartier ?? "",
+    notes: order.notes ?? "",
   });
   const [statusDropdown, setStatusDropdown] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [pendingStatusModal, setPendingStatusModal] = useState(false);
+  const [pendingNote, setPendingNote] = useState(order.notes ?? "");
+  const [noteError, setNoteError] = useState("");
 
   const startEdit = (field: string) => {
     setEditing(field);
@@ -74,6 +78,7 @@ export function OrderDetail({
       customerName: order.customerName,
       customerPhone: order.customerPhone,
       quartier: order.quartier ?? "",
+      notes: order.notes ?? "",
     });
   };
 
@@ -82,8 +87,8 @@ export function OrderDetail({
       const result = await updateOrder(order.id, {
         [field]: tempValues[field as keyof typeof tempValues],
       });
-      if ("error" in result) {
-        toast.error("Erreur lors de la mise à jour");
+      if ("error" in result && result.error) {
+        toast.error(result.error);
       } else {
         toast.success("Modifié");
         setEditing(null);
@@ -92,12 +97,28 @@ export function OrderDetail({
     });
   };
 
-  const handleStatusChange = (newStatus: OrderStatus) => {
+  const handleStatusSelect = (newStatus: OrderStatus) => {
+    setStatusDropdown(false);
+    if (newStatus === "PENDING_CONFIRMATION") {
+      setPendingNote(order.notes ?? "");
+      setNoteError("");
+      setPendingStatusModal(true);
+      return;
+    }
+    handleStatusChange(newStatus);
+  };
+
+  const handleStatusChange = (newStatus: OrderStatus, note?: string) => {
     startTransition(async () => {
-      await updateOrderStatus(order.id, newStatus);
-      toast.success(`Statut mis à jour : ${ORDER_STATUS_CONFIG[newStatus].label}`);
-      setStatusDropdown(false);
-      router.refresh();
+      const res = await updateOrderStatus(order.id, newStatus, note);
+      if ("error" in res && res.error) {
+        toast.error(res.error);
+      } else {
+        toast.success(`Statut mis à jour : ${ORDER_STATUS_CONFIG[newStatus].label}`);
+        setStatusDropdown(false);
+        setPendingStatusModal(false);
+        router.refresh();
+      }
     });
   };
 
@@ -199,7 +220,7 @@ export function OrderDetail({
     </div>
   );
 
-  const cleanPhone = order.customerPhone.replace(/\D/g, "");
+  const cleanPhone = formatWhatsAppPhone(order.customerPhone);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -228,6 +249,12 @@ export function OrderDetail({
               label: "Quartier / Zone",
               value: order.quartier ?? "",
               icon: <MapPin className="w-3.5 h-3.5 text-ink-4" />,
+            })}
+            {renderInlineField({
+              field: "notes",
+              label: "Note de suivi / closer",
+              value: order.notes ?? "",
+              icon: <FileText className="w-3.5 h-3.5 text-amber-400" />,
             })}
           </div>
 
@@ -334,7 +361,7 @@ export function OrderDetail({
                 {STATUS_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
-                    onClick={() => handleStatusChange(opt.value as OrderStatus)}
+                    onClick={() => handleStatusSelect(opt.value as OrderStatus)}
                     className={cn(
                       "w-full text-left px-3 py-2.5 text-[13px] transition-colors hover:bg-bg-elev",
                       order.status === opt.value ? "bg-bg-elev-2 text-ink" : "text-ink-2"
@@ -412,7 +439,7 @@ export function OrderDetail({
                       </span>
                       <div className="flex items-center gap-1.5">
                         <a
-                          href={`https://wa.me/${assignedDriver.user.phone.replace(/\D/g, "")}`}
+                          href={`https://wa.me/${formatWhatsAppPhone(assignedDriver.user.phone)}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-1 rounded-md text-emerald-400 hover:bg-emerald-500/15 transition-colors"
@@ -494,6 +521,100 @@ export function OrderDetail({
         variant="danger"
         isLoading={isDeleting}
       />
+
+      {/* Modale de note obligatoire pour le statut "En attente de confirmation" */}
+      {pendingStatusModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="w-full max-w-md bg-[#161616] border border-line rounded-2xl p-5 sm:p-6 shadow-2xl flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center text-yellow-400 shrink-0">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-ink">
+                  Mise en attente de confirmation
+                </h3>
+                <p className="text-xs text-ink-3">
+                  Une note explicative est obligatoire pour ce statut
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-medium text-ink-2">
+                Motif de la mise en attente <span className="text-yellow-400">*</span>
+              </label>
+              <textarea
+                autoFocus
+                rows={3}
+                value={pendingNote}
+                onChange={(e) => {
+                  setPendingNote(e.target.value);
+                  if (e.target.value.trim()) setNoteError("");
+                }}
+                placeholder="Ex: Le client est en réunion, rappeler ce soir vers 18h..."
+                className="w-full bg-bg-elev-2 border border-line focus:border-yellow-400/60 focus:ring-1 focus:ring-yellow-400/30 rounded-xl p-3 text-sm text-ink outline-none resize-none placeholder:text-ink-4 transition-all"
+              />
+              {noteError && (
+                <span className="text-xs text-red-400 font-medium">{noteError}</span>
+              )}
+            </div>
+
+            {/* Suggestions rapides en 1 clic */}
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] text-ink-4 font-mono uppercase tracking-wider">
+                Suggestions rapides :
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  "Rappeler plus tard aujourd'hui",
+                  "Demande à être rappelé ce soir",
+                  "Doit vérifier sa disponibilité",
+                  "En déplacement, à relancer demain",
+                  "Sonnerie sans réponse",
+                ].map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    onClick={() => {
+                      setPendingNote(preset);
+                      setNoteError("");
+                    }}
+                    className="text-[11px] px-2.5 py-1 rounded-lg bg-bg-elev hover:bg-bg-elev-2 border border-line text-ink-3 hover:text-ink transition-colors cursor-pointer text-left"
+                  >
+                    + {preset}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-line mt-1">
+              <button
+                type="button"
+                disabled={isPending}
+                onClick={() => setPendingStatusModal(false)}
+                className="px-4 py-2 rounded-xl text-xs font-medium text-ink-3 hover:text-ink hover:bg-bg-elev transition-colors cursor-pointer"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                disabled={isPending || !pendingNote.trim()}
+                onClick={() => {
+                  if (!pendingNote.trim()) {
+                    setNoteError("Veuillez renseigner un motif pour mettre en attente.");
+                    return;
+                  }
+                  handleStatusChange("PENDING_CONFIRMATION", pendingNote.trim());
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center gap-1.5"
+              >
+                {isPending ? "Enregistrement..." : "Confirmer la mise en attente"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

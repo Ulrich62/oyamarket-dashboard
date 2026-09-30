@@ -5,6 +5,7 @@ import { requireStoreId, getCurrentMemberContext } from "@/lib/actions/store-con
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { OrderStatus } from "@prisma/client";
+import { TO_PROCESS_STATUSES } from "@/lib/constants";
 import { z } from "zod";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -29,8 +30,9 @@ const OrderSchema = z.object({
 // ─── Server Actions — Orders ─────────────────────────────────────────────────
 
 export async function getOrders(filters?: {
-  status?: OrderStatus;
+  status?: OrderStatus | "TO_PROCESS" | "relance" | "ALL";
   assignedToId?: string;
+  tab?: string;
 }) {
   const context = await getCurrentMemberContext();
   const storeId = context.storeId;
@@ -41,12 +43,27 @@ export async function getOrders(filters?: {
     ? context.userId
     : filters?.assignedToId;
 
+  const isToProcess =
+    filters?.status === "TO_PROCESS" ||
+    filters?.status === "relance" ||
+    filters?.tab === "to_process" ||
+    filters?.tab === "relance";
+
+  const isAll = filters?.status === "ALL" || filters?.tab === "all";
+
+  const where: any = {
+    storeId,
+    ...(effectiveAssignedToId && { assignedToId: effectiveAssignedToId }),
+  };
+
+  if (isToProcess) {
+    where.status = { in: TO_PROCESS_STATUSES };
+  } else if (!isAll && filters?.status && filters.status !== ("ALL" as any)) {
+    where.status = filters.status as OrderStatus;
+  }
+
   return prisma.order.findMany({
-    where: {
-      storeId,
-      ...(filters?.status && { status: filters.status }),
-      ...(effectiveAssignedToId && { assignedToId: effectiveAssignedToId }),
-    },
+    where,
     include: {
       items: {
         include: { product: { select: { name: true, imageUrl: true } } },
@@ -116,14 +133,28 @@ export async function createOrder(data: {
   return { success: true, order };
 }
 
-export async function updateOrderStatus(id: string, status: OrderStatus) {
+export async function updateOrderStatus(
+  id: string,
+  status: OrderStatus,
+  note?: string
+) {
   const storeId = await requireStoreId();
-  
+
+  if (status === "PENDING_CONFIRMATION" && (!note || !note.trim())) {
+    return {
+      error:
+        "Une note explicative est obligatoire pour mettre une commande en attente de confirmation.",
+    };
+  }
+
   const order = await prisma.order.update({
     where: { id, storeId },
-    data: { status },
+    data: {
+      status,
+      ...(note && note.trim() ? { notes: note.trim() } : {}),
+    },
   });
-  
+
   // 🔥 Déclenchement automatique Meta CAPI Purchase si commande livrée
   if (status === "DELIVERED") {
     const { sendMetaCapiPurchase } = await import("./meta-capi");
@@ -140,19 +171,33 @@ export async function updateOrderStatus(id: string, status: OrderStatus) {
   return { success: true, order };
 }
 
-
 export async function updateOrder(
   id: string,
   data: Partial<{
     customerName: string;
     customerPhone: string;
+    customerCity: string;
     quartier: string;
+    notes: string | null;
     status: OrderStatus;
     assignedToId: string | null;
     items: { productId: string; quantity: number; price: number }[];
   }>
 ) {
   const storeId = await requireStoreId();
+
+  if (data.status === "PENDING_CONFIRMATION" && (!data.notes || !data.notes.trim())) {
+    const existing = await prisma.order.findUnique({
+      where: { id, storeId },
+      select: { notes: true },
+    });
+    if (!existing?.notes || !existing.notes.trim()) {
+      return {
+        error:
+          "Une note explicative est obligatoire pour mettre une commande en attente de confirmation.",
+      };
+    }
+  }
 
   // Si on met à jour les items, on les recrée entièrement
   if (data.items) {
@@ -166,7 +211,9 @@ export async function updateOrder(
       data: {
         ...(data.customerName && { customerName: data.customerName }),
         ...(data.customerPhone && { customerPhone: data.customerPhone }),
+        ...(data.customerCity !== undefined && { customerCity: data.customerCity }),
         ...(data.quartier !== undefined && { quartier: data.quartier }),
+        ...(data.notes !== undefined && { notes: data.notes }),
         ...(data.status && { status: data.status }),
         ...(data.assignedToId !== undefined && { assignedToId: data.assignedToId }),
         totalAmount,
@@ -190,7 +237,9 @@ export async function updateOrder(
     data: {
       ...(data.customerName && { customerName: data.customerName }),
       ...(data.customerPhone && { customerPhone: data.customerPhone }),
+      ...(data.customerCity !== undefined && { customerCity: data.customerCity }),
       ...(data.quartier !== undefined && { quartier: data.quartier }),
+      ...(data.notes !== undefined && { notes: data.notes }),
       ...(data.status && { status: data.status }),
       ...(data.assignedToId !== undefined && { assignedToId: data.assignedToId }),
     },
