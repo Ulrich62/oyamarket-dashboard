@@ -137,9 +137,13 @@
       "https://res.cloudinary.com/poqm6bs0/image/upload/v1791145563/oyamarket/products/filtre-eau-robinet-charbon/gallery_5.png",
       "https://res.cloudinary.com/poqm6bs0/image/upload/v1791145564/oyamarket/products/filtre-eau-robinet-charbon/gallery_6.png"
     ],
-    "twoStepsTitle": "",
-    "twoStepsDesc": "",
-    "twoStepsBullets": [],
+    "twoStepsTitle": "La preuve en un verre : une eau limpide et sans odeur",
+    "twoStepsDesc": "À gauche, l'eau du robinet non filtrée chargée en chlore et résidus de canalisations. À droite, l'eau purifiée instantanément par le système 6 couches OyaMarket™ : cristalline, saine et agréable à boire pour toute la famille.",
+    "twoStepsBullets": [
+      "Bloque 99% du chlore résiduel, de la rouille et des impuretés",
+      "Supprime le goût et l'odeur piquante pour une eau fraîche",
+      "S'installe en 10 secondes chrono sur votre robinet, sans aucun outil"
+    ],
     "beforeAfterImage": "https://res.cloudinary.com/poqm6bs0/image/upload/v1791145560/oyamarket/products/filtre-eau-robinet-charbon/gallery_2.png",
     "threeInOneCards": [
       {
@@ -172,8 +176,19 @@
         "desc": "Ajustez le collier inox et buvez une eau saine et cristalline."
       }
     ],
-    "unboxingItems": [],
-    "clientPhotos": [],
+    "unboxingImage": "https://res.cloudinary.com/poqm6bs0/image/upload/v1791145559/oyamarket/products/filtre-eau-robinet-charbon/gallery_1.png",
+    "unboxingItems": [
+      "Purificateur(s) d'eau 6 couches (Charbon actif de coco, Zéolite & Minéraux)",
+      "Bague de fixation universelle en silicone souple (robinets de 15 à 32 mm)",
+      "Collier de fixation inox avec molette de serrage sécurisée",
+      "Notice d'installation rapide en français"
+    ],
+    "clientPhotos": [
+      "https://res.cloudinary.com/poqm6bs0/image/upload/v1790610540/oyamarket/products/filtre-eau-robinet-charbon/ugc_verre_filtre_cuisine.jpg",
+      "https://res.cloudinary.com/poqm6bs0/image/upload/v1790610541/oyamarket/products/filtre-eau-robinet-charbon/ugc_installation_robinet.jpg",
+      "https://res.cloudinary.com/poqm6bs0/image/upload/v1790610542/oyamarket/products/filtre-eau-robinet-charbon/ugc_deballage_colis_client.jpg",
+      "https://res.cloudinary.com/poqm6bs0/image/upload/v1790610544/oyamarket/products/filtre-eau-robinet-charbon/ugc_remplissage_carafe_cuisine.jpg"
+    ],
     "ugcVideos": [
       {
         "videoUrl": "https://res.cloudinary.com/poqm6bs0/video/upload/v1790608172/oyamarket/media/0914_7_-1_1790608171926.mov",
