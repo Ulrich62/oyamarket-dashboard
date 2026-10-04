@@ -1028,7 +1028,17 @@ export function ProductForm({ product }: ProductFormProps) {
                   variant="secondary"
                   size="sm"
                   onClick={() => {
-                    openUploader((url: string) => addGalleryImage(url));
+                    openUploader({
+                      multiple: true,
+                      title: "Choisir des images pour la galerie",
+                      onSelectMultiple: (urls: string[]) => {
+                        setLandingData((prev) => ({
+                          ...prev,
+                          gallery: Array.from(new Set([...(prev.gallery || []), ...urls])),
+                        }));
+                      },
+                      onUploaded: (url: string) => addGalleryImage(url),
+                    });
                   }}
                   icon={<Layers className="w-3.5 h-3.5" />}
                 >
@@ -1091,7 +1101,17 @@ export function ProductForm({ product }: ProductFormProps) {
                   variant="secondary"
                   size="sm"
                   onClick={() => {
-                    openUploader((url: string) => addClientPhoto(url));
+                    openUploader({
+                      multiple: true,
+                      title: "Choisir des photos clientes UGC",
+                      onSelectMultiple: (urls: string[]) => {
+                        setLandingData((prev) => ({
+                          ...prev,
+                          clientPhotos: Array.from(new Set([...(prev.clientPhotos || []), ...urls])),
+                        }));
+                      },
+                      onUploaded: (url: string) => addClientPhoto(url),
+                    });
                   }}
                   icon={<Layers className="w-3.5 h-3.5" />}
                 >
@@ -1126,17 +1146,43 @@ export function ProductForm({ product }: ProductFormProps) {
                     })
                   }
                 />
-                <Input
-                  label="URL Image Avant/Après"
-                  placeholder="https://res.cloudinary.com/.../avant_apres.jpg"
-                  value={landingData.beforeAfter?.image || ""}
-                  onChange={(e) =>
-                    setLandingData({
-                      ...landingData,
-                      beforeAfter: { ...landingData.beforeAfter, image: e.target.value },
-                    })
-                  }
-                />
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-medium text-ink">URL Image Avant/Après</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="https://res.cloudinary.com/.../avant_apres.jpg"
+                      value={landingData.beforeAfter?.image || ""}
+                      onChange={(e) =>
+                        setLandingData({
+                          ...landingData,
+                          beforeAfter: { ...landingData.beforeAfter, image: e.target.value },
+                        })
+                      }
+                      className="flex-1 p-2 bg-bg-elev rounded-lg text-xs border border-line text-ink"
+                    />
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => {
+                        openUploader({
+                          multiple: false,
+                          title: "Choisir l'image Avant / Après",
+                          onUploaded: (url: string) => {
+                            setLandingData((prev) => ({
+                              ...prev,
+                              beforeAfter: { ...prev.beforeAfter, image: url },
+                            }));
+                          },
+                        });
+                      }}
+                      icon={<Layers className="w-3.5 h-3.5" />}
+                    >
+                      Médiathèque
+                    </Button>
+                  </div>
+                </div>
               </div>
               <div className="mt-3">
                 <Textarea
