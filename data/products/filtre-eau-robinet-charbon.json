@@ -53,9 +53,9 @@
     "reviewsCount": 1640,
     "stockBadge": "🚨 VENTE FLASH LIMITÉE • 1 ACHETÉ = 1 OFFERT • Plus que 7 packs en stock à Cotonou • Expédition 24h & Paiement à la réception",
     "keyArguments": [
-      "Bloque chlore, rouille et impuretés des canalisations",
-      "S'installe en 10 secondes chrono, sans outil ni plombier",
-      "Compatible avec 95 % des robinets ronds standards"
+      "Bloque chlore, rouille et impuretés",
+      "S'installe en 10 secondes, sans outil",
+      "Compatible avec 95 % des robinets"
     ],
     "shippingRibbon": [
       "🚚 Livraison Express à Cotonou, Calavi & tout le Bénin (24h-48h)",
@@ -218,7 +218,12 @@
         "text": "Sur notre forage à Calavi, l'eau laissait un dépôt calcaire. Depuis qu'on a posé ce purificateur, l'eau est très douce et les enfants n'ont plus mal au ventre. Vraiment top !"
       }
     ],
-    "accordions": [],
+    "accordions": [
+      {
+        "title": "Composition et spécifications techniques",
+        "content": "Purificateur 6 couches actives : Coton PVA non-tissé, Zéolite naturelle, Sulfite de calcium déchlorant, Charbon actif de noix de coco, Pierres minérales Maifan et micro-tamis de sortie. Compatible avec robinets ronds standards de 16 à 22 mm de diamètre. Collier de serrage inox et bague silicone universelle inclus."
+      }
+    ],
     "faq": [
       {
         "q": "Mon robinet est-il compatible ?",
